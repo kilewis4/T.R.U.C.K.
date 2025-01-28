@@ -1,0 +1,64 @@
+VIRTUAL CLERK:
+Incoming trucks put on a timed waitlist (queue?)
+Associates clock in and get put onto work list (queue?)
+CLERK assigns trucks to associates based on certain variables (time, current hourly rate, other trucks currently being unloaded in nearby doors)
+
+Possibly be able to learn what the most effective distribution of workload would be (would like to see what it does differently compared to us)
+
+ASSOCIATE PROFILES:
+	- Name
+	- EID
+	- Avg Hourly Rate
+	- Avg Pallets per Hour
+
+Depending on certain production levels, different associates should be kept at different levels of income in order to rewards more effective workers.
+
+Keeping track of how long a truck takes to be unloaded by specific associates in order to keep up with production level?
+Potential to determine how other nearby loads impact associates ability to unload.
+
+TRUCK VARIABLES:
+	- PO #
+	- Door #
+	- Vendor
+	- Carrier
+	- Pallets In
+	- Pallets Out
+	- Price
+	- [Door to left, Door to Right]
+	
+
+	Carrier: MDI (Backhaul), Any Other Company (Logistic Shipped Load, Vendor Shipped Loads)
+
+
+DATABASE SAVES TIME TAKEN + TRUCK TO LEFT AND RIGHT FOR EACH TRUCK OBJECT FOR ASSOCIATES.
+
+PRIORITY NUMBERS WHERE LIVE LOADS INCREASE IN PRORITY AS THEY CONTINUE TO WAIT.
+
+**MAKE A SIMULATED ENVIROMENT**
+
+**DOCUMENT IMPROVEMENTS**
+
+**PLOT TIME**
+
+AGENT BASED SIMULATION
+NET LOGO
+
+
+truck1 00:00
+truck2 00:05
+
+truck3 00:10 
+
+
+associate1: truck1
+associate2: truck2 
+
+
+truck4 01:10 (LIVE) (Has a 2 hour time limit)
+truck5 01:15
+
+associate1: truck3
+associate: truck3
+
+
+
