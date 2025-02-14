@@ -13,3 +13,6 @@ def getTrucks():
 
     return trucks
 
+list = getTrucks()
+for t in list:
+    print(t.live)

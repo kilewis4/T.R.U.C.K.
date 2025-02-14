@@ -4,4 +4,4 @@ class Truck(object):
         self.po = po
         self.size = size
         self.live = live
-        self.time = 0
+        self.time = 1
