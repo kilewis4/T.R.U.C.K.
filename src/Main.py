@@ -1,4 +1,5 @@
 from simpy import Environment
+from Door import Door
 from Truck import Truck
 from Unloader import Unloader
 from UnloadingProcess import unloading
@@ -13,17 +14,21 @@ def __main__():
 
 
     trucks = TruckList()
+    
 
-    start_truck = trucks.removeTruck()
+    #start_truck = trucks.removeTruck() -> This is for the reason below.
 
     env = Environment()
 
-    trucks.addTruck(start_truck)
+    #trucks.addTruck(start_truck) -> This is for having the enviroment start the time of the first truck.
 
 
     unloaders = UnloaderList(env)
+  
+    doors = [Door(1), Door(2), Door(3)]
 
-    env.process(process_generator(env, trucks, unloaders.list))
+    env.process(process_generator(env, trucks, unloaders.list, doors))
+
 
     
     print('The current time is: ' + str(env.now))
@@ -31,13 +36,20 @@ def __main__():
     
     print('The current time is: ' + str(env.now))
 
-def process_generator(env, trucks, unloaders):
+def process_generator(env, trucks, unloaders, doors):
     i = 0
 
-    for t in trucks:
-        yield env.timeout(t[1].time)
+    for each_truck in trucks:
+        index = i % 3
+        doors[index].assign_job(each_truck[1], unloader=unloaders[index])
+        print(doors[index])
+        yield env.timeout(each_truck[1].time)
+        doors[index].fill_dock()
+        
 
-        env.process(unloading(env, unloader=unloaders[i % 3], trucks=trucks))
+
+        env.process(unloading(env, unloader=unloaders[index], trucks= trucks))
+        doors[index].finish_job()
         i += 1
 
 if __name__ == __main__():
