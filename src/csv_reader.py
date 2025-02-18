@@ -6,7 +6,6 @@ from Truck import Truck
 def getTrucks():
     df = pd.read_csv(filepath_or_buffer="./Data/truck_data_02_04_2025.csv", usecols=[7,16,26,41])
     new_list = df.values.tolist()
-    print(new_list)
 
 
     trucks = []
