@@ -4,4 +4,10 @@ class Truck(object):
         self.po = po
         self.size = size
         self.live = live
-        self.time = 1
+        self.time = time
+
+    def incrementTime(self):
+        self.time += 1
+
+    def __lt__(self, other):
+        return self.size < other.size and self.time <= other.time
