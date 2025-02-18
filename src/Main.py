@@ -5,6 +5,7 @@ from UnloadingProcess import unloading
 import random
 from TruckList import TruckList
 import csv_reader
+from UnloaderList import UnloaderList
 
 
 def __main__():
@@ -20,9 +21,9 @@ def __main__():
     trucks.addTruck(start_truck)
 
 
-    unloaders = [Unloader(env, 1, 10),Unloader(env, 2, 10),Unloader(env, 3, 10)]
+    unloaders = UnloaderList(env)
 
-    env.process(process_generator(env, trucks, unloaders))
+    env.process(process_generator(env, trucks, unloaders.list))
 
     
     print('The current time is: ' + str(env.now))
@@ -36,7 +37,7 @@ def process_generator(env, trucks, unloaders):
     for t in trucks:
         yield env.timeout(t[1].time)
 
-        env.process(unloading(env, unloader=unloaders[i % 3], trucks= trucks))
+        env.process(unloading(env, unloader=unloaders[i % 3], trucks=trucks))
         i += 1
 
 if __name__ == __main__():
