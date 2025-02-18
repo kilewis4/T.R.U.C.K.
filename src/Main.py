@@ -16,12 +16,13 @@ def __main__():
 
     unloaders = [Unloader(env, 1, 10),Unloader(env, 2, 10),Unloader(env, 3, 10)]
 
-    for i in range(100):
-        env.process(unloading(env, unloader=unloaders[i % 3], truck= trucks.removeTruck()))
+    for i in range(trucks.getSize()):
+        env.process(unloading(env, unloader=unloaders[i % 3], trucks= trucks))
 
     
     print('The current time is: ' + str(env.now))
     env.run()
+    
     print('The current time is: ' + str(env.now))
 
 if __name__ == __main__():
