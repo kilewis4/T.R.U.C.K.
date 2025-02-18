@@ -8,10 +8,16 @@ import csv_reader
 
 
 def __main__():
-    env = Environment()
+    
 
 
     trucks = TruckList()
+
+    start_truck = trucks.removeTruck()
+
+    env = Environment(start_truck.time)
+
+    trucks.addTruck(start_truck)
 
 
     unloaders = [Unloader(env, 1, 10),Unloader(env, 2, 10),Unloader(env, 3, 10)]
