@@ -6,6 +6,7 @@ from UnloadingProcess import unloading
 import random
 from TruckList import TruckList
 import csv_reader
+from UnloaderList import UnloaderList
 
 
 def __main__():
@@ -22,10 +23,11 @@ def __main__():
     #trucks.addTruck(start_truck) -> This is for having the enviroment start the time of the first truck.
 
 
-    unloaders = [Unloader(env, 1, 10),Unloader(env, 2, 10),Unloader(env, 3, 10)]
+    unloaders = UnloaderList(env)
+  
     doors = [Door(1), Door(2), Door(3)]
 
-    env.process(process_generator(env, trucks, unloaders, doors))
+    env.process(process_generator(env, trucks, unloaders.list, doors))
 
 
     
@@ -44,6 +46,7 @@ def process_generator(env, trucks, unloaders, doors):
         yield env.timeout(each_truck[1].time)
         doors[index].fill_dock()
         
+
 
         env.process(unloading(env, unloader=unloaders[index], trucks= trucks))
         doors[index].finish_job()
