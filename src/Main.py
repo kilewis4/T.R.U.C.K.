@@ -15,7 +15,7 @@ list, initializes the enviorment, and prints enviorment time.
 def __main__():
     trucks = TruckList()
 
-    start_truck = trucks.removeTruck()
+    #start_truck = trucks.removeTruck() -> This is for the reason below
 
     env = Environment()
 
@@ -24,7 +24,9 @@ def __main__():
 
     unloaders = UnloaderList(env)
 
-    env.process(process_generator(env, trucks, unloaders.list))
+    doors = [Door(1), Door(2), Door(3)]
+
+    env.process(process_generator(env, trucks, unloaders.list, doors))
 
     
     print('The current time is: ' + str(env.now))
