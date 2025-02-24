@@ -1,4 +1,5 @@
 from simpy import Environment
+from Door import Door
 from Truck import Truck
 from Unloader import Unloader
 from UnloadingProcess import unloading
@@ -13,29 +14,37 @@ list, initializes the enviorment, and prints enviorment time.
 """
 def __main__():
     trucks = TruckList()
+
     start_truck = trucks.removeTruck()
+
     env = Environment()
-    trucks.addTruck(start_truck)
+
+    #trucks.addTruck(start_truck) -> This is for having the enviroment start the time of the first truck.
+
+
     unloaders = UnloaderList(env)
+
     env.process(process_generator(env, trucks, unloaders.list))
+
     
     print('The current time is: ' + str(env.now))
     env.run()
     print('The current time is: ' + str(env.now))
 
-"""
-Method to process the trucks with the unloaders, assigining the trucks to the unloaders.
-
-Args:
-    env (Environment): enviorment which is used to process.
-    trucks (list): list of trucks that need to be unloaded.
-    unloaders (list): unloaders that will unload the trucks.
-"""
-def process_generator(env, trucks, unloaders):
+def process_generator(env, trucks, unloaders, doors):
     i = 0
-    for t in trucks:
-        yield env.timeout(t[1].time)
-        env.process(unloading(env, unloader=unloaders[i % 3], trucks=trucks))
+
+    for each_truck in trucks:
+        index = i % 3
+        doors[index].assign_job(each_truck[1], unloader=unloaders[index])
+        print(doors[index])
+        yield env.timeout(each_truck[1].time)
+        doors[index].fill_dock()
+        
+
+
+        env.process(unloading(env, unloader=unloaders[index], trucks= trucks))
+        doors[index].finish_job()
         i += 1
 
 """
