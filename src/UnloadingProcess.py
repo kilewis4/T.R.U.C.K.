@@ -1,5 +1,11 @@
 from TruckList import TruckList
 
+"""
+Method to simulate the "unloading" itself. When a truck is unloaded,
+it is removed from the list. Prints the PO number of the truck, the time
+the truck was finished unloading, and the time taken. Also unloades the 
+eid of the unloader.
+"""
 def unloading(env, unloader, trucks):
     
     truck = trucks.removeTruck()

@@ -8,15 +8,14 @@ from TruckList import TruckList
 import csv_reader
 from UnloaderList import UnloaderList
 
-
+"""
+Main method to run all code. Currently makes the truck and employee
+list, initializes the enviorment, and prints enviorment time.
+"""
 def __main__():
-    
-
-
     trucks = TruckList()
-    
 
-    #start_truck = trucks.removeTruck() -> This is for the reason below.
+    #start_truck = trucks.removeTruck() -> This is for the reason below
 
     env = Environment()
 
@@ -24,16 +23,14 @@ def __main__():
 
 
     unloaders = UnloaderList(env)
-  
+
     doors = [Door(1), Door(2), Door(3)]
 
     env.process(process_generator(env, trucks, unloaders.list, doors))
 
-
     
     print('The current time is: ' + str(env.now))
     env.run()
-    
     print('The current time is: ' + str(env.now))
 
 def process_generator(env, trucks, unloaders, doors):
@@ -52,5 +49,8 @@ def process_generator(env, trucks, unloaders, doors):
         doors[index].finish_job()
         i += 1
 
+"""
+Run the code.
+"""
 if __name__ == __main__():
     __main__()
