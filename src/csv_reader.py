@@ -17,14 +17,15 @@ def getTrucks():
 
     trucks = []
     for truck in new_list:
+        live = truck[0]
         time = truck[1]
         month = int(time[:2])
         day = int(time[3:5])
         year = int(time[6:10])
         hour = int(time[11:13])
         minute = int(time[14:16])
-        print(truck[3])
-        trucks.append(Truck(int(truck[2]), int (truck[3]), int(truck[0]), ((day * 10000) + (hour * 100) + (minute * 1))))
+        time_parsed = (((day * 10000) + (hour * 100) + (minute * 1)) - 40000) % 1200
+        trucks.append(Truck(int(truck[2]), int (truck[3]), int(truck[0]), time_parsed))
 
     return trucks
 
@@ -51,3 +52,4 @@ def getUnloaders(env):
         unloaders.append(Unloader(env, eid, pallets_per_hour))
 
     return unloaders
+

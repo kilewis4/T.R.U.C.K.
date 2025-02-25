@@ -49,7 +49,7 @@ class TruckList:
         The truck that was removed.
     """
     def removeTruck(self):
-        return self.list.pop()[1]
+        return self.list.pop(0)[1]
     
     """
     Gets the current size of the list of trucks.

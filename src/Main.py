@@ -24,9 +24,12 @@ def __main__():
 
     unloaders = UnloaderList(env)
 
+    for unloader in unloaders.list:
+        print(unloader.eid)
+
     doors = [Door(1), Door(2), Door(3)]
 
-    env.process(process_generator(env, trucks, unloaders.list, doors))
+    env.process(process_generator(env, trucks, unloaders, doors))
 
     
     print('The current time is: ' + str(env.now))
@@ -37,16 +40,18 @@ def process_generator(env, trucks, unloaders, doors):
     i = 0
 
     for each_truck in trucks:
+
         index = i % 3
-        doors[index].assign_job(each_truck[1], unloader=unloaders[index])
+
+        doors[index].assign_job(each_truck[1], unloader=unloaders.list[index])
         print(doors[index])
-        yield env.timeout(each_truck[1].time)
-        doors[index].fill_dock()
         
-
-
-        env.process(unloading(env, unloader=unloaders[index], trucks= trucks))
+        env.process(unloading(env, unloaders=unloaders, trucks= trucks))
+        doors[index].fill_dock()
         doors[index].finish_job()
+
+        yield env.timeout(each_truck[1].time)
+        
         i += 1
 
 """
