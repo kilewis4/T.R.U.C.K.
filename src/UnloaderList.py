@@ -52,9 +52,17 @@ class UnloaderList:
     Determines if list of unloaders is empty.
     
     Returns:
-        Boolean value of wether the list is empty
+        Boolean value of whether the list is empty
     """
     def isEmpty(self):
         return self.getSize() == 0
     
 
+    """
+    Gets the current size of the list of unloaders.
+
+    Returns:
+        The size of the list.
+    """
+    def getSize(self):
+        return self.list.__len__()
