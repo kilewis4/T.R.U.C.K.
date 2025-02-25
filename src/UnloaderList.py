@@ -37,7 +37,7 @@ class UnloaderList:
         The value of the list element removed.
     """
     def removeUnloader(self):
-        return self.list.pop()[1]
+        return self.list.pop(0)
     
     """
     Gets the size of the unloader list.
@@ -47,3 +47,14 @@ class UnloaderList:
     """
     def getSize(self):
         return self.list.__len__()
+    
+    """
+    Determines if list of unloaders is empty.
+    
+    Returns:
+        Boolean value of wether the list is empty
+    """
+    def isEmpty(self):
+        return self.getSize() == 0
+    
+
