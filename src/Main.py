@@ -46,6 +46,8 @@ def process_generator(env, trucks, unloaders, doors):
         door_index = i % doors.getSize()
         #print(index)
 
+        yield env.timeout(each_truck[1].time)
+
 
         doors.list[door_index].assign_job(each_truck[1], unloader=unloaders.list[unloader_index])
         print(doors.list[door_index])
@@ -54,7 +56,7 @@ def process_generator(env, trucks, unloaders, doors):
         doors.list[door_index].fill_dock()
         doors.list[door_index].finish_job()
 
-        yield env.timeout(each_truck[1].time)
+        
         
         i += 1
 
