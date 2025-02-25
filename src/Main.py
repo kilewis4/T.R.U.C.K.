@@ -3,10 +3,12 @@ from Door import Door
 from Truck import Truck
 from Unloader import Unloader
 from UnloadingProcess import unloading
-import random
 from TruckList import TruckList
-import csv_reader
 from UnloaderList import UnloaderList
+from DoorList import DoorList
+
+import random
+import csv_reader
 
 """
 Main method to run all code. Currently makes the truck and employee
@@ -24,10 +26,10 @@ def __main__():
 
     unloaders = UnloaderList(env)
 
-    for unloader in unloaders.list:
-        print(unloader.eid)
+    # for unloader in unloaders.list:
+    #     print(unloader.eid)
 
-    doors = [Door(1), Door(2), Door(3)]
+    doors = DoorList()
 
     env.process(process_generator(env, trucks, unloaders, doors))
 
@@ -40,15 +42,17 @@ def process_generator(env, trucks, unloaders, doors):
     i = 0
 
     for each_truck in trucks:
+        unloader_index = i % unloaders.getSize()
+        door_index = i % doors.getSize()
+        #print(index)
 
-        index = i % 3
 
-        doors[index].assign_job(each_truck[1], unloader=unloaders.list[index])
-        print(doors[index])
+        doors.list[door_index].assign_job(each_truck[1], unloader=unloaders.list[unloader_index])
+        print(doors.list[door_index])
         
         env.process(unloading(env, unloaders=unloaders, trucks= trucks))
-        doors[index].fill_dock()
-        doors[index].finish_job()
+        doors.list[door_index].fill_dock()
+        doors.list[door_index].finish_job()
 
         yield env.timeout(each_truck[1].time)
         

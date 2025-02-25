@@ -43,7 +43,7 @@ Returns:
 """
 def getUnloaders(env):
     edf = pd.read_csv(filepath_or_buffer="./Data/employee_data_02_04_2025.csv", usecols=[0])
-    new_unloader_list = edf.values.tolist()
+    new_unloader_list = edf.iloc[:, 0].unique().tolist()    
 
     unloaders = []
     for unloader in new_unloader_list:
@@ -52,4 +52,6 @@ def getUnloaders(env):
         unloaders.append(Unloader(env, eid, pallets_per_hour))
 
     return unloaders
+
+
 
