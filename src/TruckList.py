@@ -1,6 +1,6 @@
 from Truck import Truck
 import csv_reader
-
+import simpy
 
 """
 Trucklist contains a list of all the trucks that come in in a day.
@@ -12,13 +12,9 @@ class TruckList:
     Creates a TruckList object, and inserts all of the data from
     csv_reader into the list of trucks.
     """
-    def __init__(self):
+    def __init__(self, env):
         self.list = []
-            
-        trucks = csv_reader.getTrucks()
-        for truck in trucks:
-            self.addTruck(truck)
-    
+        self.env = env
     """
     Returns an iterator for the list itself.
 
@@ -37,8 +33,8 @@ class TruckList:
     Args:
         truck(Truck): Truck to add
     """
-    def addTruck(self, truck):
-        priorityNumber = -(int (truck.live) * (truck.time * 0.083))
+    def addTruck(self, truck, env):
+        priorityNumber = -(int (truck.live) * ((env.now - truck.time) * 0.083))
         self.list.append((priorityNumber, truck))
         self.list.sort()
 
@@ -49,7 +45,11 @@ class TruckList:
         The truck that was removed.
     """
     def removeTruck(self):
-        return self.list.pop(0)[1]
+        for t in self.list:
+            print(t[0], t[1].po)
+        result = self.list.pop(0)[1]
+        self.list.sort()
+        return result
     
     """
     Gets the current size of the list of trucks.

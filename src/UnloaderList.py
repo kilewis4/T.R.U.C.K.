@@ -18,8 +18,18 @@ class UnloaderList:
         self.list = []
         self.env = env
         unloaders = csv_reader.getUnloaders(env)
-        for unloader in unloaders:
+        for unloader in unloaders[1:2]:
+            print(unloader.eid)
             self.addUnloader(unloader)
+    
+    """
+    Returns an iterator for the list itself.
+
+    Returns:
+        The iterator to the list.
+    """
+    def __iter__(self):
+        return iter(self.list)
 
     """
     Appends an unloader to the list.

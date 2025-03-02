@@ -8,23 +8,27 @@ the truck was finished unloading, and the time taken. Also unloades the
 eid of the unloader.
 """
 def unloading(env, unloaders, trucks):
-    
-    truck = trucks.removeTruck()
+
+    while unloaders.isEmpty():
+        yield env.timeout(1)
+    print("Unloader found")
     unloader = unloaders.removeUnloader()
 
+    truck = trucks.removeTruck()
 
-    with unloader.request() as req:
+
+    # Need to see if this is requesting from the list of just one unloader
+    
+
+
         
-        print(str(truck.po) + " has arrived at " + str(truck.time) + " size: " + str(truck.size))
+    
 
-        time_taken = truck.size / unloader.pph
+    time_taken = (truck.size / unloader.pph) * 60
 
-        if unloaders.isEmpty():
-            for each_truck in trucks:
-                each_truck[1].time += time_taken
-        yield req
 
-        print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + str(env.now))
-        yield env.timeout(time_taken)
-        print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
-        unloaders.addUnloader(unloader)
+
+    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + str(env.now))
+    yield env.timeout(time_taken)
+    print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
+    unloaders.addUnloader(unloader)
