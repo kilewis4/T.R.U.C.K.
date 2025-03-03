@@ -25,37 +25,32 @@ list, initializes the enviorment, and prints enviorment time.
 """
 def __main__():
     
-    csv_reader.getTrucks()
-        
-    
-
-    #start_truck = trucks.removeTruck() -> This is for the reason below
-
-    #trucks.addTruck(start_truck) -> This is for having the enviroment start the time of the first truck.
-
-
-    
-
-    # for unloader in unloaders.list:
-    #     print(unloader.eid)
-
-    
-
     env.process(process_manager(env, incomingTrucks, trucks, unloaders, doors))
     sim_thread = threading.Thread(target=run_simulation, daemon=True)
     sim_thread.start()
-    
-    for truck in csv_reader.getTrucks():
-        if env.now < truck.time - 1:
-            time.sleep(truck.time - env.now - 1)
-        add_truck(env, truck)
 
-    time.sleep(200)
+    program_running = True
+    while program_running:
+        user_input = input("Press enter when truck arrives, or enter 'quit' to exit.\n")
 
-
-    
-
+        if user_input.lower() == 'quit':
+            program_running = False
+        else:
+            add_truck(env, get_truck_data())
+            time.sleep(5)
+        
+        
     print('The end time is: ' + str(env.now))
+
+""" Gathers input from keyboard
+    Gets input from keyboard and returns a truck object consisting of given parameters.
+"""
+def get_truck_data():
+    po = input("Enter PO#: ")
+    size = int(input("Total pallets: "))
+    live = 1 if input("Live load (y/n): ") == 'y' else 0
+    truck = Truck(po, size, live, env.now)
+    return truck
 
 """ Runs simulation
     Prints the start time and than runs the global enviroment.
@@ -76,31 +71,6 @@ def process_manager(env, incomingTrucks, trucks, unloaders, doors):
 
 def add_truck(env, truck):
     incomingTrucks.append(truck)
-
-""" This is legacy code for generating processes based on a single list of trucks.
-def process_generator(env, trucks, unloaders, doors):
-    i = 0
-
-    for each_truck in trucks:
-        print("inside process_generator")
-        unloader_index = i % unloaders.getSize()
-        door_index = i % doors.getSize()
-        #print(index)
-
-        yield env.timeout(each_truck[1].time)
-
-
-        doors.list[door_index].assign_job(each_truck[1], unloader=unloaders.list[unloader_index])
-        print(doors.list[door_index])
-        
-        env.process(unloading(env, unloaders=unloaders, trucks= trucks))
-        doors.list[door_index].fill_dock()
-        doors.list[door_index].finish_job()
-
-        
-        
-        i += 1
-"""
 
 """
 Run the code.

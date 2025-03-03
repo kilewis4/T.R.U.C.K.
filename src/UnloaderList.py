@@ -18,7 +18,7 @@ class UnloaderList:
         self.list = []
         self.env = env
         unloaders = csv_reader.getUnloaders(env)
-        for unloader in unloaders[1:2]:
+        for unloader in unloaders[1:4]:
             print(unloader.eid)
             self.addUnloader(unloader)
     
