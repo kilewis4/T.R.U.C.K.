@@ -1,6 +1,3 @@
-from Truck import Truck
-import csv_reader
-import simpy
 
 """
 Trucklist contains a list of all the trucks that come in in a day.
@@ -45,8 +42,6 @@ class TruckList:
         The truck that was removed.
     """
     def removeTruck(self):
-        for t in self.list:
-            print(t[0], t[1].po)
         result = self.list.pop(0)[1]
         self.list.sort()
         return result

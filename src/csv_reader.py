@@ -1,5 +1,4 @@
 import pandas as pd
-import datetime
 from Truck import Truck
 from Unloader import Unloader
 import random

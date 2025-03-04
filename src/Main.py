@@ -1,14 +1,10 @@
 import simpy
-from Door import Door
 from Truck import Truck
-from Unloader import Unloader
 from UnloadingProcess import unloading
 from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
 
-import random
-import csv_reader
 import threading
 import time
 
@@ -39,7 +35,6 @@ def __main__():
             add_truck(env, get_truck_data())
             time.sleep(2)
         
-        
     print('The end time is: ' + str(env.now))
 
 """ Gathers input from keyboard
@@ -59,6 +54,9 @@ def run_simulation():
     print('The start time is: ' + str(env.now))
     env.run()
 
+""" Manages the incoming trucks being processed
+    When new truck arrives adds it to the simulation and begins process.
+"""
 def process_manager(env, incomingTrucks, trucks, unloaders, doors):
     """Constantly checks for new processes while keeping the simulation running"""
     while True:
@@ -69,6 +67,9 @@ def process_manager(env, incomingTrucks, trucks, unloaders, doors):
             env.process(unloading(env, unloaders=unloaders, trucks= trucks, doors=doors))
         yield env.timeout(1)
 
+""" Adds truck
+    Adds inputted truck to incoming trucks list.
+"""
 def add_truck(env, truck):
     incomingTrucks.append(truck)
 

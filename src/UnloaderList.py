@@ -1,4 +1,3 @@
-from Unloader import Unloader
 import csv_reader
 
 """

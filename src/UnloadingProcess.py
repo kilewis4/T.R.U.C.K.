@@ -1,4 +1,3 @@
-import Door
 import math
 
 """

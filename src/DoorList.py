@@ -1,5 +1,4 @@
 from Door import Door
-import csv_reader
 
 """
 Door list which currently is made on arbitrary values. 
