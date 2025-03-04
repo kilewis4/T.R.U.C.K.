@@ -1,0 +1,5 @@
+To build the docker image:
+docker build -t nginx:1.0 .
+
+To run the docker image:
+docker run -d -p 9090:80 --name webserver nginx:1.0
