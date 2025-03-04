@@ -19,6 +19,15 @@ class DoorList:
             self.addDoor(door)
 
     """
+    Returns an iterator for the list itself.
+
+    Returns:
+        The iterator to the list.
+    """
+    def __iter__(self):
+        return iter(self.list)
+
+    """
     Appends an door to the list.
 
     Args:
@@ -53,6 +62,18 @@ class DoorList:
     """
     def isEmpty(self):
         return self.getSize() == 0
+    
+    """ Find open door
+    Iterates through the list of doors and determines if there exists one without a truck and unloader.
+
+    Returns:
+        Boolean value of wether a door is avaliable
+    """
+    def openDoors(self):
+        for door in self.list:
+            if door.truck_and_unloader == ():
+                return True
+        return False
     
 
     """

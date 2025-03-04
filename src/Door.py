@@ -39,7 +39,9 @@ class Door(Container):
     Empty the tuple, indicating that the unloading has been finished.
     """
     def finish_job(self):
+        self.fill_dock()
         self.truck_and_unloader = ()
+        
     
     """
     Put the number of pallets in the truck into the palets variable.

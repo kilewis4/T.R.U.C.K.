@@ -1,4 +1,4 @@
-from TruckList import TruckList
+import Door
 import math
 
 """
@@ -7,7 +7,7 @@ it is removed from the list. Prints the PO number of the truck, the time
 the truck was finished unloading, and the time taken. Also unloades the 
 eid of the unloader.
 """
-def unloading(env, unloaders, trucks):
+def unloading(env, unloaders, trucks, doors):
 
     while unloaders.isEmpty():
         yield env.timeout(1)
@@ -16,19 +16,22 @@ def unloading(env, unloaders, trucks):
 
     truck = trucks.removeTruck()
 
-
-    # Need to see if this is requesting from the list of just one unloader
-    
-
-
-        
-    
-
     time_taken = (truck.size / unloader.pph) * 60
 
-
-
-    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + str(env.now))
+    local_min = 1000
+    
+    while not doors.openDoors():
+        yield env.timeout(1)
+    
+    for door in doors:
+        if door.truck_and_unloader == ():
+            if door.pallets < local_min:
+                chosen_door = door
+    
+        
+    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + str(env.now) + " at door: " + str(chosen_door.number))
+    chosen_door.assign_job(truck, unloader)
     yield env.timeout(time_taken)
     print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
+    chosen_door.finish_job()
     unloaders.addUnloader(unloader)

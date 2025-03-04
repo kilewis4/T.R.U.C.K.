@@ -13,7 +13,7 @@ import threading
 import time
 
 
-env = simpy.RealtimeEnvironment(initial_time=320)
+env = simpy.RealtimeEnvironment()
 incomingTrucks = []
 trucks = TruckList(env)
 unloaders = UnloaderList(env)
@@ -37,7 +37,7 @@ def __main__():
             program_running = False
         else:
             add_truck(env, get_truck_data())
-            time.sleep(5)
+            time.sleep(2)
         
         
     print('The end time is: ' + str(env.now))
@@ -66,7 +66,7 @@ def process_manager(env, incomingTrucks, trucks, unloaders, doors):
             nextTruck = incomingTrucks.pop(0)
             print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(env.now))
             trucks.addTruck(nextTruck, env)
-            env.process(unloading(env, unloaders=unloaders, trucks= trucks))
+            env.process(unloading(env, unloaders=unloaders, trucks= trucks, doors=doors))
         yield env.timeout(1)
 
 def add_truck(env, truck):
