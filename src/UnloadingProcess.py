@@ -1,4 +1,7 @@
 import math
+import WebpageScript
+import threading
+import time
 
 """
 Method to simulate the "unloading" itself. When a truck is unloaded,
@@ -27,10 +30,18 @@ def unloading(env, unloaders, trucks, doors):
             if door.pallets < local_min:
                 chosen_door = door
     
-        
-    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + str(env.now) + " at door: " + str(chosen_door.number))
+    start_time = str(env.now)
+    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + start_time + " at door: " + str(chosen_door.number))
     chosen_door.assign_job(truck, unloader)
+
     yield env.timeout(time_taken)
+
+    finish_time = str(math.ceil(env.now))
+    webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    webpage_thread.start()
     print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
     chosen_door.finish_job()
     unloaders.addUnloader(unloader)
+    
+    
+    

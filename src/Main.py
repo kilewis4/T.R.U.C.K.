@@ -25,6 +25,7 @@ def __main__():
     sim_thread = threading.Thread(target=run_simulation, daemon=True)
     sim_thread.start()
 
+
     program_running = True
     while program_running:
         user_input = input("Press enter when truck arrives, or enter 'quit' to exit.\n")
