@@ -3,12 +3,12 @@
     <head>
     <meta charset="utf-8">
     <Title>Truck Entry Replication</Title>
-    <link rel="stylesheet" href="TruckEntry.css">
+    <link rel="stylesheet" href="..\website\TruckEntry.css">
     </head>
     <body>
         <h1>PO NUM HERE</h1>
 
-        <label>recieved_time</label><br>
+       <!-- <label>recieved_time</label><br>
         <input id="recieved_time" type="datetime">
         <hr>
         <label>po_num</label><br>
@@ -30,9 +30,18 @@
         <input id="payment_type" type="datetime">
         <hr>
         <label>price</label><br>
-        <input id="price" type="datetime">
-        <br>
-        <button>Submit</button>
+        <input id="price" type="text">
+        <br> -->
+        <form action="/" method="POST">
+            <input type="text" name="content" placeholder="Enter task content" required>
+            <button type="submit">Submit</button>
+        </form>
 
+        <h2>Previous Entries</h2>
+        <ul>
+            {% for entry in entries %}
+                <li>{{ entry[0] }} - {{ entry[1] }}</li>
+            {% endfor %}
+        </ul>
     </body>
 </html>
