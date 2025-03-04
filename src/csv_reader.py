@@ -1,5 +1,4 @@
 import pandas as pd
-import datetime
 from Truck import Truck
 from Unloader import Unloader
 import random
@@ -25,9 +24,13 @@ def getTrucks():
         hour = int(time[11:13])
         minute = int(time[14:16])
         time_parsed = (((day * 10000) + (hour * 100) + (minute * 1)) - 40000) % 1200
-        trucks.append(Truck(int(truck[2]), int (truck[3]), int(truck[0]), time_parsed))
+        trucks.append(Truck(int(truck[2]), int (truck[3]), int(truck[0]), (hour * 100) + (minute * 1)))
 
-    return trucks
+    trucks.reverse()
+
+
+
+    return trucks[0:5]
 
 """
 Method to extract all of the employees from the employee data csv.

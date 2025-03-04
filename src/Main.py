@@ -1,64 +1,77 @@
-from simpy import Environment
-from Door import Door
+import simpy
 from Truck import Truck
-from Unloader import Unloader
 from UnloadingProcess import unloading
 from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
 
-import random
-import csv_reader
+import threading
+import time
+
+
+env = simpy.RealtimeEnvironment()
+incomingTrucks = []
+trucks = TruckList(env)
+unloaders = UnloaderList(env)
+doors = DoorList()
 
 """
 Main method to run all code. Currently makes the truck and employee
 list, initializes the enviorment, and prints enviorment time.
 """
 def __main__():
-    trucks = TruckList()
-
-    #start_truck = trucks.removeTruck() -> This is for the reason below
-
-    env = Environment()
-
-    #trucks.addTruck(start_truck) -> This is for having the enviroment start the time of the first truck.
-
-
-    unloaders = UnloaderList(env)
-
-    # for unloader in unloaders.list:
-    #     print(unloader.eid)
-
-    doors = DoorList()
-
-    env.process(process_generator(env, trucks, unloaders, doors))
-
     
-    print('The current time is: ' + str(env.now))
+    env.process(process_manager(env, incomingTrucks, trucks, unloaders, doors))
+    sim_thread = threading.Thread(target=run_simulation, daemon=True)
+    sim_thread.start()
+
+    program_running = True
+    while program_running:
+        user_input = input("Press enter when truck arrives, or enter 'quit' to exit.\n")
+
+        if user_input.lower() == 'quit':
+            program_running = False
+        else:
+            add_truck(env, get_truck_data())
+            time.sleep(2)
+        
+    print('The end time is: ' + str(env.now))
+
+""" Gathers input from keyboard
+    Gets input from keyboard and returns a truck object consisting of given parameters.
+"""
+def get_truck_data():
+    po = input("Enter PO#: ")
+    size = int(input("Total pallets: "))
+    live = 1 if input("Live load (y/n): ") == 'y' else 0
+    truck = Truck(po, size, live, env.now)
+    return truck
+
+""" Runs simulation
+    Prints the start time and than runs the global enviroment.
+"""
+def run_simulation():
+    print('The start time is: ' + str(env.now))
     env.run()
-    print('The current time is: ' + str(env.now))
 
-def process_generator(env, trucks, unloaders, doors):
-    i = 0
+""" Manages the incoming trucks being processed
+    When new truck arrives adds it to the simulation and begins process.
+"""
+def process_manager(env, incomingTrucks, trucks, unloaders, doors):
+    """Constantly checks for new processes while keeping the simulation running"""
+    while True:
+        if incomingTrucks:
+            nextTruck = incomingTrucks.pop(0)
+            print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(env.now))
+            trucks.addTruck(nextTruck, env)
+            env.process(unloading(env, unloaders=unloaders, trucks= trucks, doors=doors))
+        yield env.timeout(1)
 
-    for each_truck in trucks:
-        unloader_index = i % unloaders.getSize()
-        door_index = i % doors.getSize()
-        #print(index)
-
-        yield env.timeout(each_truck[1].time)
-
-
-        doors.list[door_index].assign_job(each_truck[1], unloader=unloaders.list[unloader_index])
-        print(doors.list[door_index])
-        
-        env.process(unloading(env, unloaders=unloaders, trucks= trucks))
-        doors.list[door_index].fill_dock()
-        doors.list[door_index].finish_job()
-
-        
-        
-        i += 1
+""" Adds truck
+    Adds inputted truck to incoming trucks list.
+"""
+def add_truck(env, truck):
+    incomingTrucks.append(truck)
 
 """
 Run the code.
