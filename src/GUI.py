@@ -73,11 +73,17 @@ class GUI():
         size_text_box_active = False
         live_text_box_active = False
 
+        input_background = pg.Rect(SCREEN_WIDTH - 300, 0, 300, 300)
+        
+
         # Creates dimensions for text input.
-        po_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 0, (140), 32)
-        size_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 64, (140), 32)
-        live_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 128, (140), 32)
-        button = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 192, (140), 32)
+        po_input_box = pg.Rect(SCREEN_WIDTH - 200, 10, (140), 32)
+        po_label_box = pg.Rect(po_input_box.x - 40, po_input_box.y + 8, 32, 32)
+        size_input_box = pg.Rect(SCREEN_WIDTH - 200, 74, (140), 32)
+        size_label_box = pg.Rect(size_input_box.x - 90, size_input_box.y + 8, 32, 32)
+        live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
+        live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
+        button = pg.Rect(SCREEN_WIDTH - 200, 202, (140), 32)
 
         running = True
         while running:
@@ -86,14 +92,19 @@ class GUI():
                     running = False
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if button.collidepoint(event.pos):
+                        live_value = 0
+                        if live_text.lower() == 'true':
+                            live_value = 1
                         new_truck = Truck(
                             int(po_text),
                             int(size_text),
-                            0,
+                            live_value,
                             self.env.now
                         )
                         self.add_truck(self.env, new_truck)
-                        time.sleep(2)
+                
+                        
+                        
                     if po_input_box.collidepoint(event.pos):
                         po_text_box_active = True
                     else:
@@ -128,12 +139,14 @@ class GUI():
                     
                     if live_text_box_active:
                         if event.key == pg.K_BACKSPACE:
-                            live_text = size_text[:-1]
+                            live_text = live_text[:-1]
                         else:
                             live_text += event.unicode
             
             DISPLAYSURF.fill(WHITE)
 
+            pg.draw.rect(DISPLAYSURF, GRAY, input_background)
+            
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -143,41 +156,55 @@ class GUI():
             DISPLAYSURF.blit(po_text_surface, (po_input_box.x+5, po_input_box.y+5))
             pg.draw.rect(DISPLAYSURF, po_text_box_color, po_input_box, 2)
 
+            po_label_surface = font.render('PO #:', True, WHITE)
+            DISPLAYSURF.blit(po_label_surface, (po_label_box.x, po_label_box.y))
+
             size_text_surface = font.render(size_text, True, size_text_box_color)
             DISPLAYSURF.blit(size_text_surface, (size_input_box.x+5, size_input_box.y+5))
             pg.draw.rect(DISPLAYSURF, size_text_box_color, size_input_box, 2)
+
+            size_label_surface = font.render('# OF PALLETS:', True, WHITE)
+            DISPLAYSURF.blit(size_label_surface, (size_label_box.x, size_label_box.y))
 
             live_text_surface = font.render(live_text, True, live_text_box_color)
             DISPLAYSURF.blit(live_text_surface, (live_input_box.x+5, live_input_box.y+5))
             pg.draw.rect(DISPLAYSURF, live_text_box_color, live_input_box, 2)
 
+            live_label_surface = font.render('LIVE:', True, WHITE)
+            DISPLAYSURF.blit(live_label_surface, (live_label_box.x, live_label_box.y))
+
             idx = 1
             for door in door_graphics:
+                door_text_surface = font.render(str(idx), True, BLACK)
                 door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * idx, 40, 40)
                 pg.draw.rect(DISPLAYSURF, RED, door_graphic)
+                DISPLAYSURF.blit(door_text_surface, (DOOR_XPOSITION + 15, DOOR_YPOSITION * idx + 15))
                 idx += 1
             
-            self.draw_trucks(self.truck_graphics, DISPLAYSURF)
+            self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             
             pg.display.flip()
             clock.tick(30)
         
-        print("End time: " + self.env.now)
+        print("End time: " + str(self.env.now))
 
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
-            print(truck)
-            if truck.reached_door and truck.done:
+            if truck.gone:
+                trucks.remove(truck)
+            elif truck.reached_door and truck.done:
                 truck.go_out()
             else:
                 truck.go_in(DOOR_XPOSITION, DOOR_YPOSITION)
 
-    def draw_trucks(self, trucks, surface):
+    def draw_trucks(self, trucks, surface, font):
         for truck in trucks:
-            truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 50, 25)
-            pg.draw.rect(surface, GREEN, truck_object)
+            truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 100, 25)
+            truck_text_surface = font.render(str(truck.po_num), True, WHITE)
+            pg.draw.rect(surface, GRAY, truck_object)
+            surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
 
     """ Runs simulation
         Prints the start time and than runs the global enviroment.
