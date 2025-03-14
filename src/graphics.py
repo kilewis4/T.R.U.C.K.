@@ -1,7 +1,16 @@
+import simpy
+from Truck import Truck
+from UnloadingProcess import unloading
+from TruckList import TruckList
+from UnloaderList import UnloaderList
+from DoorList import DoorList
+
+import threading
+import time
+
 import pygame as pg
 import tkinter as tk
-from Door import Door
-from Truck import Truck
+
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -10,114 +19,196 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 GRAY = (128, 128, 128)
 
-def animation(doors):
-    # Create text on screen for inputting door numbers.
-    pg.font.init()
-    font = pg.font.SysFont(None, 18)
-    clock = pg.time.Clock()
+class GUI():
+    def __init__(self):
+        
+        self.env = simpy.RealtimeEnvironment()
+        self.incomingTrucks = []
+        self.trucks = TruckList(self.env)
+        self.unloaders = UnloaderList(self.env)
+        self.doors = DoorList()
 
-    # Sets screen size relative to size of users monitor.
-    ROOT = tk.Tk()
-    SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
-    SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
+        self.truck_graphics = []
 
-    # Finds initial x, y position for doors.
-    DOOR_XPOSITION = SCREEN_WIDTH / 2
-    DOOR_YPOSITION = SCREEN_HEIGHT / (len(doors) + 1)
+    def animation(self):
 
-    # Creates display and sets caption.
-    DISPLAYSURF = pg.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
-    pg.display.set_caption('OVERVIEW SCREEN')
+        door_graphics = []
+        for door in self.doors.list:
+            door_graphics.append(door.number)
 
-    # Creates two different color schemes to use for when use clicks on text input.
-    inactive_color = pg.Color('lightskyblue3')
-    active_color = pg.Color('dodgerblue2')
-    text_box_color = active_color
-    # Default text input is nothing.
-    text = ''
-    text_box_active = False
+        self.env.process(self.process_manager())
+        sim_thread = threading.Thread(target=self.run_simulation, daemon=True)
+        sim_thread.start()
 
-    # Creates dimensions for text input.
-    input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 0, 140, 32)
+        # Create text on screen for inputting door numbers.
+        pg.font.init()
+        font = pg.font.SysFont(None, 18)
+        clock = pg.time.Clock()
 
-    trucks = []
+        # Sets screen size relative to size of users monitor.
+        ROOT = tk.Tk()
+        SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
+        SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
 
-    running = True
-    while running:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                running = False
-            if event.type == pg.MOUSEBUTTONDOWN:
-                if input_box.collidepoint(event.pos):
-                    text_box_active = True
-                else:
-                    text_box_active = False
-                text_box_color = active_color if text_box_active else inactive_color
-            if event.type == pg.KEYDOWN:
-                if text_box_active:
-                    if event.key == pg.K_RETURN:
-                        print(text)
-                        trucks.append(TruckGraphic(int(text)))
-                        text = ''
-                    elif event.key == pg.K_BACKSPACE:
-                        text = text[:-1]
+        # Finds initial x, y position for doors.
+        DOOR_XPOSITION = SCREEN_WIDTH / 2
+        DOOR_YPOSITION = SCREEN_HEIGHT / (len(door_graphics) + 1)
+
+        # Creates display and sets caption.
+        DISPLAYSURF = pg.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
+        pg.display.set_caption('OVERVIEW SCREEN')
+
+        # Creates two different color schemes to use for when use clicks on text input.
+        inactive_color = pg.Color('lightskyblue3')
+        active_color = pg.Color('dodgerblue2')
+        po_text_box_color = inactive_color
+        size_text_box_color = inactive_color
+        live_text_box_color = inactive_color
+        # Default text input is nothing.
+        po_text = ''
+        size_text = ''
+        live_text = ''
+
+        po_text_box_active = False
+        size_text_box_active = False
+        live_text_box_active = False
+
+        # Creates dimensions for text input.
+        po_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 0, (140), 32)
+        size_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 64, (140), 32)
+        live_input_box = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 128, (140), 32)
+        button = pg.Rect(SCREEN_WIDTH - (SCREEN_WIDTH / 4), 192, (140), 32)
+
+        running = True
+        while running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    running = False
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    if button.collidepoint(event.pos):
+                        new_truck = Truck(
+                            int(po_text),
+                            int(size_text),
+                            0,
+                            self.env.now
+                        )
+                        self.add_truck(self.env, new_truck)
+                        time.sleep(2)
+                    if po_input_box.collidepoint(event.pos):
+                        po_text_box_active = True
                     else:
-                        text += event.unicode
+                        po_text_box_active = False
+                    
+                    if size_input_box.collidepoint(event.pos):
+                        size_text_box_active = True
+                    else:
+                        size_text_box_active = False
+
+                    if live_input_box.collidepoint(event.pos):
+                        live_text_box_active = True
+                    else:
+                        live_text_box_active = False
+
+                    po_text_box_color = active_color if po_text_box_active else inactive_color
+                    size_text_box_color = active_color if size_text_box_active else inactive_color
+                    live_text_box_color = active_color if live_text_box_active else inactive_color
+                
+                if event.type == pg.KEYDOWN:
+                    if po_text_box_active:
+                        if event.key == pg.K_BACKSPACE:
+                            po_text = po_text[:-1]
+                        else:
+                            po_text += event.unicode
+                    
+                    if size_text_box_active:
+                        if event.key == pg.K_BACKSPACE:
+                            size_text = size_text[:-1]
+                        else:
+                            size_text += event.unicode
+                    
+                    if live_text_box_active:
+                        if event.key == pg.K_BACKSPACE:
+                            live_text = size_text[:-1]
+                        else:
+                            live_text += event.unicode
+            
+            DISPLAYSURF.fill(WHITE)
+
+            
+            button_text_surface = font.render("Submit", True, BLACK)
+            DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
+            pg.draw.rect(DISPLAYSURF, BLACK, button, 2)
+
+            po_text_surface = font.render(po_text, True, po_text_box_color)
+            DISPLAYSURF.blit(po_text_surface, (po_input_box.x+5, po_input_box.y+5))
+            pg.draw.rect(DISPLAYSURF, po_text_box_color, po_input_box, 2)
+
+            size_text_surface = font.render(size_text, True, size_text_box_color)
+            DISPLAYSURF.blit(size_text_surface, (size_input_box.x+5, size_input_box.y+5))
+            pg.draw.rect(DISPLAYSURF, size_text_box_color, size_input_box, 2)
+
+            live_text_surface = font.render(live_text, True, live_text_box_color)
+            DISPLAYSURF.blit(live_text_surface, (live_input_box.x+5, live_input_box.y+5))
+            pg.draw.rect(DISPLAYSURF, live_text_box_color, live_input_box, 2)
+
+            idx = 1
+            for door in door_graphics:
+                door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * idx, 40, 40)
+                pg.draw.rect(DISPLAYSURF, RED, door_graphic)
+                idx += 1
+            
+            self.draw_trucks(self.truck_graphics, DISPLAYSURF)
+            self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
+            
+            pg.display.flip()
+            clock.tick(30)
         
-        DISPLAYSURF.fill(WHITE)
-
-        text_surface = font.render(text, True, text_box_color)
-        DISPLAYSURF.blit(text_surface, (input_box.x+5, input_box.y+5))
-        pg.draw.rect(DISPLAYSURF, text_box_color, input_box, 2)
-
-        idx = 1
-        for door in doors:
-            door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * idx, 40, 40)
-            pg.draw.rect(DISPLAYSURF, RED, door_graphic)
-            idx += 1
-        
-        draw_trucks(trucks, DISPLAYSURF)
-        update_trucks(trucks, DOOR_XPOSITION, DOOR_YPOSITION)
-        
-        pg.display.flip()
-        clock.tick(30)
+        print("End time: " + self.env.now)
 
 
-def update_trucks(trucks, DOOR_XPOSITION, DOOR_YPOSITION):
-    for truck in trucks:
-        if truck.reached_door:
-            truck.go_out()
-        else:
-            truck.go_in(DOOR_XPOSITION, DOOR_YPOSITION)
+    def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
+        for truck in trucks:
+            print(truck)
+            if truck.reached_door and truck.done:
+                truck.go_out()
+            else:
+                truck.go_in(DOOR_XPOSITION, DOOR_YPOSITION)
 
-def draw_trucks(trucks, surface):
-    for truck in trucks:
-        truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 50, 25)
-        pg.draw.rect(surface, GREEN, truck_object)
+    def draw_trucks(self, trucks, surface):
+        for truck in trucks:
+            truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 50, 25)
+            pg.draw.rect(surface, GREEN, truck_object)
 
+    """ Runs simulation
+        Prints the start time and than runs the global enviroment.
+    """
+    def run_simulation(self):
+        print('The start time is: ' + str(self.env.now))
+        self.env.run()
 
-class TruckGraphic():
-    def __init__(self, door_num):
-        self.truck_x_position = 0
-        self.truck_y_position = 0
-        self.door_num = door_num
-        self.reached_door = False
-        
+    """ Manages the incoming trucks being processed
+        When new truck arrives adds it to the simulation and begins process.
+    """
+    def process_manager(self):
+        """Constantly checks for new processes while keeping the simulation running"""
+        while True:
+            if self.incomingTrucks:
+                nextTruck = self.incomingTrucks.pop(0)
+                print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(self.env.now))
+                self.trucks.addTruck(nextTruck, self.env)
+                self.env.process(unloading(self))
+            yield self.env.timeout(1)
+
+    """ Adds truck
+        Adds inputted truck to incoming trucks list.
+    """
+    def add_truck(self, env, truck):
+        self.incomingTrucks.append(truck)
+
+    def add_truck_graphic(self, truck_graphic):
+        self.truck_graphics.append(truck_graphic)
     
-    def go_in(self, DOOR_XPOSITION, DOOR_YPOSITION):
-        if self.truck_x_position == DOOR_XPOSITION - 50 and self.truck_y_position == DOOR_YPOSITION * self.door_num:
-            self.reached_door = True
-        else:
-            if self.truck_x_position < DOOR_XPOSITION - 50:
-                self.truck_x_position += 5
-            if self.truck_y_position < DOOR_YPOSITION * self.door_num:
-                self.truck_y_position += 5
-    
-    def go_out(self):
-        if self.truck_x_position > -100:
-            self.truck_x_position -= 5
-    
-animation([Door(1), Door(2), Door(3)])
 
 
-
+gui = GUI()
+gui.animation()
