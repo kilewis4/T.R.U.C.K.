@@ -4,6 +4,7 @@ from UnloadingProcess import unloading
 from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
+import graphics
 
 import threading
 import time
@@ -24,6 +25,9 @@ def __main__():
     env.process(process_manager(env, incomingTrucks, trucks, unloaders, doors))
     sim_thread = threading.Thread(target=run_simulation, daemon=True)
     sim_thread.start()
+
+    anim_thread = threading.Thread(target=run_animation, daemon=True)
+    anim_thread.start()
 
 
     program_running = True
@@ -54,6 +58,12 @@ def get_truck_data():
 def run_simulation():
     print('The start time is: ' + str(env.now))
     env.run()
+
+def run_animation(doors):
+    door_nums = []
+    for door in doors:
+        door_nums.append(door.number)
+    graphics.animation(door_nums)
 
 """ Manages the incoming trucks being processed
     When new truck arrives adds it to the simulation and begins process.
