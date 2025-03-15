@@ -4,6 +4,7 @@ from UnloadingProcess import unloading
 from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
+from UnloaderGraphic import UnloaderGraphic
 
 import threading
 import time
@@ -29,12 +30,18 @@ class GUI():
         self.doors = DoorList()
 
         self.truck_graphics = []
+        self.unloader_graphics = []
+        for unloader in self.unloader.list:
+            unloader_graphic = UnloaderGraphic(unloader.eid)
+            self.unloader_graphics.append(unloader_graphic)
 
     def animation(self):
 
         door_graphics = []
         for door in self.doors.list:
             door_graphics.append(door.number)
+
+        
 
         self.env.process(self.process_manager())
         sim_thread = threading.Thread(target=self.run_simulation, daemon=True)
@@ -93,7 +100,7 @@ class GUI():
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if button.collidepoint(event.pos):
                         live_value = 0
-                        if live_text.lower() == 'true':
+                        if live_text.lower() == 'true' or live_text.lower() == 'yes' or live_text.lower() == '1':
                             live_value = 1
                         new_truck = Truck(
                             int(po_text),
@@ -189,6 +196,17 @@ class GUI():
         
         print("End time: " + str(self.env.now))
 
+    
+    def update_unloaders(self):
+        for unloader_graphic in self.unloader_graphics:
+            if unloader_graphic.current_door != -1:
+                if unloader_graphic.reached_door and unloader_graphic.is_done:
+                    unloader_graphic.go_out()
+                elif unloader_graphic
+
+
+
+
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
@@ -234,6 +252,9 @@ class GUI():
 
     def add_truck_graphic(self, truck_graphic):
         self.truck_graphics.append(truck_graphic)
+    
+    def assign_unloader(self, unloader_graphic, door_num):
+        unloader_graphic.current_door = door_num
     
 
 

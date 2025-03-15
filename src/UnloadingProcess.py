@@ -35,6 +35,7 @@ def unloading(gui):
     start_time = str(gui.env.now)
     print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + start_time + " at door: " + str(chosen_door.number))
     chosen_door.assign_job(truck, unloader)
+    
     truck_graphic = TruckGraphic(chosen_door.number, truck.po)
     gui.add_truck_graphic(truck_graphic)
 
