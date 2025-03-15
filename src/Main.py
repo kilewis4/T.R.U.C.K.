@@ -1,11 +1,12 @@
-import simpy
 from Truck import Truck
 from UnloadingProcess import unloading
 from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
+from multiprocessing import Process
 import graphics
 
+import simpy
 import threading
 import time
 
@@ -21,7 +22,6 @@ Main method to run all code. Currently makes the truck and employee
 list, initializes the enviorment, and prints enviorment time.
 """
 def __main__():
-    
     env.process(process_manager(env, incomingTrucks, trucks, unloaders, doors))
     sim_thread = threading.Thread(target=run_simulation, daemon=True)
     sim_thread.start()
@@ -42,8 +42,9 @@ def __main__():
         
     print('The end time is: ' + str(env.now))
 
-""" Gathers input from keyboard
-    Gets input from keyboard and returns a truck object consisting of given parameters.
+""" 
+Gathers input from keyboard
+Gets input from keyboard and returns a truck object consisting of given parameters.
 """
 def get_truck_data():
     po = input("Enter PO#: ")
@@ -52,12 +53,15 @@ def get_truck_data():
     truck = Truck(po, size, live, env.now)
     return truck
 
-""" Runs simulation
-    Prints the start time and than runs the global enviroment.
+""" 
+Runs simulation
+Prints the start time and than runs the global enviroment.
 """
 def run_simulation():
     print('The start time is: ' + str(env.now))
     env.run()
+
+
 
 def run_animation(doors):
     door_nums = []
@@ -65,21 +69,23 @@ def run_animation(doors):
         door_nums.append(door.number)
     graphics.animation(door_nums)
 
-""" Manages the incoming trucks being processed
-    When new truck arrives adds it to the simulation and begins process.
+""" 
+Manages the incoming trucks being processed
+When new truck arrives adds it to the simulation and begins process.
 """
 def process_manager(env, incomingTrucks, trucks, unloaders, doors):
-    """Constantly checks for new processes while keeping the simulation running"""
+    #Constantly checks for new processes while keeping the simulation running
     while True:
         if incomingTrucks:
             nextTruck = incomingTrucks.pop(0)
             print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(env.now))
             trucks.addTruck(nextTruck, env)
-            env.process(unloading(env, unloaders=unloaders, trucks= trucks, doors=doors))
+            env.process(unloading(env, unloaders=unloaders, trucks=trucks, doors=doors))
         yield env.timeout(1)
 
-""" Adds truck
-    Adds inputted truck to incoming trucks list.
+""" 
+Adds truck
+Adds inputted truck to incoming trucks list.
 """
 def add_truck(env, truck):
     incomingTrucks.append(truck)
@@ -88,4 +94,6 @@ def add_truck(env, truck):
 Run the code.
 """
 if __name__ == __main__():
+    #flask_process = Process(target=start_flask)
+    #flask_process.start()
     __main__()
