@@ -19,13 +19,14 @@ def start_flask():
 def truck_entry(truck, unloader, start, finish):
     driver = webdriver.Chrome()
 
-    time.sleep(2)
+    #time.sleep(2)
 
     path = Path("src") / "templates" / "TruckEntry.html"
     abspath = path.resolve()
     print(str(abspath))
     
-    driver.get("http://127.0.0.1:5000")
+    #driver.get("http://127.0.0.1:5000")
+    driver.get(f"file://{abspath}")
 
     assert "Truck Entry Replication" in driver.title
 
@@ -49,17 +50,17 @@ def truck_entry(truck, unloader, start, finish):
     driver.find_element(By.ID, "submit").send_keys(Keys.RETURN)
 
     # Give it some time to process and navigate
-    time.sleep(2)
+    #time.sleep(2)
 
 
     driver.close()
 
-if __name__ == "__main__":
-    flask_process = Process(target=start_flask)
-    flask_process.start()
-    try:
-        truck_entry()
-    finally:
-        # Terminate the Flask server process
-        flask_process.terminate()
-        flask_process.join()
+# if __name__ == "__main__":
+#     flask_process = Process(target=start_flask)
+#     flask_process.start()
+#     try:
+#         truck_entry()
+#     finally:
+#         # Terminate the Flask server process
+#         flask_process.terminate()
+#         flask_process.join()

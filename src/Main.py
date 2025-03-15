@@ -68,7 +68,7 @@ def process_manager(env, incomingTrucks, trucks, unloaders, doors):
             nextTruck = incomingTrucks.pop(0)
             print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(env.now))
             trucks.addTruck(nextTruck, env)
-            env.process(unloading(env, unloaders=unloaders, trucks= trucks, doors=doors))
+            env.process(unloading(env, unloaders=unloaders, trucks=trucks, doors=doors))
         yield env.timeout(1)
 
 """ 
@@ -82,6 +82,6 @@ def add_truck(env, truck):
 Run the code.
 """
 if __name__ == __main__():
-    flask_process = Process(target=start_flask)
-    flask_process.start()
+    #flask_process = Process(target=start_flask)
+    #flask_process.start()
     __main__()
