@@ -2,7 +2,10 @@ import math
 import WebpageScript
 import threading
 import time
+
 from TruckGraphic import TruckGraphic
+from PushNoti import PushNoti
+
 
 
 """
@@ -31,6 +34,9 @@ def unloading(gui):
         if door.truck_and_unloader == ():
             if door.pallets < local_min:
                 chosen_door = door
+
+    pusher = PushNoti("https://api.pushover.net/1/messages.json", "iphone", chosen_door.number)
+    pusher.send_message()
     
     start_time = str(gui.env.now)
     print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + start_time + " at door: " + str(chosen_door.number))
@@ -46,8 +52,6 @@ def unloading(gui):
     webpage_thread.start()
     truck_graphic.done = True
     print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
+
     chosen_door.finish_job()
     gui.unloaders.addUnloader(unloader)
-    
-    
-    

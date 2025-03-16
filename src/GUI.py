@@ -8,7 +8,6 @@ from UnloaderGraphic import UnloaderGraphic
 
 import threading
 import time
-
 import pygame as pg
 import tkinter as tk
 
@@ -22,7 +21,6 @@ GRAY = (128, 128, 128)
 
 class GUI():
     def __init__(self):
-        
         self.env = simpy.RealtimeEnvironment()
         self.incomingTrucks = []
         self.trucks = TruckList(self.env)
@@ -31,18 +29,14 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        for unloader in self.unloader.list:
-            unloader_graphic = UnloaderGraphic(unloader.eid)
+        for unloader in self.unloaders.list:
+            unloader_graphic = UnloaderGraphic(unloader.eid, 10, 10, 0)
             self.unloader_graphics.append(unloader_graphic)
 
     def animation(self):
-
         door_graphics = []
         for door in self.doors.list:
             door_graphics.append(door.number)
-
-        
-
         self.env.process(self.process_manager())
         sim_thread = threading.Thread(target=self.run_simulation, daemon=True)
         sim_thread.start()
@@ -202,11 +196,7 @@ class GUI():
             if unloader_graphic.current_door != -1:
                 if unloader_graphic.reached_door and unloader_graphic.is_done:
                     unloader_graphic.go_out()
-                elif unloader_graphic
-
-
-
-
+                #elif unloader_graphic
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
@@ -224,18 +214,20 @@ class GUI():
             pg.draw.rect(surface, GRAY, truck_object)
             surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
 
-    """ Runs simulation
-        Prints the start time and than runs the global enviroment.
+    """ 
+    Runs simulation
+    Prints the start time and than runs the global enviroment.
     """
     def run_simulation(self):
         print('The start time is: ' + str(self.env.now))
         self.env.run()
 
-    """ Manages the incoming trucks being processed
-        When new truck arrives adds it to the simulation and begins process.
+    """ 
+    Manages the incoming trucks being processed
+    When new truck arrives adds it to the simulation and begins process.
     """
     def process_manager(self):
-        """Constantly checks for new processes while keeping the simulation running"""
+        #Constantly checks for new processes while keeping the simulation running
         while True:
             if self.incomingTrucks:
                 nextTruck = self.incomingTrucks.pop(0)
@@ -256,7 +248,5 @@ class GUI():
     def assign_unloader(self, unloader_graphic, door_num):
         unloader_graphic.current_door = door_num
     
-
-
 gui = GUI()
 gui.animation()
