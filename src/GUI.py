@@ -31,9 +31,7 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        for unloader in self.unloader.list:
-            unloader_graphic = UnloaderGraphic(unloader.eid)
-            self.unloader_graphics.append(unloader_graphic)
+        
 
     def animation(self):
 
@@ -56,6 +54,16 @@ class GUI():
         ROOT = tk.Tk()
         SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
         SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
+
+        UNLOADERS_WAITLIST_X = SCREEN_WIDTH * 3/4
+        UNLOADERS_WAITLIST_Y = SCREEN_HEIGHT * 3/4
+
+        UNLOADERS_INBETWEEN = (SCREEN_HEIGHT * 1/4) / len(self.unloaders.list)
+
+        for unloader in self.unloaders.list:
+            unloader_graphic = UnloaderGraphic(unloader.eid, UNLOADERS_WAITLIST_X, UNLOADERS_WAITLIST_Y)
+            self.unloader_graphics.append(unloader_graphic)
+            UNLOADERS_WAITLIST_Y += UNLOADERS_INBETWEEN
 
         # Finds initial x, y position for doors.
         DOOR_XPOSITION = SCREEN_WIDTH / 2
@@ -187,9 +195,16 @@ class GUI():
                 pg.draw.rect(DISPLAYSURF, RED, door_graphic)
                 DISPLAYSURF.blit(door_text_surface, (DOOR_XPOSITION + 15, DOOR_YPOSITION * idx + 15))
                 idx += 1
+
+            idx = 1
+            for unloader in self.unloader_graphics:
+                unloader_graphic = pg.draw.circle(DISPLAYSURF, BLACK, (unloader.x_position, unloader.y_position), 10)
+                
+
             
             self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
+            self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
             
             pg.display.flip()
             clock.tick(30)
@@ -197,12 +212,19 @@ class GUI():
         print("End time: " + str(self.env.now))
 
     
-    def update_unloaders(self):
+    def update_unloaders(self, DOOR_XPOSITION, DOOR_YPOSITION):
         for unloader_graphic in self.unloader_graphics:
             if unloader_graphic.current_door != -1:
                 if unloader_graphic.reached_door and unloader_graphic.is_done:
                     unloader_graphic.go_out()
-                elif unloader_graphic
+                elif not unloader_graphic.reached_door:
+                    unloader_graphic.go_in(DOOR_XPOSITION, DOOR_YPOSITION * unloader_graphic.current_door)
+            else:
+                if unloader_graphic.initial_x == unloader_graphic.x_position and unloader_graphic.initial_y == unloader_graphic.y_position:
+                    unloader_graphic.is_done = False
+                    unloader_graphic.go_out()
+
+                
 
 
 

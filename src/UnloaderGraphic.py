@@ -1,5 +1,5 @@
 class UnloaderGraphic():
-    def __init__(self, eid, x, y, current_door):
+    def __init__(self, eid, x, y):
         self.current_door = -1
         self.initial_x = x
         self.initial_y = y
@@ -16,7 +16,7 @@ class UnloaderGraphic():
             if self.x_position > door_x + 10:
                 self.x_position -= 5
             if self.y_position > door_y + 5:
-                self.y -= 5
+                self.y_position -= 5
     
     def go_out(self):
         if self.x_position < self.initial_x:
