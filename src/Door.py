@@ -48,4 +48,3 @@ class Door(Container):
     """
     def fill_dock(self):
         self.pallets = self.truck_and_unloader[0].size
-

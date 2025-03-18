@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <Title>Truck Entry Replication</Title>
+    <link rel="stylesheet" href="..\website\TruckEntry.css">
+    </head>
+    <body>
+        <form action="/" method="POST">
+        <h1>Log Truck Information</h1>
+            <label>Recieved time</label><br>
+            <input id = "recieved_time" name ="received_time" type = "text">
+            <hr>
+            <label>PO num</label><br>
+            <input id = "po_num" name ="po_num">
+            <hr>
+            <label>Vendor</label><br>
+            <input id = "vendor" name ="vendor">
+            <hr>
+            <label>Unloader name</label><br>
+            <input id = "unloader_name" name ="unloader_name" type = "text">
+            <hr>
+            <label>Unload start time</label><br>
+            <input id = "unload_start_time" name ="unload_start_time" type = "text">
+            <hr>
+            <label>Unload end time</label><br>
+            <input id = "unload_end_time" name ="unload_end_time" type = "text">
+            <hr>
+            <label>Payment type</label><br>
+            <input id = "payment_type" name ="payment_type" type = "text">
+            <hr>
+            <label>Price</label><br>
+            <input id = "price" name ="price" type = "text">
+            <br><br>
+            <button id = "submit">Submit</button>
+        </body>
+    </form>
+    <br>
+    <a href="/export">
+        <button>Export to Excel</button>
+    </a>
+</html>
