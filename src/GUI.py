@@ -43,24 +43,25 @@ class GUI():
 
         # Create text on screen for inputting door numbers.
         pg.font.init()
-        font = pg.font.SysFont(None, 18)
+        self.FONT_SIZE = 18
+        font = pg.font.SysFont(None, self.FONT_SIZE)
         clock = pg.time.Clock()
 
         # Sets screen size relative to size of users monitor.
         ROOT = tk.Tk()
-        SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
-        SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
+        self.SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
+        self.SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
 
         # Finds initial x, y position for doors.
-        DOOR_XPOSITION = SCREEN_WIDTH / 2
-        DOOR_YPOSITION = SCREEN_HEIGHT / (len(door_graphics) + 1)
+        DOOR_XPOSITION = self.SCREEN_WIDTH / 2
+        DOOR_YPOSITION = self.SCREEN_HEIGHT / (len(door_graphics) + 1)
 
         # Creates display and sets caption.
-        DISPLAYSURF = pg.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
+        DISPLAYSURF = pg.display.set_mode(size=(self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         pg.display.set_caption('OVERVIEW SCREEN')
 
         # Creates two different color schemes to use for when use clicks on text input.
-        inactive_color = pg.Color('lightskyblue3')
+        inactive_color = pg.Color('BLACK')
         active_color = pg.Color('dodgerblue2')
         po_text_box_color = inactive_color
         size_text_box_color = inactive_color
@@ -74,17 +75,21 @@ class GUI():
         size_text_box_active = False
         live_text_box_active = False
 
-        input_background = pg.Rect(SCREEN_WIDTH - 300, 0, 300, 300)
-        
+        input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
+        terminal_background = pg.Rect(self.SCREEN_WIDTH - 300, 300, 300, 300)
+
+        self.lines = []
+        self.max_lines = 300 // self.FONT_SIZE
+
 
         # Creates dimensions for text input.
-        po_input_box = pg.Rect(SCREEN_WIDTH - 200, 10, (140), 32)
+        po_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 10, (140), 32)
         po_label_box = pg.Rect(po_input_box.x - 40, po_input_box.y + 8, 32, 32)
-        size_input_box = pg.Rect(SCREEN_WIDTH - 200, 74, (140), 32)
+        size_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 74, (140), 32)
         size_label_box = pg.Rect(size_input_box.x - 90, size_input_box.y + 8, 32, 32)
-        live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
+        live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
-        button = pg.Rect(SCREEN_WIDTH - 200, 202, (140), 32)
+        button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
 
         running = True
         while running:
@@ -135,19 +140,21 @@ class GUI():
                     if size_text_box_active:
                         if event.key == pg.K_BACKSPACE:
                             size_text = size_text[:-1]
+
                         else:
                             size_text += event.unicode
                     
                     if live_text_box_active:
                         if event.key == pg.K_BACKSPACE:
                             live_text = live_text[:-1]
+
                         else:
                             live_text += event.unicode
             
-            DISPLAYSURF.fill(WHITE)
+            DISPLAYSURF.fill(GRAY)
 
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
-            
+            self.draw_terminal(DISPLAYSURF, terminal_background, font)            
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -174,6 +181,15 @@ class GUI():
             live_label_surface = font.render('LIVE:', True, WHITE)
             DISPLAYSURF.blit(live_label_surface, (live_label_box.x, live_label_box.y))
 
+            warehouse_outline_left = pg.Rect(DOOR_XPOSITION, 75, 5, self.SCREEN_HEIGHT - 100)
+            pg.draw.rect(DISPLAYSURF, BLACK, warehouse_outline_left)
+
+            warehouse_outline_top = pg.Rect(DOOR_XPOSITION, 75, 275, 5)
+            pg.draw.rect(DISPLAYSURF, BLACK, warehouse_outline_top)
+
+            warehouse_outline_bottom = pg.Rect(DOOR_XPOSITION, self.SCREEN_HEIGHT - 25, 275, 5)
+            pg.draw.rect(DISPLAYSURF, BLACK, warehouse_outline_bottom)
+
             idx = 1
             for door in door_graphics:
                 door_text_surface = font.render(str(idx), True, BLACK)
@@ -184,6 +200,8 @@ class GUI():
             
             self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
+
+            
             
             pg.display.flip()
             clock.tick(30)
@@ -210,9 +228,24 @@ class GUI():
     def draw_trucks(self, trucks, surface, font):
         for truck in trucks:
             truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 100, 25)
-            truck_text_surface = font.render(str(truck.po_num), True, WHITE)
-            pg.draw.rect(surface, GRAY, truck_object)
+            truck_text_surface = font.render(str(truck.po_num), True, BLACK)
+            pg.draw.rect(surface, WHITE, truck_object)
             surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
+
+    def add_text(self, new_text):
+        self.lines.append(new_text)
+        if len(self.lines) > self.max_lines:
+            self.lines.pop(0)
+
+    def draw_terminal(self, DISPLAYSURF, terminal_background, font):
+        pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
+        y_offset = 300  
+
+        for line in self.lines:
+            text_surface = font.render(line, True, WHITE)  # Render text
+            DISPLAYSURF.blit(text_surface, (self.SCREEN_WIDTH - 300, y_offset))  # Draw text
+            y_offset += self.FONT_SIZE  # Move text down
+
 
     """ 
     Runs simulation
@@ -232,6 +265,7 @@ class GUI():
             if self.incomingTrucks:
                 nextTruck = self.incomingTrucks.pop(0)
                 print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(self.env.now))
+                self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
                 self.trucks.addTruck(nextTruck, self.env)
                 self.env.process(unloading(self))
             yield self.env.timeout(1)
