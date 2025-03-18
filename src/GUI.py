@@ -8,6 +8,7 @@ from UnloaderGraphic import UnloaderGraphic
 
 import threading
 import time
+import math
 
 import pygame as pg
 import tkinter as tk
@@ -31,6 +32,7 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
+        self.text_lines = []
         
 
     def animation(self):
@@ -38,6 +40,8 @@ class GUI():
         door_graphics = []
         for door in self.doors.list:
             door_graphics.append(door.number)
+
+        terminal_boxes = []
 
         
 
@@ -61,7 +65,7 @@ class GUI():
         UNLOADERS_INBETWEEN = (SCREEN_HEIGHT * 1/4) / len(self.unloaders.list)
 
         for unloader in self.unloaders.list:
-            unloader_graphic = UnloaderGraphic(unloader.eid, UNLOADERS_WAITLIST_X, UNLOADERS_WAITLIST_Y)
+            unloader_graphic = UnloaderGraphic(unloader.eid, math.floor(UNLOADERS_WAITLIST_X), math.floor(UNLOADERS_WAITLIST_Y))
             self.unloader_graphics.append(unloader_graphic)
             UNLOADERS_WAITLIST_Y += UNLOADERS_INBETWEEN
 
@@ -78,15 +82,21 @@ class GUI():
         active_color = pg.Color('dodgerblue2')
         po_text_box_color = inactive_color
         size_text_box_color = inactive_color
-        live_text_box_color = inactive_color
+
+        live_true_box_color = inactive_color
+        live_false_box_color = inactive_color
+
+        #live_text_box_color = inactive_color
         # Default text input is nothing.
         po_text = ''
         size_text = ''
-        live_text = ''
+        #live_text = ''
 
         po_text_box_active = False
         size_text_box_active = False
-        live_text_box_active = False
+        #live_text_box_active = False
+        live_true_box_active = False
+        live_false_box_active = False
 
         input_background = pg.Rect(SCREEN_WIDTH - 300, 0, 300, 300)
         
@@ -96,8 +106,15 @@ class GUI():
         po_label_box = pg.Rect(po_input_box.x - 40, po_input_box.y + 8, 32, 32)
         size_input_box = pg.Rect(SCREEN_WIDTH - 200, 74, (140), 32)
         size_label_box = pg.Rect(size_input_box.x - 90, size_input_box.y + 8, 32, 32)
-        live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
-        live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
+        #live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
+
+        live_true_button = pg.Rect(SCREEN_WIDTH - 200, 138, 70, 32)
+        live_false_button = pg.Rect(SCREEN_WIDTH - 125, 138, 70, 32)
+        live_label_box = pg.Rect(live_true_button.x - 40, live_true_button.y + 8, 32, 32)
+            
+
+        
+
         button = pg.Rect(SCREEN_WIDTH - 200, 202, (140), 32)
 
         running = True
@@ -108,7 +125,7 @@ class GUI():
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if button.collidepoint(event.pos):
                         live_value = 0
-                        if live_text.lower() == 'true' or live_text.lower() == 'yes' or live_text.lower() == '1':
+                        if live_true_box_active:
                             live_value = 1
                         new_truck = Truck(
                             int(po_text),
@@ -130,14 +147,18 @@ class GUI():
                     else:
                         size_text_box_active = False
 
-                    if live_input_box.collidepoint(event.pos):
-                        live_text_box_active = True
-                    else:
-                        live_text_box_active = False
+                    if live_true_button.collidepoint(event.pos):
+                        live_true_box_active = True
+                        live_false_box_active = False
+                        
+                    if live_false_button.collidepoint(event.pos):
+                        live_false_box_active = True
+                        live_true_box_active = False
 
                     po_text_box_color = active_color if po_text_box_active else inactive_color
                     size_text_box_color = active_color if size_text_box_active else inactive_color
-                    live_text_box_color = active_color if live_text_box_active else inactive_color
+                    live_true_box_color = active_color if live_true_box_active else inactive_color
+                    live_false_box_color = active_color if live_false_box_active else inactive_color
                 
                 if event.type == pg.KEYDOWN:
                     if po_text_box_active:
@@ -152,16 +173,12 @@ class GUI():
                         else:
                             size_text += event.unicode
                     
-                    if live_text_box_active:
-                        if event.key == pg.K_BACKSPACE:
-                            live_text = live_text[:-1]
-                        else:
-                            live_text += event.unicode
+    
             
             DISPLAYSURF.fill(WHITE)
 
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
-            
+                        
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -181,9 +198,13 @@ class GUI():
             size_label_surface = font.render('# OF PALLETS:', True, WHITE)
             DISPLAYSURF.blit(size_label_surface, (size_label_box.x, size_label_box.y))
 
-            live_text_surface = font.render(live_text, True, live_text_box_color)
-            DISPLAYSURF.blit(live_text_surface, (live_input_box.x+5, live_input_box.y+5))
-            pg.draw.rect(DISPLAYSURF, live_text_box_color, live_input_box, 2)
+            live_true_text_surface = font.render('YES', True, live_true_box_color)
+            DISPLAYSURF.blit(live_true_text_surface, (live_true_button.x+25, live_true_button.y+10))
+            pg.draw.rect(DISPLAYSURF, live_true_box_color, live_true_button, 2)
+
+            live_false_text_surface = font.render('NO', True, live_false_box_color)
+            DISPLAYSURF.blit(live_false_text_surface, (live_false_button.x+25, live_false_button.y+10))
+            pg.draw.rect(DISPLAYSURF, live_false_box_color, live_false_button, 2)
 
             live_label_surface = font.render('LIVE:', True, WHITE)
             DISPLAYSURF.blit(live_label_surface, (live_label_box.x, live_label_box.y))
@@ -196,9 +217,10 @@ class GUI():
                 DISPLAYSURF.blit(door_text_surface, (DOOR_XPOSITION + 15, DOOR_YPOSITION * idx + 15))
                 idx += 1
 
-            idx = 1
             for unloader in self.unloader_graphics:
+                unloader_text_surface = font.render(str(unloader.eid), True, WHITE)
                 unloader_graphic = pg.draw.circle(DISPLAYSURF, BLACK, (unloader.x_position, unloader.y_position), 10)
+                DISPLAYSURF.blit(unloader_text_surface, (unloader.x_position - 5, unloader.y_position - 5))
                 
 
             
@@ -215,14 +237,12 @@ class GUI():
     def update_unloaders(self, DOOR_XPOSITION, DOOR_YPOSITION):
         for unloader_graphic in self.unloader_graphics:
             if unloader_graphic.current_door != -1:
-                if unloader_graphic.reached_door and unloader_graphic.is_done:
-                    unloader_graphic.go_out()
-                elif not unloader_graphic.reached_door:
+                if not unloader_graphic.reached_door:
                     unloader_graphic.go_in(DOOR_XPOSITION, DOOR_YPOSITION * unloader_graphic.current_door)
             else:
-                if unloader_graphic.initial_x == unloader_graphic.x_position and unloader_graphic.initial_y == unloader_graphic.y_position:
-                    unloader_graphic.is_done = False
+                if unloader_graphic.initial_x != unloader_graphic.x_position or unloader_graphic.initial_y != unloader_graphic.y_position:
                     unloader_graphic.go_out()
+                    unloader_graphic.reached_door = False
 
                 
 

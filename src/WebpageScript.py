@@ -18,12 +18,14 @@ def truck_entry(truck, unloader, start, finish):
 
     assert "Truck Entry Replication" in driver.title
 
-    ids = {"recieved_time", "po_num", "vendor", "unloader_name", "unload_start_time", "unload_end_time", "payment_type", "price"}
-    info = {"100", "Check", finish, start, unloader.eid, "vendor", truck.po, truck.time}
-    for id in ids:
-        elem = driver.find_element(By.ID, id)
-        elem.clear()
-        elem.send_keys(str(info.pop()))
+    ids = ["recieved_time", "po_num", "vendor", "unloader_name", "unload_start_time", "unload_end_time", "payment_type", "price"]
+    info = [truck.time, truck.po, "vendor", unloader.eid, start, finish, "Check",  "100"]
 
-    driver.find_element(By.ID, "submit").send_keys(Keys.RETURN)
+    for idx in range(len(ids)):
+        elem = driver.find_element(By.ID, ids[idx])
+        elem.clear()
+        elem.send_keys(str(info[idx]))
+        idx += 1
+
+    driver.find_element(By.ID, "submit").send_keys(Keys.ENTER)
     driver.close()
