@@ -33,9 +33,7 @@ class GUI():
         self.text_lines = []
         
 
-        for unloader in self.unloaders.list:
-            unloader_graphic = UnloaderGraphic(unloader.eid, 10, 10)
-            self.unloader_graphics.append(unloader_graphic)
+        
 
     def animation(self):
         door_graphics = []
@@ -273,13 +271,6 @@ class GUI():
                     unloader_graphic.go_out()
                     unloader_graphic.reached_door = False
 
-                
-
-
-
-
-
-                #elif unloader_graphic
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
