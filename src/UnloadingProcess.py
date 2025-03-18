@@ -37,7 +37,7 @@ def unloading(gui):
             if door.pallets < local_min:
                 chosen_door = door
 
-    pusher = PushNoti("https://api.pushover.net/1/messages.json", "iphone", chosen_door.number)
+    pusher = PushNoti("https://api.pushover.net/1/messages.json", unloader.deviceName, chosen_door.number)
     pusher.send_message()
     
     chosen_unloader_graphic = None
@@ -47,7 +47,7 @@ def unloading(gui):
             chosen_unloader_graphic = unloader_graphic
 
     start_time = str(gui.env.now)
-    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + start_time + " at door: " + str(chosen_door.number))
+    gui.add_text('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
     chosen_door.assign_job(truck, unloader)
     
     truck_graphic = TruckGraphic(chosen_door.number, truck.po)
@@ -69,7 +69,8 @@ def unloading(gui):
     truck_graphic.done = True
     chosen_unloader_graphic.is_done = True
     chosen_unloader_graphic.current_door = -1
-    print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
+    gui.add_text('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
+    
 
     chosen_door.finish_job()
     gui.unloaders.addUnloader(unloader)

@@ -98,7 +98,7 @@ class GUI():
         live_false_box_active = False
 
         input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
-        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 300, 300)
+        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 350, 300)
 
         self.lines = []
         self.max_lines = 300 // self.FONT_SIZE
@@ -192,8 +192,6 @@ class GUI():
             DISPLAYSURF.fill(GRAY)
 
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
-
-            self.draw_terminal(DISPLAYSURF, terminal_background, font)            
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -251,6 +249,8 @@ class GUI():
             self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
+            self.draw_terminal(DISPLAYSURF, terminal_background, font)            
+
 
 
             
@@ -295,7 +295,7 @@ class GUI():
 
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = terminal_background.y1  
+        y_offset = terminal_background.y
 
         for line in self.lines:
             text_surface = font.render(line, True, WHITE)  # Render text
@@ -321,7 +321,7 @@ class GUI():
             if self.incomingTrucks:
                 nextTruck = self.incomingTrucks.pop(0)
                 print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(self.env.now))
-                self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
+                #self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
                 self.trucks.addTruck(nextTruck, self.env)
                 self.env.process(unloading(self))
             yield self.env.timeout(1)

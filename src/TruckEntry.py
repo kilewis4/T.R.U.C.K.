@@ -60,24 +60,24 @@ def index():
 
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
-            writer.writerow([timestamp, received_time, po_num,
-                              vendor, unloader_name, unload_start_time, 
-                              unload_start_time, unload_end_time, payment_type, 
-                              price])
+    #     with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+    #         writer = csv.writer(file)
+    #         writer.writerow([timestamp, received_time, po_num,
+    #                           vendor, unloader_name, unload_start_time, 
+    #                           unload_start_time, unload_end_time, payment_type, 
+    #                           price])
         
-        return redirect(url_for('index'))
-    else:
-        entries = []
-        try:
-            with open(csv_file, mode='r', encoding='utf-8') as file:
-                reader = csv.reader(file)
-                entries = list(reader)
-        except FileNotFoundError:
-            pass
+    #     return redirect(url_for('index'))
+    # else:
+    #     entries = []
+    #     try:
+    #         with open(csv_file, mode='r', encoding='utf-8') as file:
+    #             reader = csv.reader(file)
+    #             entries = list(reader)
+    #     except FileNotFoundError:
+    #         pass
         
-        return render_template('TruckEntry.html', entries=entries)
+        # return render_template('TruckEntry.html', entries=entries)
     
 @app.route('/export')
 def to_excel():

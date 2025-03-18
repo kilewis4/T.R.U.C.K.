@@ -49,10 +49,13 @@ def getUnloaders(env):
     new_unloader_list = edf.iloc[:, 0].unique().tolist()    
 
     unloaders = []
+    idx = 0
     for unloader in new_unloader_list:
         eid = unloader
         pallets_per_hour = random.randint(25,40)
-        unloaders.append(Unloader(env, eid, pallets_per_hour, "iphone"))
+        unloaders.append(Unloader(env, idx, pallets_per_hour, ""))
+        idx += 1
+    #unloaders[0].deviceName = "iphone"
 
     return unloaders
 
