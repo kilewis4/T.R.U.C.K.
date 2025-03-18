@@ -2,6 +2,8 @@ import math
 import WebpageScript
 import threading
 import time
+from TruckGraphic import TruckGraphic
+from UnloaderGraphic import UnloaderGraphic
 
 from TruckGraphic import TruckGraphic
 from PushNoti import PushNoti
@@ -20,7 +22,7 @@ def unloading(gui):
         yield gui.env.timeout(1)
     print("Unloader found")
     unloader = gui.unloaders.removeUnloader()
-
+    
     truck = gui.trucks.removeTruck()
 
     time_taken = (truck.size / unloader.pph) * 60
@@ -38,6 +40,12 @@ def unloading(gui):
     pusher = PushNoti("https://api.pushover.net/1/messages.json", "iphone", chosen_door.number)
     pusher.send_message()
     
+    chosen_unloader_graphic = None
+    for unloader_graphic in gui.unloader_graphics:
+        if unloader_graphic.eid == unloader.eid:
+            unloader_graphic.current_door = chosen_door.number
+            chosen_unloader_graphic = unloader_graphic
+
     start_time = str(gui.env.now)
     print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at ' + start_time + " at door: " + str(chosen_door.number))
     chosen_door.assign_job(truck, unloader)
@@ -59,6 +67,8 @@ def unloading(gui):
     flask_process.join()
         
     truck_graphic.done = True
+    chosen_unloader_graphic.is_done = True
+    chosen_unloader_graphic.current_door = -1
     print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
 
     chosen_door.finish_job()
