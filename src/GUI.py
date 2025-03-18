@@ -98,7 +98,7 @@ class GUI():
         live_false_box_active = False
 
         input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
-        terminal_background = pg.Rect(self.SCREEN_WIDTH - 300, 300, 300, 300)
+        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 300, 300)
 
         self.lines = []
         self.max_lines = 300 // self.FONT_SIZE
@@ -295,11 +295,11 @@ class GUI():
 
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = 300  
+        y_offset = terminal_background.y1  
 
         for line in self.lines:
             text_surface = font.render(line, True, WHITE)  # Render text
-            DISPLAYSURF.blit(text_surface, (self.SCREEN_WIDTH - 300, y_offset))  # Draw text
+            DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
             y_offset += self.FONT_SIZE  # Move text down
 
 
