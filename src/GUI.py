@@ -34,7 +34,7 @@ class GUI():
         
 
         for unloader in self.unloaders.list:
-            unloader_graphic = UnloaderGraphic(unloader.eid, 10, 10, 0)
+            unloader_graphic = UnloaderGraphic(unloader.eid, 10, 10)
             self.unloader_graphics.append(unloader_graphic)
 
     def animation(self):
@@ -60,10 +60,10 @@ class GUI():
         self.SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
         self.SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
 
-        UNLOADERS_WAITLIST_X = SCREEN_WIDTH * 3/4
-        UNLOADERS_WAITLIST_Y = SCREEN_HEIGHT * 3/4
+        UNLOADERS_WAITLIST_X = self.SCREEN_WIDTH * 3/4
+        UNLOADERS_WAITLIST_Y = self.SCREEN_HEIGHT * 3/4
 
-        UNLOADERS_INBETWEEN = (SCREEN_HEIGHT * 1/4) / len(self.unloaders.list)
+        UNLOADERS_INBETWEEN = (self.SCREEN_HEIGHT * 1/4) / len(self.unloaders.list)
 
         for unloader in self.unloaders.list:
             unloader_graphic = UnloaderGraphic(unloader.eid, math.floor(UNLOADERS_WAITLIST_X), math.floor(UNLOADERS_WAITLIST_Y))
@@ -95,7 +95,7 @@ class GUI():
 
         po_text_box_active = False
         size_text_box_active = False
-        #live_text_box_active = False
+        self.live_text_box_active = False
         live_true_box_active = False
         live_false_box_active = False
 
@@ -113,14 +113,14 @@ class GUI():
         size_label_box = pg.Rect(size_input_box.x - 90, size_input_box.y + 8, 32, 32)
         #live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
 
-        live_true_button = pg.Rect(SCREEN_WIDTH - 200, 138, 70, 32)
-        live_false_button = pg.Rect(SCREEN_WIDTH - 125, 138, 70, 32)
+        live_true_button = pg.Rect(self.SCREEN_WIDTH - 200, 138, 70, 32)
+        live_false_button = pg.Rect(self.SCREEN_WIDTH - 125, 138, 70, 32)
         live_label_box = pg.Rect(live_true_button.x - 40, live_true_button.y + 8, 32, 32)
             
 
         
 
-        button = pg.Rect(SCREEN_WIDTH - 200, 202, (140), 32)
+        button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
 
         live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
@@ -184,7 +184,7 @@ class GUI():
                             size_text += event.unicode
                     
 
-                    if live_text_box_active:
+                    if self.live_text_box_active:
                         if event.key == pg.K_BACKSPACE:
                             live_text = live_text[:-1]
 
