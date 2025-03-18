@@ -13,7 +13,8 @@ class Unloader(Resource):
         eid(String): Employee identification number
         pph(int): Pallets per hour
     """
-    def __init__(self, env, eid, pph):
+    def __init__(self, env, eid, pph, deviceName):
         Resource.__init__(self, env, capacity = 1)
         self.eid = eid
         self.pph = pph
+        self.deviceName = deviceName

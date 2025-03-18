@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for, send_file
 from datetime import datetime
 
+import pandas as pd
+
+import os
 import csv
 import pandas as pd
 import openpyxl
@@ -18,6 +21,30 @@ list_of_input = []
 
 # with app.app_context():
 #     db.create_all()
+
+# @app.route('/', methods=['POST', 'GET'])
+# def index():
+#     if request.method == 'POST':
+#         task_content = request.form['content']
+#         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+#         with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
+#             writer = csv.writer(file)
+#             writer.writerow([timestamp, task_content])
+        
+#         return redirect(url_for('index'))
+#     else:
+#         entries = []
+#         # Read the CSV file to display entries on the page
+#         try:
+#             with open(csv_file, mode='r', encoding='utf-8') as file:
+#                 reader = csv.reader(file)
+#                 entries = list(reader)
+#         except FileNotFoundError:
+#             pass
+        
+#         return render_template('TruckEntry.html', entries=entries)
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -43,7 +70,6 @@ def index():
         return redirect(url_for('index'))
     else:
         entries = []
-        # Read the CSV file to display entries on the page
         try:
             with open(csv_file, mode='r', encoding='utf-8') as file:
                 reader = csv.reader(file)
@@ -63,3 +89,6 @@ def to_excel():
         return send_file(file_path, as_attachment=True)
     except Exception as e:
         return f"An error occurred while exporting: {e}"
+
+# if __name__ == '__main__':
+#     app.run(debug=True)

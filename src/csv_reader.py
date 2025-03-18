@@ -52,7 +52,7 @@ def getUnloaders(env):
     for unloader in new_unloader_list:
         eid = unloader
         pallets_per_hour = random.randint(25,40)
-        unloaders.append(Unloader(env, eid, pallets_per_hour))
+        unloaders.append(Unloader(env, eid, pallets_per_hour, "iphone"))
 
     return unloaders
 
