@@ -274,6 +274,7 @@ class GUI():
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
+            print(truck.truck_x_position, DOOR_XPOSITION - 100, truck.truck_y_position, (DOOR_YPOSITION * truck.door_num) + 5)
             if truck.gone:
                 trucks.remove(truck)
             elif truck.reached_door and truck.done:
