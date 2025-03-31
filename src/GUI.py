@@ -274,7 +274,6 @@ class GUI():
 
     def update_trucks(self, trucks, DOOR_XPOSITION, DOOR_YPOSITION):
         for truck in trucks:
-            print(truck.truck_x_position, DOOR_XPOSITION - 100, truck.truck_y_position, (DOOR_YPOSITION * truck.door_num) + 5)
             if truck.gone:
                 trucks.remove(truck)
             elif truck.reached_door and truck.done:
@@ -296,12 +295,13 @@ class GUI():
 
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = terminal_background.y
+        y_offset = (terminal_background.y + 300) - (terminal_background.height / 300)
+        y_offset -= self.FONT_SIZE
 
         for line in self.lines:
             text_surface = font.render(line, True, WHITE)  # Render text
             DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
-            y_offset += self.FONT_SIZE  # Move text down
+            y_offset -= self.FONT_SIZE  # Move text down
 
 
     """ 
