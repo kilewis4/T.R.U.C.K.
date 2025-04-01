@@ -8,7 +8,7 @@ from UnloaderGraphic import UnloaderGraphic
 from TruckGraphic import TruckGraphic
 from PushNoti import PushNoti
 from multiprocessing import Process
-from TruckEntry import app
+# from TruckEntry import app
 
 """
 Method to simulate the "unloading" itself. When a truck is unloaded,
@@ -57,15 +57,9 @@ def unloading(gui):
 
     finish_time = str(math.ceil(gui.env.now))
 
-    flask_process = Process(target=WebpageScript.start_flask)
-    flask_process.start()
-
     webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
     webpage_thread.start()
 
-    flask_process.terminate()
-    flask_process.join()
-        
     truck_graphic.done = True
     chosen_unloader_graphic.is_done = True
     chosen_unloader_graphic.current_door = -1

@@ -97,8 +97,14 @@ class GUI():
         live_true_box_active = False
         live_false_box_active = False
 
-        input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
-        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 350, 300)
+        self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT = 350, 300
+        self.TERMINAL_X, self.TERMINAL_Y = self.SCREEN_WIDTH - 300, 0
+
+        input_background = pg.Rect(self.TERMINAL_X, self.TERMINAL_Y, 300, 300)
+        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT)
+        self.SCROLLBAR_WIDTH = 10
+        #self.lines = [f"Line {i}" for i in range(50)]
+        self.scroll_offset = 0
 
         self.lines = []
         self.max_lines = 300 // self.FONT_SIZE
@@ -127,6 +133,7 @@ class GUI():
         running = True
         while running:
             for event in pg.event.get():
+                self.handle_scroll(event)
                 if event.type == pg.QUIT:
                     running = False
                 if event.type == pg.MOUSEBUTTONDOWN:
@@ -249,12 +256,12 @@ class GUI():
             self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
-            self.draw_terminal(DISPLAYSURF, terminal_background, font)            
+            self.draw_terminal(DISPLAYSURF, terminal_background, font) 
+            self.draw_scrollbar(DISPLAYSURF)           
 
 
 
-            
-            
+
             pg.display.flip()
             clock.tick(30)
         
@@ -293,15 +300,42 @@ class GUI():
         if len(self.lines) > self.max_lines:
             self.lines.pop(0)
 
+    """
+    Draw the terminal to the screen
+    """
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
         y_offset = terminal_background.y
+        start_line = max(0, self.scroll_offset)
+        end_line = min(start_line + self.max_lines, len(self.lines))
 
-        for line in self.lines:
-            text_surface = font.render(line, True, WHITE)  # Render text
+        for i in range(start_line, end_line):
+            text_surface = font.render(self.lines[i], True, WHITE)  # Render text
             DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
             y_offset += self.FONT_SIZE  # Move text down
 
+    """
+    Draw the scrollbar to the screen
+    """
+    def draw_scrollbar(self, DISPLAYSURF):
+        if len(self.lines) <= self.max_lines:
+            return  # No scrollbar needed if all text fits
+
+        scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
+        scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
+        scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
+        pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
+
+    """
+    Handles mouse scrolling in the terminal
+    """
+    def handle_scroll(self, event):
+        #global scroll_offset
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 4:  # Scroll up
+                self.scroll_offset = max(0, self.scroll_offset - 1)
+            elif event.button == 5:  # Scroll down
+                self.scroll_offset = min(len(self.lines) - self.max_lines, self.scroll_offset + 1)
 
     """ 
     Runs simulation
