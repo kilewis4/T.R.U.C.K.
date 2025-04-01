@@ -86,6 +86,9 @@ class GUI():
         live_false_box_color = inactive_color
 
         submit_hover_color = hover_inactive_color
+        live_true_hover_color = hover_inactive_color
+        live_false_hover_color = hover_inactive_color
+        
 
         #live_text_box_color = inactive_color
         # Default text input is nothing.
@@ -99,6 +102,8 @@ class GUI():
         live_true_box_active = False
         live_false_box_active = False
         submit_hover_active = False
+        live_true_hover_active = False
+        live_false_hover_active = False
 
         self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT = 350, 300
         self.TERMINAL_X, self.TERMINAL_Y = self.SCREEN_WIDTH - 300, 0
@@ -117,9 +122,17 @@ class GUI():
         #live_input_box = pg.Rect(SCREEN_WIDTH - 200, 138, (140), 32)
 
         live_true_button = pg.Rect(self.SCREEN_WIDTH - 200, 138, 70, 32)
-        live_false_button = pg.Rect(self.SCREEN_WIDTH - 125, 138, 70, 32)
+        live_false_button = pg.Rect(self.SCREEN_WIDTH - 115, 138, 70, 32)
+
         live_label_box = pg.Rect(live_true_button.x - 40, live_true_button.y + 8, 32, 32)
-            
+        
+        live_true_outline = pg.Rect(live_true_button.x-5, live_true_button.y-5, 80, 42)
+        live_true_background = pg.Rect(live_true_button.x + 2, live_true_button.y + 2, (68), 30)
+        
+        live_false_outline = pg.Rect(live_false_button.x-5, live_false_button.y-5, 80, 42)
+        live_false_background = pg.Rect(live_false_button.x + 2, live_false_button.y + 2, (68), 30)
+
+
 
         
 
@@ -128,16 +141,29 @@ class GUI():
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
         button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
         button_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
+        button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
 
         running = True
         while running:
-            print(submit_hover_active)
+            
             if button.collidepoint(pg.mouse.get_pos()):
                 submit_hover_active = True
             else:
                 submit_hover_active = False
+
+            if live_true_button.collidepoint(pg.mouse.get_pos()):
+                live_true_hover_active = True
+            else:
+                live_true_hover_active = False
+
+            if live_false_button.collidepoint(pg.mouse.get_pos()):
+                live_false_hover_active = True
+            else:
+                live_false_hover_active = False
             
             submit_hover_color = hover_active_color if submit_hover_active else hover_inactive_color
+            live_true_hover_color = hover_active_color if live_true_hover_active else hover_inactive_color
+            live_false_hover_color = hover_active_color if live_false_hover_active else hover_inactive_color
             
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -213,12 +239,19 @@ class GUI():
             
             DISPLAYSURF.fill(GRAY)
 
-            button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
+            
 
 
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
+
             pg.draw.rect(DISPLAYSURF, submit_hover_color, button_outline)
             pg.draw.rect(DISPLAYSURF, GRAY, button_background)
+
+            pg.draw.rect(DISPLAYSURF, live_true_hover_color, live_true_outline)
+            pg.draw.rect(DISPLAYSURF, GRAY, live_true_background)
+
+            pg.draw.rect(DISPLAYSURF, live_false_hover_color, live_false_outline)
+            pg.draw.rect(DISPLAYSURF, GRAY, live_false_background)
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
