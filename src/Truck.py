@@ -14,11 +14,12 @@ class Truck(object):
         live(int): Determines if the truck is a live load or not
         time(int): Determines the time of the truck's arrival.
     """
-    def __init__(self, po, size, live, time):
+    def __init__(self, po, size, live, time, vendor):
         self.po = po
         self.size = size
         self.live = live
         self.time = time
+        self.vendor = vendor
 
     """
     Increments the time of a truck by one, simulating the
