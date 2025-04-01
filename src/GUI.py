@@ -112,9 +112,12 @@ class GUI():
 
         self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT = 350, 300
         self.TERMINAL_X, self.TERMINAL_Y = self.SCREEN_WIDTH - 300, 0
+        self.SCROLLBAR_WIDTH = 10
+        self.scroll_offset = 0
 
 
         self.lines = []
+        #self.lines = [f"Line {i}" for i in range(50)]
         self.max_lines = terminal_background.height // self.FONT_SIZE
         self.terminal_boxes = ['' for x in range(self.max_lines)]
 
@@ -161,7 +164,7 @@ class GUI():
             else:
                 live_true_hover_active = False
 
-            if live_false_button.collidepoint(pg.mouse.get_pos()):
+            if live_false_button.collidepoint(pg.mouse.get_pos()):                                                 
                 live_false_hover_active = True
             else:
                 live_false_hover_active = False
@@ -171,12 +174,13 @@ class GUI():
             live_false_hover_color = hover_active_color if live_false_hover_active else hover_inactive_color
             
             for event in pg.event.get():
+                self.handle_scroll(event)
                 if event.type == pg.QUIT:
                     running = False
                 if event.type == pg.MOUSEBUTTONDOWN:
-                    if button.collidepoint(event.pos):
-                        live_value = 0
-                        if live_true_box_active:
+                    if button.collidepoint(event.pos):                                                                                                                                                                                                                                                                                         
+                        live_value = 0                            
+                        if live_true_box_active:               
                             live_value = 1
                         new_truck = Truck(
                             int(po_text),
@@ -233,14 +237,6 @@ class GUI():
 
                         else:
                             live_text += event.unicode
-                if event.type == pg.MOUSEWHEEL:
-                    if event.y == -1:
-                        if (len(self.text_lines_scrollup) != 0):
-                            self.shift_down()
-                    if event.y == 1:
-                        if (len(self.text_lines_scrolldown) != 0):
-                            self.shift_up()
-                            self.terminal_boxes[0] = self.text_lines_scrolldown.pop()
             
             DISPLAYSURF.fill(GRAY)
 
@@ -315,7 +311,7 @@ class GUI():
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
             self.draw_terminal(DISPLAYSURF, terminal_background, font) 
-            #self.draw_scrollbar(DISPLAYSURF)           
+            self.draw_scrollbar(DISPLAYSURF)           
 
 
 
@@ -354,46 +350,34 @@ class GUI():
             surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
 
     def add_text(self, new_text):
-        self.shift_up()
-        self.terminal_boxes[0] = new_text
-        
-    
-    def shift_up(self):
-        if (self.terminal_boxes[len(self.terminal_boxes)-1] != ''):
-            self.text_lines_scrollup.append(self.terminal_boxes[len(self.terminal_boxes)-1])
-            print(self.text_lines_scrollup)
-        for i in range(self.max_lines-1,0,-1):
-            new_word = self.terminal_boxes[i-1]
-            self.terminal_boxes[i] = new_word
+        self.lines.append(new_text)
+        if len(self.lines) > self.max_lines:
+            self.lines.pop(0)
 
-    def shift_down(self):
-        self.text_lines_scrolldown.append(self.terminal_boxes[0])
-        for i in range(self.max_lines-1):
-            new_word = self.terminal_boxes[i+1]
-            self.terminal_boxes[i] = new_word
-        self.terminal_boxes[len(self.terminal_boxes)-1] = self.text_lines_scrollup.pop()
+
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = (terminal_background.height // self.max_lines)
-        y_value = terminal_background.y + 300
+        y_offset = terminal_background.y
+        start_line = max(0, self.scroll_offset)
+        end_line = min(start_line + self.max_lines, len(self.lines))
         
 
-        for line in self.terminal_boxes:
-            text_surface = font.render(line, True, WHITE)  # Render text
-            DISPLAYSURF.blit(text_surface, (0, y_value)) # Draw text
-            y_value -= y_offset
+        for i in range(start_line, end_line):
+             text_surface = font.render(self.lines[i], True, WHITE)  # Render text
+             DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
+             y_offset += self.FONT_SIZE  # Move text down
 
     """
     Draw the scrollbar to the screen
     """
-    # def draw_scrollbar(self, DISPLAYSURF):
-    #     if len(self.lines) <= self.max_lines:
-    #         return  # No scrollbar needed if all text fits
+    def draw_scrollbar(self, DISPLAYSURF):
+        if len(self.lines) <= self.max_lines:
+            return  # No scrollbar needed if all text fits
 
-    #     scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
-    #     scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
-    #     scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
-    #     pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
+        scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
+        scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
+        scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
+        pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
 
     """
     Handles mouse scrolling in the terminal
