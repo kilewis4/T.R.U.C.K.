@@ -15,6 +15,10 @@ class TruckGraphic():
         else:
             if self.truck_x_position < DOOR_XPOSITION - 100:
                 self.truck_x_position += 5
+            if self.truck_x_position > DOOR_XPOSITION - 100:
+                self.truck_x_position -= 1
+            if self.truck_y_position > (DOOR_YPOSITION * self.door_num) + 5:
+                self.truck_y_position -=1
             if self.truck_y_position < (DOOR_YPOSITION * self.door_num) + 5:
                 self.truck_y_position += 5
     

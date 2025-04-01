@@ -30,10 +30,8 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        self.text_lines = []
-        
-
-        
+        self.text_lines_scrollup = []
+        self.text_lines_scrolldown = []
 
     def animation(self):
         door_graphics = []
@@ -79,11 +77,15 @@ class GUI():
         # Creates two different color schemes to use for when use clicks on text input.
         inactive_color = pg.Color('BLACK')
         active_color = pg.Color('dodgerblue2')
+        hover_inactive_color = GRAY
+        hover_active_color = pg.Color('dodgerblue4')
         po_text_box_color = inactive_color
         size_text_box_color = inactive_color
 
         live_true_box_color = inactive_color
         live_false_box_color = inactive_color
+
+        submit_hover_color = hover_inactive_color
 
         #live_text_box_color = inactive_color
         # Default text input is nothing.
@@ -96,18 +98,15 @@ class GUI():
         self.live_text_box_active = False
         live_true_box_active = False
         live_false_box_active = False
+        submit_hover_active = False
 
         self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT = 350, 300
         self.TERMINAL_X, self.TERMINAL_Y = self.SCREEN_WIDTH - 300, 0
 
-        input_background = pg.Rect(self.TERMINAL_X, self.TERMINAL_Y, 300, 300)
-        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT)
-        self.SCROLLBAR_WIDTH = 10
-        self.lines = [f"Line {i}" for i in range(50)]
-        self.scroll_offset = 0
 
-        #self.lines = []
-        self.max_lines = 300 // self.FONT_SIZE
+        self.lines = []
+        self.max_lines = terminal_background.height // self.FONT_SIZE
+        self.terminal_boxes = ['' for x in range(self.max_lines)]
 
 
         # Creates dimensions for text input.
@@ -124,16 +123,23 @@ class GUI():
 
         
 
-        button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
 
         live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
         button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
+        button_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
 
         running = True
         while running:
+            print(submit_hover_active)
+            if button.collidepoint(pg.mouse.get_pos()):
+                submit_hover_active = True
+            else:
+                submit_hover_active = False
+            
+            submit_hover_color = hover_active_color if submit_hover_active else hover_inactive_color
+            
             for event in pg.event.get():
-                self.handle_scroll(event)
                 if event.type == pg.QUIT:
                     running = False
                 if event.type == pg.MOUSEBUTTONDOWN:
@@ -174,6 +180,7 @@ class GUI():
                     live_true_box_color = active_color if live_true_box_active else inactive_color
                     live_false_box_color = active_color if live_false_box_active else inactive_color
                 
+                
                 if event.type == pg.KEYDOWN:
                     if po_text_box_active:
                         if event.key == pg.K_BACKSPACE:
@@ -195,10 +202,23 @@ class GUI():
 
                         else:
                             live_text += event.unicode
+                if event.type == pg.MOUSEWHEEL:
+                    if event.y == -1:
+                        if (len(self.text_lines_scrollup) != 0):
+                            self.shift_down()
+                    if event.y == 1:
+                        if (len(self.text_lines_scrolldown) != 0):
+                            self.shift_up()
+                            self.terminal_boxes[0] = self.text_lines_scrolldown.pop()
             
             DISPLAYSURF.fill(GRAY)
 
+            button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
+
+
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
+            pg.draw.rect(DISPLAYSURF, submit_hover_color, button_outline)
+            pg.draw.rect(DISPLAYSURF, GRAY, button_background)
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -296,23 +316,34 @@ class GUI():
             surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
 
     def add_text(self, new_text):
-        self.lines.append(new_text)
-        if len(self.lines) > self.max_lines:
-            self.lines.pop(0)
+        self.shift_up()
+        self.terminal_boxes[0] = new_text
+        
+    
+    def shift_up(self):
+        if (self.terminal_boxes[len(self.terminal_boxes)-1] != ''):
+            self.text_lines_scrollup.append(self.terminal_boxes[len(self.terminal_boxes)-1])
+            print(self.text_lines_scrollup)
+        for i in range(self.max_lines-1,0,-1):
+            new_word = self.terminal_boxes[i-1]
+            self.terminal_boxes[i] = new_word
 
-    """
-    Draw the terminal to the screen
-    """
+    def shift_down(self):
+        self.text_lines_scrolldown.append(self.terminal_boxes[0])
+        for i in range(self.max_lines-1):
+            new_word = self.terminal_boxes[i+1]
+            self.terminal_boxes[i] = new_word
+        self.terminal_boxes[len(self.terminal_boxes)-1] = self.text_lines_scrollup.pop()
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = terminal_background.y
-        start_line = max(0, self.scroll_offset)
-        end_line = min(start_line + self.max_lines, len(self.lines))
+        y_offset = (terminal_background.height // self.max_lines)
+        y_value = terminal_background.y + 300
+        
 
-        for i in range(start_line, end_line):
-            text_surface = font.render(self.lines[i], True, WHITE)  # Render text
-            DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
-            y_offset += self.FONT_SIZE  # Move text down
+        for line in self.terminal_boxes:
+            text_surface = font.render(line, True, WHITE)  # Render text
+            DISPLAYSURF.blit(text_surface, (0, y_value)) # Draw text
+            y_value -= y_offset
 
     """
     Draw the scrollbar to the screen
@@ -355,7 +386,7 @@ class GUI():
             if self.incomingTrucks:
                 nextTruck = self.incomingTrucks.pop(0)
                 print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(self.env.now))
-                #self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
+                self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
                 self.trucks.addTruck(nextTruck, self.env)
                 self.env.process(unloading(self))
             yield self.env.timeout(1)
