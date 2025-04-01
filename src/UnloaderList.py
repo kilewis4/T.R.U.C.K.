@@ -1,4 +1,5 @@
 import csv_reader
+from Unloader import Unloader
 
 """
 Unloader list which initializes the list using csv_reader,
@@ -16,10 +17,16 @@ class UnloaderList:
     def __init__(self, env):
         self.list = []
         self.env = env
-        unloaders = csv_reader.getUnloaders(env)
-        for unloader in unloaders[1:4]:
+        # unloaders = csv_reader.getUnloaders(env)
+        """ for unloader in unloaders[1:4]:
             print(unloader.eid)
-            self.addUnloader(unloader)
+            self.addUnloader(unloader)"""
+        Unloader103 = Unloader(env, 103, 20, "iphone")
+        Unloader1278 = Unloader(env, 1278, 20, "iphone")
+        Unloader13586 = Unloader(env, 13586, 20, "iphone")
+        self.addUnloader(Unloader103)
+        self.addUnloader(Unloader1278)
+        self.addUnloader(Unloader13586)
     
     """
     Returns an iterator for the list itself.

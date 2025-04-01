@@ -1,109 +1,779 @@
-ociate_ID"	="Total_Time_In_Minutes"	="Main_PO_Number"	="Main_Vendor_Name"	="Total_Pallet_Finished_Count"
-="1278"	="193"	="10056445"	="JAC. VANDENBERG, INC"	="27"
-="1278"	="95"	="10057357"	="CAROLINA EGG COMPANIES INC."	="16"
-="1278"	="29"	="10057562"	="TOPCO"	="8"
-="1278"	="32"	="10057566"	="TOPCO"	="6"
-="1278"	="120"	="10057582"	="OLIPOP INC."	="28"
-="1278"	="49"	="10057606"	="CAROLINA EGG COMPANIES INC."	="22"
-="1278"	="110"	="10057628"	="FRESH EXPRESS"	="34"
-="1278"	="153"	="10057662"	="MASTRONARDI PRODUCE"	="68"
-="1278"	="166"	="10057665"	="MASTRONARDI PRODUCE"	="56"
-="1278"	="104"	="10057895"	="VIRGINIA PRODUCE COMPANY INC"	="25"
-="1278"	="11"	="10057900"	="L & M COMPANIES"	="26"
-="1278"	="158"	="10057940"	="GT'S LIVING FOODS"	="25"
-="1278"	="11"	="10057950"	="TOPCO"	="22"
-="1278"	="27"	="10057959"	="ORGANICGIRL LLC"	="10"
-="1278"	="792"	="10057973"	="EAST COAST FRESH"	="26"
-="1278"	="11"	="10058099"	="WADA FARMS MARKETING GROUP LLC"	="21"
-="1278"	="11"	="10058113"	="HEALTH-ADE LLC"	="20"
-="1278"	="40"	="10058124"	="HANSHAW SALES"	="56"
-="1278"	="32"	="10058159"	="DUTT & WAGNER OF VA INC"	="24"
-="1278"	="11"	="10058185"	="WRIGHT BROTHERS TOMATO COMPANY"	="2"
-="1278"	="36"	="10058239"	="PATTERSONS PRODUCE &"	="10"
-="1278"	="11"	="10058293"	="DIRECT SOURCE MARKETING"	="14"
-="1278"	="75"	="10058368"	="TOPCO"	="56"
-="1278"	="84"	="10058388"	="EAST COAST FRESH"	="20"
-="1278"	="11"	="10058442"	="TOM LANGE COMPANY INC"	="26"
-="1278"	="160"	="10058466"	="NATURE'S FLOWERS"	="41"
-="1278"	="29"	="10058517"	="NICKEY GREGORY CO. INC."	="3"
-="1278"	="36"	="10058726"	="WALTER P. RAWL & SONS INC"	="14"
-="1278"	="63"	="16000089"	="OCEAN SPRAY CRANBERRIES INC."	="35"
-="1278"	="100"	="16450100"	="DR PEPPER SNAPPLE GROUP INC."	="25"
-="1278"	="19"	="16450101"	="DR PEPPER SNAPPLE GROUP INC."	="25"
-="1278"	="42"	="16550102"	="MINUTE MAID COMPANY"	="19"
-="1278"	="73"	="16550103"	="MINUTE MAID COMPANY"	="19"
-="1278"	="11"	="16550104"	="MINUTE MAID COMPANY"	="18"
-="1278"	="232"	="300790"	="KRAFT HEINZ FOOD COMPANY"	="58"
-="1278"	="104"	="302534"	="LEWIS BAKERIES"	="36"
-="1278"	="11"	="303227"	="MARATHON ENTERPRISES"	="8"
-="1278"	="74"	="303685"	="Quaker maid"	="19"
-="1278"	="11"	="303783"	="NATIONAL BEEF PACKING CO."	="23"
-="1278"	="11"	="303866"	="FRESH MARK INC."	="25"
-="1278"	="49"	="303894"	="KEN'S FOODS INC"	="54"
-="1278"	="66"	="304112"	="STEVEN SAUSAGE"	="44"
-="1278"	="85"	="304131"	="AMERICA'S CATCH INC."	="4"
-="1278"	="11"	="304169"	="GOURMET SPECIALTY FOODS LLC"	="21"
-="1278"	="83"	="304240"	="PATAGONIA SEAFARMS"	="26"
-="1278"	="11"	="304373"	="SUNSET FARMS"	="20"
-="1278"	="135"	="304376"	="SANDERSON FARMS"	="34"
-="1278"	="88"	="304378"	="RESER'S FINE FOODS"	="48"
-="1278"	="768"	="304384"	="THE BEST DRESSED CHICKEN"	="26"
-="1278"	="42"	="304708"	="HANOVER FOODS CORPORATION"	="22"
-="1278"	="85"	="304716"	="CAFE  VALLEY BAKERY"	="47"
-="1278"	="11"	="304966"	="TYSON FRESH MEATS INC/IBP"	="12"
-="1278"	="28"	="304967"	="BALTER MEAT COMPANY"	="12"
-="1278"	="14"	="304981"	="PERDUE FARMS INC"	="14"
-="1278"	="11"	="305001"	="GET CARRIED AWAY"	="7"
-="1278"	="64"	="305026"	="JBS"	="25"
-="1278"	="52"	="305072"	="CAROLINA PRIDE LLC"	="53"
-="1278"	="167"	="305097"	="GODSHALL'S QUALITY MEATS"	="8"
-="1278"	="95"	="305124"	="CARGILL MEAT SOLUTIONS CORP."	="24"
-="1278"	="73"	="305147"	="PERDUE FARMS INC"	="19"
-="1278"	="11"	="305164"	="FLOWERS FOODS SPECIALITY"	="8"
-="1278"	="11"	="305236"	="WHOLESTONE FARMS"	="21"
-="1278"	="52"	="305391"	="DESKINS WHOLESALE LLC"	="6"
-="1278"	="11"	="305395"	="RANA MEAL SOLUTIONS LLC"	="35"
-="1278"	="11"	="305469"	="TYSON FOODS INC"	="73"
-="1278"	="11"	="305473"	="TYSON FOODS INC"	="74"
-="1278"	="70"	="305479"	="PENDER PACKING CO INC"	="38"
-="1278"	="67"	="305493"	="FIELDALE FARMS CORPORATION"	="50"
-="1278"	="64"	="305569"	="THE BEST DRESSED CHICKEN"	="10"
-="1278"	="11"	="305591"	="INTER-AMERICAN FOODS"	="29"
-="1278"	="11"	="305622"	="JBS"	="16"
-="1278"	="137"	="305793"	="FIELDALE FARMS CORPORATION"	="48"
-="1278"	="11"	="305802"	="FRESH MARK INC."	="24"
-="1278"	="89"	="305812"	="LEWIS BAKERIES"	="60"
-="1278"	="66"	="305935"	="HANS KISSLE LLC"	="4"
-="1278"	="11"	="306280"	="JBS"	="23"
-="1278"	="83"	="306317"	="FIELDALE FARMS CORPORATION"	="44"
-="1278"	="55"	="306325"	="PRE BRANDS LLC"	="11"
-="1278"	="37"	="306332"	="CARGILL MEAT SOLUTIONS CORP."	="8"
-="1278"	="107"	="306514"	="PATAGONIA SEAFARMS"	="26"
-="1278"	="11"	="306554"	="PERDUE FARMS INC"	="18"
-="1278"	="75"	="306576"	="PERDUE FARMS INC"	="15"
-="1278"	="11"	="40041856"	="DAIRY FARMERS OF AMERICA"	="54"
-="1278"	="70"	="40069163"	="JM SMUCKER COMPANY"	="68"
-="1278"	="29"	="40070028"	="OLDE THOMPSON/GEL SPICE"	="56"
-="1278"	="466"	="40071013"	="OLD D"	="24"
-="1278"	="15"	="40071937"	="SOUTHERN BEVERAGE PACKERS INC."	="22"
-="1278"	="20"	="40072547"	="ACH FOODS INC."	="28"
-="1278"	="11"	="40072954"	="ATEECO INC."	="49"
-="1278"	="558"	="40073573a"	="OLD DOMINION"	="249"
-="1278"	="11"	="40073588"	="BEVCO INC."	="20"
-="1278"	="11"	="40073614"	="CALIFIA FARMS LP"	="27"
-="1278"	="11"	="40073619"	="TOPCO/HP HOOD CROWLEY NY"	="12"
-="1278"	="28"	="40074047"	="FERRARA CANDY COMPANY"	="34"
-="1278"	="9"	="40074313A"	="NIAGARA"	="19"
-="1278"	="60"	="40074494"	="HAIN-CELESTIAL GROUP INC"	="50"
-="1278"	="85"	="40074662"	="MIZKAN AMERICA INC."	="26"
-="1278"	="116"	="40074665"	="MORGAN FOODS INC."	="30"
-="1278"	="141"	="40074759"	="RIVIANA FOODS INCORPORATED"	="44"
-="1278"	="11"	="40074771"	="MOODY DUNBAR INC."	="3"
-="1278"	="11"	="40075462"	="DOLE PACKAGED FOODS"	="19"
-="1278"	="23"	="40075545"	="H.P. HOOD INC."	="15"
-="1278"	="120"	="40075700"	="OLD D"	="16"
-="1278"	="34"	="40075721"	="CLOROX COMPANY"	="51"
-="1278"	="37"	="40075807"	="NIAGARA BOTTLING LLC"	="19"
-="1278"	="62"	="40076115"	="B & G FOODS INC."	="53"
-="1278"	="12"	="40076282"	="NIAGARA BOTTLING LLC"	="19"
-="1278"	="178"	="40077080"	="GENERAL MILLS FINANCE INC."	="49"
+[
+	{
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "193",
+        "Main_PO_Number": "10056445",
+        "Main_Vendor_Name": "JAC. VANDENBERG, INC",
+        "Total_Pallet_Finished_Count": "27"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "95",
+        "Main_PO_Number": "10057357",
+        "Main_Vendor_Name": "CAROLINA EGG COMPANIES INC.",
+        "Total_Pallet_Finished_Count": "16"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "29",
+        "Main_PO_Number": "10057562",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "8"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "32",
+        "Main_PO_Number": "10057566",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "6"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "120",
+        "Main_PO_Number": "10057582",
+        "Main_Vendor_Name": "OLIPOP INC.",
+        "Total_Pallet_Finished_Count": "28"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "49",
+        "Main_PO_Number": "10057606",
+        "Main_Vendor_Name": "CAROLINA EGG COMPANIES INC.",
+        "Total_Pallet_Finished_Count": "22"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "110",
+        "Main_PO_Number": "10057628",
+        "Main_Vendor_Name": "FRESH EXPRESS",
+        "Total_Pallet_Finished_Count": "34"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "153",
+        "Main_PO_Number": "10057662",
+        "Main_Vendor_Name": "MASTRONARDI PRODUCE",
+        "Total_Pallet_Finished_Count": "68"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "166",
+        "Main_PO_Number": "10057665",
+        "Main_Vendor_Name": "MASTRONARDI PRODUCE",
+        "Total_Pallet_Finished_Count": "56"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "104",
+        "Main_PO_Number": "10057895",
+        "Main_Vendor_Name": "VIRGINIA PRODUCE COMPANY INC",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10057900",
+        "Main_Vendor_Name": "L & M COMPANIES",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "158",
+        "Main_PO_Number": "10057940",
+        "Main_Vendor_Name": "GT'S LIVING FOODS",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10057950",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "22"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "27",
+        "Main_PO_Number": "10057959",
+        "Main_Vendor_Name": "ORGANICGIRL LLC",
+        "Total_Pallet_Finished_Count": "10"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "792",
+        "Main_PO_Number": "10057973",
+        "Main_Vendor_Name": "EAST COAST FRESH",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058099",
+        "Main_Vendor_Name": "WADA FARMS MARKETING GROUP LLC",
+        "Total_Pallet_Finished_Count": "21"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058113",
+        "Main_Vendor_Name": "HEALTH-ADE LLC",
+        "Total_Pallet_Finished_Count": "20"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "40",
+        "Main_PO_Number": "10058124",
+        "Main_Vendor_Name": "HANSHAW SALES",
+        "Total_Pallet_Finished_Count": "56"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "32",
+        "Main_PO_Number": "10058159",
+        "Main_Vendor_Name": "DUTT & WAGNER OF VA INC",
+        "Total_Pallet_Finished_Count": "24"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058185",
+        "Main_Vendor_Name": "WRIGHT BROTHERS TOMATO COMPANY",
+        "Total_Pallet_Finished_Count": "2"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "36",
+        "Main_PO_Number": "10058239",
+        "Main_Vendor_Name": "PATTERSONS PRODUCE &",
+        "Total_Pallet_Finished_Count": "10"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058293",
+        "Main_Vendor_Name": "DIRECT SOURCE MARKETING",
+        "Total_Pallet_Finished_Count": "14"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "75",
+        "Main_PO_Number": "10058368",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "56"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "84",
+        "Main_PO_Number": "10058388",
+        "Main_Vendor_Name": "EAST COAST FRESH",
+        "Total_Pallet_Finished_Count": "20"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058442",
+        "Main_Vendor_Name": "TOM LANGE COMPANY INC",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "160",
+        "Main_PO_Number": "10058466",
+        "Main_Vendor_Name": "NATURE'S FLOWERS",
+        "Total_Pallet_Finished_Count": "41"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "29",
+        "Main_PO_Number": "10058517",
+        "Main_Vendor_Name": "NICKEY GREGORY CO. INC.",
+        "Total_Pallet_Finished_Count": "3"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "36",
+        "Main_PO_Number": "10058726",
+        "Main_Vendor_Name": "WALTER P. RAWL & SONS INC",
+        "Total_Pallet_Finished_Count": "14"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "63",
+        "Main_PO_Number": "16000089",
+        "Main_Vendor_Name": "OCEAN SPRAY CRANBERRIES INC.",
+        "Total_Pallet_Finished_Count": "35"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "100",
+        "Main_PO_Number": "16450100",
+        "Main_Vendor_Name": "DR PEPPER SNAPPLE GROUP INC.",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "19",
+        "Main_PO_Number": "16450101",
+        "Main_Vendor_Name": "DR PEPPER SNAPPLE GROUP INC.",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "42",
+        "Main_PO_Number": "16550102",
+        "Main_Vendor_Name": "MINUTE MAID COMPANY",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "73",
+        "Main_PO_Number": "16550103",
+        "Main_Vendor_Name": "MINUTE MAID COMPANY",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "16550104",
+        "Main_Vendor_Name": "MINUTE MAID COMPANY",
+        "Total_Pallet_Finished_Count": "18"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "232",
+        "Main_PO_Number": "300790",
+        "Main_Vendor_Name": "KRAFT HEINZ FOOD COMPANY",
+        "Total_Pallet_Finished_Count": "58"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "104",
+        "Main_PO_Number": "302534",
+        "Main_Vendor_Name": "LEWIS BAKERIES",
+        "Total_Pallet_Finished_Count": "36"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "303227",
+        "Main_Vendor_Name": "MARATHON ENTERPRISES",
+        "Total_Pallet_Finished_Count": "8"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "74",
+        "Main_PO_Number": "303685",
+        "Main_Vendor_Name": "Quaker maid",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "303783",
+        "Main_Vendor_Name": "NATIONAL BEEF PACKING CO.",
+        "Total_Pallet_Finished_Count": "23"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "303866",
+        "Main_Vendor_Name": "FRESH MARK INC.",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "49",
+        "Main_PO_Number": "303894",
+        "Main_Vendor_Name": "KEN'S FOODS INC",
+        "Total_Pallet_Finished_Count": "54"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "66",
+        "Main_PO_Number": "304112",
+        "Main_Vendor_Name": "STEVEN SAUSAGE",
+        "Total_Pallet_Finished_Count": "44"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "85",
+        "Main_PO_Number": "304131",
+        "Main_Vendor_Name": "AMERICA'S CATCH INC.",
+        "Total_Pallet_Finished_Count": "4"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "304169",
+        "Main_Vendor_Name": "GOURMET SPECIALTY FOODS LLC",
+        "Total_Pallet_Finished_Count": "21"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "83",
+        "Main_PO_Number": "304240",
+        "Main_Vendor_Name": "PATAGONIA SEAFARMS",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "304373",
+        "Main_Vendor_Name": "SUNSET FARMS",
+        "Total_Pallet_Finished_Count": "20"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "135",
+        "Main_PO_Number": "304376",
+        "Main_Vendor_Name": "SANDERSON FARMS",
+        "Total_Pallet_Finished_Count": "34"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "88",
+        "Main_PO_Number": "304378",
+        "Main_Vendor_Name": "RESER'S FINE FOODS",
+        "Total_Pallet_Finished_Count": "48"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "768",
+        "Main_PO_Number": "304384",
+        "Main_Vendor_Name": "THE BEST DRESSED CHICKEN",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "42",
+        "Main_PO_Number": "304708",
+        "Main_Vendor_Name": "HANOVER FOODS CORPORATION",
+        "Total_Pallet_Finished_Count": "22"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "85",
+        "Main_PO_Number": "304716",
+        "Main_Vendor_Name": "CAFE  VALLEY BAKERY",
+        "Total_Pallet_Finished_Count": "47"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "304966",
+        "Main_Vendor_Name": "TYSON FRESH MEATS INC/IBP",
+        "Total_Pallet_Finished_Count": "12"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "28",
+        "Main_PO_Number": "304967",
+        "Main_Vendor_Name": "BALTER MEAT COMPANY",
+        "Total_Pallet_Finished_Count": "12"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "14",
+        "Main_PO_Number": "304981",
+        "Main_Vendor_Name": "PERDUE FARMS INC",
+        "Total_Pallet_Finished_Count": "14"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305001",
+        "Main_Vendor_Name": "GET CARRIED AWAY",
+        "Total_Pallet_Finished_Count": "7"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "64",
+        "Main_PO_Number": "305026",
+        "Main_Vendor_Name": "JBS",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "52",
+        "Main_PO_Number": "305072",
+        "Main_Vendor_Name": "CAROLINA PRIDE LLC",
+        "Total_Pallet_Finished_Count": "53"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "167",
+        "Main_PO_Number": "305097",
+        "Main_Vendor_Name": "GODSHALL'S QUALITY MEATS",
+        "Total_Pallet_Finished_Count": "8"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "95",
+        "Main_PO_Number": "305124",
+        "Main_Vendor_Name": "CARGILL MEAT SOLUTIONS CORP.",
+        "Total_Pallet_Finished_Count": "24"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "73",
+        "Main_PO_Number": "305147",
+        "Main_Vendor_Name": "PERDUE FARMS INC",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305164",
+        "Main_Vendor_Name": "FLOWERS FOODS SPECIALITY",
+        "Total_Pallet_Finished_Count": "8"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305236",
+        "Main_Vendor_Name": "WHOLESTONE FARMS",
+        "Total_Pallet_Finished_Count": "21"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "52",
+        "Main_PO_Number": "305391",
+        "Main_Vendor_Name": "DESKINS WHOLESALE LLC",
+        "Total_Pallet_Finished_Count": "6"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305395",
+        "Main_Vendor_Name": "RANA MEAL SOLUTIONS LLC",
+        "Total_Pallet_Finished_Count": "35"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305469",
+        "Main_Vendor_Name": "TYSON FOODS INC",
+        "Total_Pallet_Finished_Count": "73"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305473",
+        "Main_Vendor_Name": "TYSON FOODS INC",
+        "Total_Pallet_Finished_Count": "74"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "70",
+        "Main_PO_Number": "305479",
+        "Main_Vendor_Name": "PENDER PACKING CO INC",
+        "Total_Pallet_Finished_Count": "38"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "67",
+        "Main_PO_Number": "305493",
+        "Main_Vendor_Name": "FIELDALE FARMS CORPORATION",
+        "Total_Pallet_Finished_Count": "50"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "64",
+        "Main_PO_Number": "305569",
+        "Main_Vendor_Name": "THE BEST DRESSED CHICKEN",
+        "Total_Pallet_Finished_Count": "10"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305591",
+        "Main_Vendor_Name": "INTER-AMERICAN FOODS",
+        "Total_Pallet_Finished_Count": "29"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305622",
+        "Main_Vendor_Name": "JBS",
+        "Total_Pallet_Finished_Count": "16"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "137",
+        "Main_PO_Number": "305793",
+        "Main_Vendor_Name": "FIELDALE FARMS CORPORATION",
+        "Total_Pallet_Finished_Count": "48"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305802",
+        "Main_Vendor_Name": "FRESH MARK INC.",
+        "Total_Pallet_Finished_Count": "24"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "89",
+        "Main_PO_Number": "305812",
+        "Main_Vendor_Name": "LEWIS BAKERIES",
+        "Total_Pallet_Finished_Count": "60"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "66",
+        "Main_PO_Number": "305935",
+        "Main_Vendor_Name": "HANS KISSLE LLC",
+        "Total_Pallet_Finished_Count": "4"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "306280",
+        "Main_Vendor_Name": "JBS",
+        "Total_Pallet_Finished_Count": "23"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "83",
+        "Main_PO_Number": "306317",
+        "Main_Vendor_Name": "FIELDALE FARMS CORPORATION",
+        "Total_Pallet_Finished_Count": "44"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "55",
+        "Main_PO_Number": "306325",
+        "Main_Vendor_Name": "PRE BRANDS LLC",
+        "Total_Pallet_Finished_Count": "11"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "37",
+        "Main_PO_Number": "306332",
+        "Main_Vendor_Name": "CARGILL MEAT SOLUTIONS CORP.",
+        "Total_Pallet_Finished_Count": "8"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "107",
+        "Main_PO_Number": "306514",
+        "Main_Vendor_Name": "PATAGONIA SEAFARMS",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "306554",
+        "Main_Vendor_Name": "PERDUE FARMS INC",
+        "Total_Pallet_Finished_Count": "18"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "75",
+        "Main_PO_Number": "306576",
+        "Main_Vendor_Name": "PERDUE FARMS INC",
+        "Total_Pallet_Finished_Count": "15"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40041856",
+        "Main_Vendor_Name": "DAIRY FARMERS OF AMERICA",
+        "Total_Pallet_Finished_Count": "54"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "70",
+        "Main_PO_Number": "40069163",
+        "Main_Vendor_Name": "JM SMUCKER COMPANY",
+        "Total_Pallet_Finished_Count": "68"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "29",
+        "Main_PO_Number": "40070028",
+        "Main_Vendor_Name": "OLDE THOMPSON/GEL SPICE",
+        "Total_Pallet_Finished_Count": "56"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "466",
+        "Main_PO_Number": "40071013*",
+        "Main_Vendor_Name": "OLD D",
+        "Total_Pallet_Finished_Count": "24"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "15",
+        "Main_PO_Number": "40071937",
+        "Main_Vendor_Name": "SOUTHERN BEVERAGE PACKERS INC.",
+        "Total_Pallet_Finished_Count": "22"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "20",
+        "Main_PO_Number": "40072547",
+        "Main_Vendor_Name": "ACH FOODS INC.",
+        "Total_Pallet_Finished_Count": "28"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40072954",
+        "Main_Vendor_Name": "ATEECO INC.",
+        "Total_Pallet_Finished_Count": "49"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "558",
+        "Main_PO_Number": "40073573a",
+        "Main_Vendor_Name": "OLD DOMINION",
+        "Total_Pallet_Finished_Count": "249"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40073588",
+        "Main_Vendor_Name": "BEVCO INC.",
+        "Total_Pallet_Finished_Count": "20"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40073614",
+        "Main_Vendor_Name": "CALIFIA FARMS LP",
+        "Total_Pallet_Finished_Count": "27"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40073619",
+        "Main_Vendor_Name": "TOPCO/HP HOOD CROWLEY NY",
+        "Total_Pallet_Finished_Count": "12"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "28",
+        "Main_PO_Number": "40074047",
+        "Main_Vendor_Name": "FERRARA CANDY COMPANY",
+        "Total_Pallet_Finished_Count": "34"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "9",
+        "Main_PO_Number": "40074313A",
+        "Main_Vendor_Name": "NIAGARA",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "60",
+        "Main_PO_Number": "40074494",
+        "Main_Vendor_Name": "HAIN-CELESTIAL GROUP INC",
+        "Total_Pallet_Finished_Count": "50"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "85",
+        "Main_PO_Number": "40074662",
+        "Main_Vendor_Name": "MIZKAN AMERICA INC.",
+        "Total_Pallet_Finished_Count": "26"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "116",
+        "Main_PO_Number": "40074665",
+        "Main_Vendor_Name": "MORGAN FOODS INC.",
+        "Total_Pallet_Finished_Count": "30"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "141",
+        "Main_PO_Number": "40074759",
+        "Main_Vendor_Name": "RIVIANA FOODS INCORPORATED",
+        "Total_Pallet_Finished_Count": "44"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40074771",
+        "Main_Vendor_Name": "MOODY DUNBAR INC.",
+        "Total_Pallet_Finished_Count": "3"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40075462",
+        "Main_Vendor_Name": "DOLE PACKAGED FOODS",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "23",
+        "Main_PO_Number": "40075545",
+        "Main_Vendor_Name": "H.P. HOOD INC.",
+        "Total_Pallet_Finished_Count": "15"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "120",
+        "Main_PO_Number": "40075700*",
+        "Main_Vendor_Name": "OLD D",
+        "Total_Pallet_Finished_Count": "16"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "34",
+        "Main_PO_Number": "40075721",
+        "Main_Vendor_Name": "CLOROX COMPANY",
+        "Total_Pallet_Finished_Count": "51"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "37",
+        "Main_PO_Number": "40075807",
+        "Main_Vendor_Name": "NIAGARA BOTTLING LLC",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "62",
+        "Main_PO_Number": "40076115",
+        "Main_Vendor_Name": "B & G FOODS INC.",
+        "Total_Pallet_Finished_Count": "53"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "12",
+        "Main_PO_Number": "40076282",
+        "Main_Vendor_Name": "NIAGARA BOTTLING LLC",
+        "Total_Pallet_Finished_Count": "19"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "178",
+        "Main_PO_Number": "40077080",
+        "Main_Vendor_Name": "GENERAL MILLS FINANCE INC.",
+        "Total_Pallet_Finished_Count": "49"
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "",
+        "Main_PO_Number": "",
+        "Main_Vendor_Name": "",
+        "Total_Pallet_Finished_Count": ""
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "",
+        "Main_PO_Number": "",
+        "Main_Vendor_Name": "",
+        "Total_Pallet_Finished_Count": ""
+    },
+    {
+        "Associate_ID": "1278",
+        "Total_Time_In_Minutes": "",
+        "Main_PO_Number": "",
+        "Main_Vendor_Name": "",
+        "Total_Pallet_Finished_Count": ""
+    }
+]

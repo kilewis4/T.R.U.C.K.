@@ -1,19 +1,128 @@
-="Associate_ID"	="Total_Time_In_Minutes"	="Main_PO_Number"	="Main_Vendor_Name"	="Total_Pallet_Finished_Count"
-="103"	="40"	="10057359"	="TOPCO"	="20"
-="103"	="11"	="10057732"	="C. H. ROBINSON COMPANY"	="35"
-="103"	="11"	="10057941"	="TROPICANA PRODUCT SALES INC"	="15"
-="103"	="11"	="10058221"	="TOPCO"	="21"
-="103"	="38"	="10058354"	="CHRISTOPHER RANCH"	="33"
-="103"	="11"	="10058522"	="L & M COMPANIES"	="30"
-="103"	="164"	="16050185"	="KRAFT HEINZ FOOD COMPANY"	="88"
-="103"	="60"	="16350061"	="NESTLE PURINA PETCARE"	="25"
-="103"	="20"	="16450084"	="DR PEPPER SNAPPLE GROUP INC."	="24"
-="103"	="11"	="304665"	="PERDUE FARMS INC"	="18"
-="103"	="11"	="305106"	="Quaker maid"	="12"
-="103"	="33"	="40071549"	="OLD WORLD CREAMERY LLC"	="7"
-="103"	="39"	="40072988"	="UNITED SUGAR PROD & REFIN COOP"	="16"
-="103"	="11"	="40073980"	="TOPCO/SAMPCO"	="2"
-="103"	="11"	="40074180"	="ALAMANCE FOODS"	="6"
-="103"	="28"	="40074266"	="food marketing group"	="14"
-="103"	="57"	="40075744"	="FERRERO MAINSTREAM CHOCOLATE"	="51"
-="103"	="47"	="40076968"	="PROCTER AND GAMBLE/PAPER DIV."	="43"
+[
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "40",
+        "Main_PO_Number": "10057359",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "20"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10057732",
+        "Main_Vendor_Name": "C. H. ROBINSON COMPANY",
+        "Total_Pallet_Finished_Count": "35"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10057941",
+        "Main_Vendor_Name": "TROPICANA PRODUCT SALES INC",
+        "Total_Pallet_Finished_Count": "15"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058221",
+        "Main_Vendor_Name": "TOPCO",
+        "Total_Pallet_Finished_Count": "21"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "38",
+        "Main_PO_Number": "10058354",
+        "Main_Vendor_Name": "CHRISTOPHER RANCH",
+        "Total_Pallet_Finished_Count": "33"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "10058522",
+        "Main_Vendor_Name": "L & M COMPANIES",
+        "Total_Pallet_Finished_Count": "30"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "164",
+        "Main_PO_Number": "16050185",
+        "Main_Vendor_Name": "KRAFT HEINZ FOOD COMPANY",
+        "Total_Pallet_Finished_Count": "88"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "60",
+        "Main_PO_Number": "16350061",
+        "Main_Vendor_Name": "NESTLE PURINA PETCARE",
+        "Total_Pallet_Finished_Count": "25"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "20",
+        "Main_PO_Number": "16450084",
+        "Main_Vendor_Name": "DR PEPPER SNAPPLE GROUP INC.",
+        "Total_Pallet_Finished_Count": "24"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "304665",
+        "Main_Vendor_Name": "PERDUE FARMS INC",
+        "Total_Pallet_Finished_Count": "18"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "305106",
+        "Main_Vendor_Name": "Quaker maid",
+        "Total_Pallet_Finished_Count": "12"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "33",
+        "Main_PO_Number": "40071549",
+        "Main_Vendor_Name": "OLD WORLD CREAMERY LLC",
+        "Total_Pallet_Finished_Count": "7"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "39",
+        "Main_PO_Number": "40072988",
+        "Main_Vendor_Name": "UNITED SUGAR PROD & REFIN COOP",
+        "Total_Pallet_Finished_Count": "16"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40073980",
+        "Main_Vendor_Name": "TOPCO/SAMPCO",
+        "Total_Pallet_Finished_Count": "2"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "11",
+        "Main_PO_Number": "40074180",
+        "Main_Vendor_Name": "ALAMANCE FOODS",
+        "Total_Pallet_Finished_Count": "6"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "28",
+        "Main_PO_Number": "40074266",
+        "Main_Vendor_Name": "food marketing group",
+        "Total_Pallet_Finished_Count": "14"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "57",
+        "Main_PO_Number": "40075744",
+        "Main_Vendor_Name": "FERRERO MAINSTREAM CHOCOLATE",
+        "Total_Pallet_Finished_Count": "51"
+    },
+    {
+        "Associate_ID": "103",
+        "Total_Time_In_Minutes": "47",
+        "Main_PO_Number": "40076968",
+        "Main_Vendor_Name": "PROCTER AND GAMBLE/PAPER DIV.",
+        "Total_Pallet_Finished_Count": "43"
+    }
+]

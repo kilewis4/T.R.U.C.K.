@@ -186,7 +186,8 @@ class GUI():
                             int(po_text),
                             int(size_text),
                             live_value,
-                            self.env.now
+                            self.env.now,
+                            "NESTLE PURINA PETCARE"
                         )
                         self.add_truck(self.env, new_truck)
                 

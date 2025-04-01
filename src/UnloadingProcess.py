@@ -36,14 +36,17 @@ def unloading(gui):
     with open(file_location, "r") as file:
         loaded_data = json.load(file)
         for each_row in loaded_data:
-            if each_row["Main_Vendor_Name"] == truck.vendor:
-                if each_row["Total_Pallet_Finished_Count"] >= truck.size - 5 and each_row["Total_Pallet_Finished_Count"] <= truck.size + 5:
-                    potential_times.append(each_row["Total_Time_In_Minutes"])
+            if each_row.get("Main_Vendor_Name") == truck.vendor:
+                
+                if  int (each_row.get("Total_Pallet_Finished_Count")) >= truck.size - 5 and int (each_row.get("Total_Pallet_Finished_Count")) <= truck.size + 5:
+                    potential_times.append(each_row.get("Total_Time_In_Minutes"))
     
     if (len(potential_times) != 0):
-        time_taken = potential_times[random.randint(0, len(potential_times) - 1)]
+        time_taken = int (potential_times[random.randint(0, len(potential_times) - 1)])
+        print(time_taken)
     else:
         time_taken = (truck.size / unloader.pph) * 60
+        print(str (time_taken) + " else")
 
 
     local_min = 1000
