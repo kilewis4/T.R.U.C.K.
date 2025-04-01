@@ -103,10 +103,10 @@ class GUI():
         input_background = pg.Rect(self.TERMINAL_X, self.TERMINAL_Y, 300, 300)
         terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, self.TERMINAL_WIDTH, self.TERMINAL_HEIGHT)
         self.SCROLLBAR_WIDTH = 10
-        #self.lines = [f"Line {i}" for i in range(50)]
+        self.lines = [f"Line {i}" for i in range(50)]
         self.scroll_offset = 0
 
-        self.lines = []
+        #self.lines = []
         self.max_lines = 300 // self.FONT_SIZE
 
 
