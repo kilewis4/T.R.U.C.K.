@@ -38,10 +38,17 @@ class GUI():
         for door in self.doors.list:
             door_graphics.append(door.number)
 
-        terminal_boxes = []
+        self.terminal_boxes = []
 
+        ROOT = tk.Tk()
+        self.SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
+        self.SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
 
         self.env.process(self.process_manager())
+
+        input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
+        terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 350, 300)
+
         sim_thread = threading.Thread(target=self.run_simulation, daemon=True)
         sim_thread.start()
 
@@ -52,9 +59,7 @@ class GUI():
         clock = pg.time.Clock()
 
         # Sets screen size relative to size of users monitor.
-        ROOT = tk.Tk()
-        self.SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100
-        self.SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100
+        
 
         UNLOADERS_WAITLIST_X = self.SCREEN_WIDTH * 3/4
         UNLOADERS_WAITLIST_Y = self.SCREEN_HEIGHT * 3/4
@@ -310,7 +315,7 @@ class GUI():
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
             self.draw_terminal(DISPLAYSURF, terminal_background, font) 
-            self.draw_scrollbar(DISPLAYSURF)           
+            #self.draw_scrollbar(DISPLAYSURF)           
 
 
 
@@ -381,14 +386,14 @@ class GUI():
     """
     Draw the scrollbar to the screen
     """
-    def draw_scrollbar(self, DISPLAYSURF):
-        if len(self.lines) <= self.max_lines:
-            return  # No scrollbar needed if all text fits
+    # def draw_scrollbar(self, DISPLAYSURF):
+    #     if len(self.lines) <= self.max_lines:
+    #         return  # No scrollbar needed if all text fits
 
-        scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
-        scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
-        scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
-        pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
+    #     scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
+    #     scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
+    #     scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
+    #     pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
 
     """
     Handles mouse scrolling in the terminal
