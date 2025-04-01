@@ -30,7 +30,9 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        self.text_lines = []
+        self.text_lines_scrollup = []
+        self.text_lines_scrolldown = []
+
         
 
         
@@ -40,7 +42,7 @@ class GUI():
         for door in self.doors.list:
             door_graphics.append(door.number)
 
-        terminal_boxes = []
+        
 
 
         self.env.process(self.process_manager())
@@ -100,8 +102,8 @@ class GUI():
         input_background = pg.Rect(self.SCREEN_WIDTH - 300, 0, 300, 300)
         terminal_background = pg.Rect(0, self.SCREEN_HEIGHT - 300, 350, 300)
 
-        self.lines = []
-        self.max_lines = 300 // self.FONT_SIZE
+        self.max_lines = terminal_background.height // self.FONT_SIZE
+        self.terminal_boxes = ['' for x in range(self.max_lines)]
 
 
         # Creates dimensions for text input.
@@ -188,6 +190,16 @@ class GUI():
 
                         else:
                             live_text += event.unicode
+                
+                if event.type == pg.MOUSEWHEEL:
+                    if event.y == -1:
+                        if (len(self.text_lines_scrollup) != 0):
+                            self.shift_down()
+                    if event.y == 1:
+                        if (len(self.text_lines_scrolldown) != 0):
+                            self.shift_up()
+                            self.terminal_boxes[0] = self.text_lines_scrolldown.pop()
+
             
             DISPLAYSURF.fill(GRAY)
 
@@ -289,19 +301,39 @@ class GUI():
             surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
 
     def add_text(self, new_text):
-        self.lines.append(new_text)
-        if len(self.lines) > self.max_lines:
-            self.lines.pop(0)
+        self.shift_up()
+        self.terminal_boxes[0] = new_text
+        
+    
+    def shift_up(self):
+        if (self.terminal_boxes[len(self.terminal_boxes)-1] != ''):
+            self.text_lines_scrollup.append(self.terminal_boxes[len(self.terminal_boxes)-1])
+            print(self.text_lines_scrollup)
+        for i in range(self.max_lines-1,0,-1):
+            new_word = self.terminal_boxes[i-1]
+            self.terminal_boxes[i] = new_word
+
+    def shift_down(self):
+        self.text_lines_scrolldown.append(self.terminal_boxes[0])
+        for i in range(self.max_lines-1):
+            new_word = self.terminal_boxes[i+1]
+            self.terminal_boxes[i] = new_word
+        self.terminal_boxes[len(self.terminal_boxes)-1] = self.text_lines_scrollup.pop()
+        
+
+
+        
 
     def draw_terminal(self, DISPLAYSURF, terminal_background, font):
         pg.draw.rect(DISPLAYSURF, BLACK, terminal_background)
-        y_offset = (terminal_background.y + 300) - (terminal_background.height / 300)
-        y_offset -= self.FONT_SIZE
+        y_offset = (terminal_background.height // self.max_lines)
+        y_value = terminal_background.y + 300
+        
 
-        for line in self.lines:
+        for line in self.terminal_boxes:
             text_surface = font.render(line, True, WHITE)  # Render text
-            DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
-            y_offset -= self.FONT_SIZE  # Move text down
+            DISPLAYSURF.blit(text_surface, (0, y_value)) # Draw text
+            y_value -= y_offset
 
 
     """ 
@@ -322,7 +354,7 @@ class GUI():
             if self.incomingTrucks:
                 nextTruck = self.incomingTrucks.pop(0)
                 print(str(nextTruck.po) + " has arrived at " + str(nextTruck.time) + " size: " + str(nextTruck.size) + " env time: " + str(self.env.now))
-                #self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
+                self.add_text(f"Truck number {nextTruck.po} is arriving at time {nextTruck.time}")
                 self.trucks.addTruck(nextTruck, self.env)
                 self.env.process(unloading(self))
             yield self.env.timeout(1)
