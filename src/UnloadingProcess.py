@@ -2,6 +2,9 @@ import math
 import WebpageScript
 import threading
 import time
+import json
+import random
+from pathlib import Path
 from TruckGraphic import TruckGraphic
 from UnloaderGraphic import UnloaderGraphic
 
@@ -25,7 +28,26 @@ def unloading(gui):
     
     truck = gui.trucks.removeTruck()
 
-    time_taken = (truck.size / unloader.pph) * 60
+    path = Path("Data") / f"Unloader_{unloader.eid}.json"
+    file_location = path.resolve()
+
+    potential_times = []
+
+    with open(file_location, "r") as file:
+        loaded_data = json.load(file)
+        for each_row in loaded_data:
+            if each_row.get("Main_Vendor_Name") == truck.vendor:
+                
+                if  int (each_row.get("Total_Pallet_Finished_Count")) >= truck.size - 5 and int (each_row.get("Total_Pallet_Finished_Count")) <= truck.size + 5:
+                    potential_times.append(each_row.get("Total_Time_In_Minutes"))
+    
+    if (len(potential_times) != 0):
+        time_taken = int (potential_times[random.randint(0, len(potential_times) - 1)])
+        print(time_taken)
+    else:
+        time_taken = (truck.size / unloader.pph) * 60
+        print(str (time_taken) + " else")
+
 
     local_min = 1000
     
