@@ -153,7 +153,10 @@ class GUI():
 
         # Lines in the terminal display
         self.lines = []
-        self.max_lines = (self.TERMINAL_HEIGHT // self.FONT_SIZE)
+        #self.lines = [f"Line {i}" for i in range(50)]
+        self.max_lines = self.TERMINAL_HEIGHT // self.FONT_SIZE
+        #self.terminal_boxes = ['' for x in range(self.max_lines)]
+
 
         # Creates dimensions for text input.
         po_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 10, (155), 32)
@@ -458,7 +461,7 @@ class GUI():
             None
         """
         self.lines.append(new_text)
-        if len(self.lines) > self.max_lines:
+        if len(self.lines) > 50:
             self.lines.pop(0)
 
 
@@ -540,7 +543,6 @@ class GUI():
 
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1 and scrollbar_rect and scrollbar_rect.collidepoint(event.pos):
-                print("Hit rect")
                 self.dragging = True
                 self.drag_start_y = event.pos[1]
                 self.initial_scroll_offset = self.scroll_offset

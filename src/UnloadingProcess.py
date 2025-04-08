@@ -1,17 +1,19 @@
 import math
-import WebpageScript
 import threading
 import time
+
+from WebpageScript import WebpageScript
+
 import json
 import random
 from pathlib import Path
 from TruckGraphic import TruckGraphic
 from UnloaderGraphic import UnloaderGraphic
-
 from TruckGraphic import TruckGraphic
 from PushNoti import PushNoti
 from multiprocessing import Process
 # from TruckEntry import app
+
 
 """
 Method to simulate the "unloading" itself. When a truck is unloaded,
@@ -79,8 +81,11 @@ def unloading(gui):
 
     finish_time = str(math.ceil(gui.env.now))
 
-    webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
-    webpage_thread.start()
+    # webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    # webpage_thread.start()
+
+    
+    threading.Thread(target = submitter.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
 
     truck_graphic.done = True
     chosen_unloader_graphic.is_done = True
@@ -91,3 +96,4 @@ def unloading(gui):
     chosen_door.finish_job()
     gui.unloaders.addUnloader(unloader)
     
+submitter = WebpageScript()
