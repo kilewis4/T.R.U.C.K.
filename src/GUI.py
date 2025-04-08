@@ -86,6 +86,8 @@ class GUI():
         hover_active_color = pg.Color('dodgerblue4')
         po_text_box_color = inactive_color
         size_text_box_color = inactive_color
+        vendor_text_box_color = inactive_color
+
 
         live_true_box_color = inactive_color
         live_false_box_color = inactive_color
@@ -100,9 +102,11 @@ class GUI():
         po_text = ''
         size_text = ''
         #live_text = ''
+        vendor_text = ''
 
         po_text_box_active = False
         size_text_box_active = False
+        vendor_text_box_active = False
         self.live_text_box_active = False
         live_true_box_active = False
         live_false_box_active = False
@@ -140,14 +144,10 @@ class GUI():
         live_false_outline = pg.Rect(live_false_button.x-5, live_false_button.y-5, 80, 42)
         live_false_background = pg.Rect(live_false_button.x + 2, live_false_button.y + 2, (68), 30)
 
-
-
+        vendor_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 188, (140), 32)
+        vendor_label_box = pg.Rect(vendor_input_box.x - 68, vendor_input_box.y + 8, 32, 32)
         
-
-
-        live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
-        live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
-        button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
+        button = pg.Rect(self.SCREEN_WIDTH - 200, 238, (140), 32)
         button_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
         button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
 
@@ -187,7 +187,7 @@ class GUI():
                             int(size_text),
                             live_value,
                             self.env.now,
-                            "NESTLE PURINA PETCARE"
+                            vendor_text.upper()
                         )
                         self.add_truck(self.env, new_truck)
                 
@@ -197,6 +197,11 @@ class GUI():
                         po_text_box_active = True
                     else:
                         po_text_box_active = False
+
+                    if vendor_input_box.collidepoint(event.pos):
+                        vendor_text_box_active = True
+                    else:
+                        vendor_text_box_active = False
                     
                     if size_input_box.collidepoint(event.pos):
                         size_text_box_active = True
@@ -213,6 +218,7 @@ class GUI():
 
                     po_text_box_color = active_color if po_text_box_active else inactive_color
                     size_text_box_color = active_color if size_text_box_active else inactive_color
+                    vendor_text_box_color = active_color if vendor_text_box_active else inactive_color
                     live_true_box_color = active_color if live_true_box_active else inactive_color
                     live_false_box_color = active_color if live_false_box_active else inactive_color
                 
@@ -230,6 +236,13 @@ class GUI():
 
                         else:
                             size_text += event.unicode
+
+                    if vendor_text_box_active:
+                        if event.key == pg.K_BACKSPACE:
+                            vendor_text = vendor_text[:-1]
+
+                        else:
+                            vendor_text += event.unicode
                     
 
                     if self.live_text_box_active:
@@ -254,6 +267,8 @@ class GUI():
 
             pg.draw.rect(DISPLAYSURF, live_false_hover_color, live_false_outline)
             pg.draw.rect(DISPLAYSURF, GRAY, live_false_background)
+
+            
             
             button_text_surface = font.render("Submit", True, BLACK)
             DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
@@ -269,6 +284,13 @@ class GUI():
             size_text_surface = font.render(size_text, True, size_text_box_color)
             DISPLAYSURF.blit(size_text_surface, (size_input_box.x+5, size_input_box.y+5))
             pg.draw.rect(DISPLAYSURF, size_text_box_color, size_input_box, 2)
+            
+            vendor_label_surface = font.render("VENDOR:", True, WHITE)
+            DISPLAYSURF.blit(vendor_label_surface, (vendor_label_box.x, vendor_label_box.y))
+
+            vendor_text_surface = font.render(vendor_text, True, vendor_text_box_color)
+            DISPLAYSURF.blit(vendor_text_surface, (vendor_input_box.x+5, vendor_input_box.y+5))
+            pg.draw.rect(DISPLAYSURF, vendor_text_box_color, vendor_input_box, 2)
 
             size_label_surface = font.render('# OF PALLETS:', True, WHITE)
             DISPLAYSURF.blit(size_label_surface, (size_label_box.x, size_label_box.y))
