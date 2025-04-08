@@ -114,13 +114,12 @@ class GUI():
         self.TERMINAL_X, self.TERMINAL_Y = self.SCREEN_WIDTH - 300, 0
         self.SCROLLBAR_WIDTH = 10
         self.scroll_offset = 0
-
+        self.original_position = (0,0)
 
         self.lines = []
         #self.lines = [f"Line {i}" for i in range(50)]
-        self.max_lines = terminal_background.height // self.FONT_SIZE
-        self.terminal_boxes = ['' for x in range(self.max_lines)]
-
+        self.max_lines = (self.TERMINAL_HEIGHT // self.FONT_SIZE)
+        #self.terminal_boxes = ['' for x in range(self.max_lines)]
 
         # Creates dimensions for text input.
         po_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 10, (140), 32)
@@ -140,10 +139,9 @@ class GUI():
         live_false_outline = pg.Rect(live_false_button.x-5, live_false_button.y-5, 80, 42)
         live_false_background = pg.Rect(live_false_button.x + 2, live_false_button.y + 2, (68), 30)
 
-
-
-        
-
+        self.dragging = False
+        self.drag_start_y = 0
+        self.initial_scroll_offset = 0
 
         live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
@@ -174,7 +172,8 @@ class GUI():
             live_false_hover_color = hover_active_color if live_false_hover_active else hover_inactive_color
             
             for event in pg.event.get():
-                self.handle_scroll(event)
+                self.handle_scroll_wheel(event)
+                self.handle_drag_events(event)
                 if event.type == pg.QUIT:
                     running = False
                 if event.type == pg.MOUSEBUTTONDOWN:
@@ -380,15 +379,51 @@ class GUI():
         pg.draw.rect(DISPLAYSURF, WHITE, (scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height))
 
     """
-    Handles mouse scrolling in the terminal
+    Handles mouse scrolling with wheel in the terminal
     """
-    def handle_scroll(self, event):
+    def handle_scroll_wheel(self, event):
         #global scroll_offset
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 4:  # Scroll up
                 self.scroll_offset = max(0, self.scroll_offset - 1)
             elif event.button == 5:  # Scroll down
                 self.scroll_offset = min(len(self.lines) - self.max_lines, self.scroll_offset + 1)
+
+    def handle_drag_events(self, event):
+        """Handles clicking and dragging on the scrollbar."""
+
+        scrollbar_rect = self.get_scrollbar_rect()
+        max_scroll = max(1, len(self.lines) - self.max_lines)
+
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1 and scrollbar_rect and scrollbar_rect.collidepoint(event.pos):
+                print("Hit rect")
+                self.dragging = True
+                self.drag_start_y = event.pos[1]
+                self.initial_scroll_offset = self.scroll_offset
+
+        elif event.type == pg.MOUSEMOTION:
+            if self.dragging:
+                dy = event.pos[1] - self.drag_start_y
+                scroll_area_height = self.TERMINAL_HEIGHT - scrollbar_rect.height
+                scroll_ratio = dy / scroll_area_height if scroll_area_height > 0 else 0
+                self.scroll_offset = int(self.initial_scroll_offset + scroll_ratio * max_scroll)
+                self.scroll_offset = max(0, min(self.scroll_offset, max_scroll))
+
+        elif event.type == pg.MOUSEBUTTONUP:
+            if event.button == 1:
+                self.dragging = False
+
+    def get_scrollbar_rect(self):
+        """Returns the scrollbar rect for the current scroll state."""
+        if len(self.lines) <= self.max_lines:
+            return None
+
+        scrollbar_x = 350 - self.SCROLLBAR_WIDTH  # Align to the right
+        scrollbar_height = max(20, (self.max_lines / len(self.lines)) * self.TERMINAL_HEIGHT)  # Scale scrollbar
+        scrollbar_y = self.TERMINAL_Y + (self.scroll_offset / (len(self.lines) - self.max_lines)) * (self.TERMINAL_HEIGHT - scrollbar_height) + 320
+
+        return pg.Rect(scrollbar_x, scrollbar_y, self.SCROLLBAR_WIDTH, scrollbar_height)
 
     """ 
     Runs simulation
