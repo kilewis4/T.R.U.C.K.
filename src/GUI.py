@@ -119,6 +119,7 @@ class GUI():
         submit_hover_color = hover_inactive_color
         live_true_hover_color = hover_inactive_color
         live_false_hover_color = hover_inactive_color
+        reset_hover_color = hover_inactive_color
         
 
         # Default text input is nothing.
@@ -136,6 +137,7 @@ class GUI():
         submit_hover_active = False
         live_true_hover_active = False
         live_false_hover_active = False
+        reset_hover_active = False
 
         # States for scroll.
         self.dragging = False
@@ -154,14 +156,13 @@ class GUI():
         self.max_lines = (self.TERMINAL_HEIGHT // self.FONT_SIZE)
 
         # Creates dimensions for text input.
-        po_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 10, (140), 32)
-        size_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 74, (140), 32)
-        vendor_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 188, (140), 32)
-        live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
+        po_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 10, (155), 32)
+        size_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 54, (155), 32)
+        vendor_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 134, (155), 32)
 
         # Dimensions for True and False buttons.
-        live_true_button = pg.Rect(self.SCREEN_WIDTH - 200, 138, 70, 32)
-        live_false_button = pg.Rect(self.SCREEN_WIDTH - 115, 138, 70, 32)
+        live_true_button = pg.Rect(self.SCREEN_WIDTH - 200, 94, 70, 32)
+        live_false_button = pg.Rect(self.SCREEN_WIDTH - 115, 94, 70, 32)
 
         # Dimensions for highlighting effects,
         live_true_outline = pg.Rect(live_true_button.x-5, live_true_button.y-5, 80, 42)
@@ -177,10 +178,14 @@ class GUI():
         live_label_box = pg.Rect(live_true_button.x - 40, live_true_button.y + 8, 32, 32)
         vendor_label_box = pg.Rect(vendor_input_box.x - 68, vendor_input_box.y + 8, 32, 32)
 
-        # Dimensions for Sumbit button.
-        button = pg.Rect(self.SCREEN_WIDTH - 200, 238, (140), 32)
-        button_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
-        button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
+        
+        reset_button = pg.Rect(self.SCREEN_WIDTH - 200, 174, (52), 32)
+        reset_button_outline = pg.Rect(reset_button.x-5, reset_button.y-5, reset_button.width + 10, reset_button.height + 10)
+        reset_button_background = pg.Rect(reset_button.x + 2, reset_button.y+2, (reset_button.width)-2, reset_button.height-2)
+        # Dimensions for Sumbit button
+        button = pg.Rect(self.SCREEN_WIDTH - 98, 174, (52), 32)
+        button_outline = pg.Rect(button.x-5, button.y-5, button.width + 10, button.height + 10)
+        button_background = pg.Rect(button.x + 2, button.y+2, (button.width)-2, button.height-2)
 
         running = True
         while running:
@@ -188,7 +193,9 @@ class GUI():
             submit_hover_active = button.collidepoint(pg.mouse.get_pos())
             live_true_hover_active = live_true_button.collidepoint(pg.mouse.get_pos())
             live_false_hover_active = live_false_button.collidepoint(pg.mouse.get_pos())
+            reset_hover_active = reset_button.collidepoint(pg.mouse.get_pos())
             
+            reset_hover_color = hover_active_color if reset_hover_active else hover_inactive_color
             submit_hover_color = hover_active_color if submit_hover_active else hover_inactive_color
             live_true_hover_color = hover_active_color if live_true_hover_active else hover_inactive_color
             live_false_hover_color = hover_active_color if live_false_hover_active else hover_inactive_color
@@ -218,6 +225,15 @@ class GUI():
                 
                         
                     # Check which text input fields are clicked
+                    if reset_button.collidepoint(event.pos):
+                        po_text = ''
+                        size_text = ''
+                        vendor_text = ''
+                        live_false_box_active = False
+                        live_true_box_active = False
+
+                        
+
                     if po_input_box.collidepoint(event.pos):
                         po_text_box_active = True
                     else:
@@ -246,6 +262,7 @@ class GUI():
                     vendor_text_box_color = active_color if vendor_text_box_active else inactive_color
                     live_true_box_color = active_color if live_true_box_active else inactive_color
                     live_false_box_color = active_color if live_false_box_active else inactive_color
+                    
                 
                 
                 if event.type == pg.KEYDOWN:
@@ -282,6 +299,8 @@ class GUI():
             DISPLAYSURF.fill(GRAY)
             pg.draw.rect(DISPLAYSURF, GRAY, input_background)
             pg.draw.rect(DISPLAYSURF, submit_hover_color, button_outline)
+            pg.draw.rect(DISPLAYSURF, reset_hover_color, reset_button_outline)
+            pg.draw.rect(DISPLAYSURF, GRAY, reset_button_background)
             pg.draw.rect(DISPLAYSURF, GRAY, button_background)
             pg.draw.rect(DISPLAYSURF, live_true_hover_color, live_true_outline)
             pg.draw.rect(DISPLAYSURF, GRAY, live_true_background)
@@ -289,8 +308,12 @@ class GUI():
             pg.draw.rect(DISPLAYSURF, GRAY, live_false_background)
 
             button_text_surface = font.render("Submit", True, BLACK)
-            DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+5))
+            DISPLAYSURF.blit(button_text_surface, (button.x+5, button.y+10))
             pg.draw.rect(DISPLAYSURF, BLACK, button, 2)
+
+            reset_button_text_surface = font.render("Reset", True, BLACK)
+            DISPLAYSURF.blit(reset_button_text_surface, (reset_button.x+9, reset_button.y+10))
+            pg.draw.rect(DISPLAYSURF, BLACK, reset_button, 2)
 
             po_text_surface = font.render(po_text, True, po_text_box_color)
             DISPLAYSURF.blit(po_text_surface, (po_input_box.x+5, po_input_box.y+5))
