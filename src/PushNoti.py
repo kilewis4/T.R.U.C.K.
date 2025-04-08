@@ -1,11 +1,22 @@
 import requests
 import os
 
-"""
-Class to send notifications 
-"""
 class PushNoti:
+    """
+    A class to send push notifications using the Pushover API.
+
+    This class allows you to send notifications to a specific device through the Pushover API. 
+    It sends messages containing information about the next door (or task) assigned.
+    """
     def __init__(self, url, deviceName, door):
+        """
+        Initializes the PushNoti object with necessary parameters.
+
+        Args:
+            url (str): The Pushover API URL to send notifications to.
+            deviceName (str): The device name to send the notification to.
+            door (int): The door number that is part of the notification message.
+        """
         self.PUSHOVER_API_URL = url
         self.TOKEN = os.getenv("PUSHOVER_TOKEN")
         #print(os.getenv("PUSHOVER_TOKEN"))
@@ -23,6 +34,15 @@ class PushNoti:
         }
 
     def send_message(self):
+        """
+        Sends the notification message to the specified device using the Pushover API.
+
+        This method sends the POST request with the data defined in the `__init__` method 
+        to the Pushover API and prints the response in JSON format.
+
+        Returns:
+            None
+        """
         response = requests.post(self.PUSHOVER_API_URL, data=self.data)
         print(response.json())
 

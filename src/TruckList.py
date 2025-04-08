@@ -1,57 +1,69 @@
-
-"""
-Trucklist contains a list of all the trucks that come in in a day.
-It has several methods to manage the truck, including __iter__,
-addTruck, removeTruck, and getSize.
-"""
 class TruckList:
     """
-    Creates a TruckList object, and inserts all of the data from
-    csv_reader into the list of trucks.
+    A class that manages a list of trucks for a specific day, including adding, 
+    removing, and getting the size of the truck list. It also calculates the 
+    priority of each truck based on its arrival time and whether it's live.
+
+    Attributes:
+        list (list): A list of trucks in the truck list, where each truck is paired
+                     with its calculated priority.
+        env (object): The environment object used to determine the current time.
+
+    Methods:
+        __iter__(): Returns an iterator for the list of trucks.
+        addTruck(truck, env): Adds a truck to the list with a calculated priority and sorts the list.
+        removeTruck(): Removes the truck at the front of the list and returns it.
+        getSize(): Returns the current size of the truck list.
     """
+    
     def __init__(self, env):
+        """
+        Initializes the TruckList with an empty list and the given environment.
+
+        Args:
+            env (object): The environment object used to track time in the simulation.
+        """
         self.list = []
         self.env = env
-    """
-    Returns an iterator for the list itself.
 
-    Returns:
-        The iterator to the list.
-    """
     def __iter__(self):
+        """
+        Returns an iterator for the truck list.
+
+        Returns:
+            iterator: An iterator object for the list of trucks.
+        """
         return iter(self.list)
-        
 
-    """
-    Calculates the priority number of a truck based on its arrival time
-    and if its live or not. Appends this truck into the list, and sorts
-    the list.
-
-    Args:
-        truck(Truck): Truck to add
-    """
     def addTruck(self, truck, env):
-        priorityNumber = -(int (truck.live) * ((env.now - truck.time) * 0.083))
+        """
+        Adds a truck to the list with a priority based on its arrival time and live status.
+        The truck is added to the list, and the list is then sorted.
+
+        Args:
+            truck (Truck): The truck to add to the list.
+            env (object): The environment object used to calculate the truck's priority.
+        """
+        priorityNumber = -(int(truck.live) * ((env.now - truck.time) * 0.083))
         self.list.append((priorityNumber, truck))
         self.list.sort()
 
-    """
-    Removes a truck at the front of the list and returns it.
-
-    Returns:
-        The truck that was removed.
-    """
     def removeTruck(self):
+        """
+        Removes and returns the truck at the front of the list.
+
+        Returns:
+            Truck: The truck that was removed from the list.
+        """
         result = self.list.pop(0)[1]
         self.list.sort()
         return result
-    
-    """
-    Gets the current size of the list of trucks.
 
-    Returns:
-        The size of the list.
-    """
     def getSize(self):
-        return self.list.__len__()
-    
+        """
+        Gets the current size of the truck list.
+
+        Returns:
+            int: The size of the truck list.
+        """
+        return len(self.list)
