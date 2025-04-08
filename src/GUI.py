@@ -155,8 +155,7 @@ class GUI():
         live_input_box = pg.Rect(self.SCREEN_WIDTH - 200, 138, (140), 32)
         live_label_box = pg.Rect(live_input_box.x - 40, live_input_box.y + 8, 32, 32)
         button = pg.Rect(self.SCREEN_WIDTH - 200, 202, (140), 32)
-        butto
-        n_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
+        button_outline = pg.Rect(button.x-5, button.y-5, 150, 42)
         button_background = pg.Rect(button.x + 2, button.y+2, (138), 30)
 
         running = True
