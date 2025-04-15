@@ -138,6 +138,7 @@ class GUI():
         live_true_hover_active = False
         live_false_hover_active = False
         reset_hover_active = False
+        backspace_active = False
 
         # States for scroll.
         self.dragging = False
@@ -272,31 +273,37 @@ class GUI():
                     # Handle text input for each active text box
                     if po_text_box_active:
                         if event.key == pg.K_BACKSPACE:
-                            po_text = po_text[:-1]
+                            backspace_active = True
                         else:
                             po_text += event.unicode
                     
                     if size_text_box_active:
                         if event.key == pg.K_BACKSPACE:
-                            size_text = size_text[:-1]
+                            backspace_active = True
 
                         else:
                             size_text += event.unicode
 
                     if vendor_text_box_active:
                         if event.key == pg.K_BACKSPACE:
-                            vendor_text = vendor_text[:-1]
+                            backspace_active = True
 
                         else:
                             vendor_text += event.unicode
                     
+                else:
+                    backspace_active = False
+            
+            # Handles deletion of text while backspace is being held
+            if backspace_active:
+                if po_text_box_active:
+                    po_text = po_text[:-1]
+                    
+                if size_text_box_active:
+                    size_text = size_text[:-1]
 
-                    if self.live_text_box_active:
-                        if event.key == pg.K_BACKSPACE:
-                            live_text = live_text[:-1]
-
-                        else:
-                            live_text += event.unicode
+                if vendor_text_box_active:
+                    vendor_text = vendor_text[:-1]
 
             # Update the display with the new graphical elements
             DISPLAYSURF.fill(GRAY)
