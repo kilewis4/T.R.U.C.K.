@@ -73,6 +73,7 @@ def unloading(gui):
     start_time = str(gui.env.now)
     gui.add_text('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
     chosen_door.assign_job(truck, unloader)
+    chosen_door.unloading = True
     
     truck_graphic = TruckGraphic(chosen_door.number, truck.po)
     gui.add_truck_graphic(truck_graphic)
@@ -81,19 +82,21 @@ def unloading(gui):
 
     finish_time = str(math.ceil(gui.env.now))
 
-    # webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
-    # webpage_thread.start()
+    #webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    #webpage_thread.start()
 
     
-    threading.Thread(target = submitter.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    #threading.Thread(target = submitter.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    #submitter.close()
 
     truck_graphic.done = True
     chosen_unloader_graphic.is_done = True
     chosen_unloader_graphic.current_door = -1
     gui.add_text('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
-    
+    chosen_door.unloading = False
 
     chosen_door.finish_job()
     gui.unloaders.addUnloader(unloader)
     
-submitter = WebpageScript()
+#submitter = WebpageScript()
+webpage_thread = WebpageScript()
