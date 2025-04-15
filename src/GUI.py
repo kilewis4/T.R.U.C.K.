@@ -51,8 +51,8 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        self.text_lines_scrollup = []
-        self.text_lines_scrolldown = []
+        #self.text_lines_scrollup = []
+        #self.text_lines_scrolldown = []
 
     def animation(self):
         """
@@ -61,7 +61,7 @@ class GUI():
         """
         door_graphics = []
         for door in self.doors.list:
-            door_graphics.append(door.number)
+            door_graphics.append(door)
 
         self.terminal_boxes = []
 
@@ -360,17 +360,21 @@ class GUI():
             pg.draw.rect(DISPLAYSURF, BLACK, warehouse_outline_bottom)
 
             idx = 1
-            for door in door_graphics:
-                door_text_surface = font.render(str(idx), True, BLACK)
-                door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * idx, 40, 40)
-                pg.draw.rect(DISPLAYSURF, RED, door_graphic)
-                DISPLAYSURF.blit(door_text_surface, (DOOR_XPOSITION + 15, DOOR_YPOSITION * idx + 15))
+            for idx, door in enumerate(door_graphics):
+                door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
+                color = GREEN if door.unloading else RED
+                door_visual = pg.draw.rect(DISPLAYSURF, color, door_graphic)
+                door_text_surface = font.render(str(idx + 1), True, WHITE)
+                self.mouse_hover_door(door_visual, DISPLAYSURF, door_text_surface)
                 idx += 1
+            
 
             for unloader in self.unloader_graphics:
                 unloader_text_surface = font.render(str(unloader.eid), True, WHITE)
                 unloader_graphic = pg.draw.circle(DISPLAYSURF, BLACK, (unloader.x_position, unloader.y_position), 10)
-                DISPLAYSURF.blit(unloader_text_surface, (unloader.x_position - 5, unloader.y_position - 5))
+                #DISPLAYSURF.blit(unloader_text_surface, (unloader.x_position - 5, unloader.y_position - 5))
+                self.mouse_hover_door(unloader_graphic, DISPLAYSURF, unloader_text_surface)
+
                 
 
             
@@ -640,6 +644,23 @@ class GUI():
             None
         """
         unloader_graphic.current_door = door_num
+    
+    def mouse_hover_door(self, door, DISPLAYSURF, door_text_surface):
+        pos = pg.mouse.get_pos()
+        if door.collidepoint(pos):
+            DISPLAYSURF.blit(door_text_surface, (pos[0] + 15, pos[1] + 15))
+
+    def mouse_hover_unloader(self, unloader, DISPLAYSURF, unloader_text_surface):
+        pos = pg.mouse.get_pos()
+        if unloader.collidepoint(pos):
+            DISPLAYSURF.blit(unloader_text_surface, (pos[0] + 15, pos[1] + 15))
+
+    def mouse_hover_truck(self, truck, DISPLAYSURF, truck_text_surface):
+        pass
+
+    # def warning_area(self, DISPLAYSURF, DOOR_XPOSITION, ):
+    #     warning_area = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
+
     
 gui = GUI()
 gui.animation()
