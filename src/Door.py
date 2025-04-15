@@ -15,6 +15,7 @@ class Door(Container):
         self.number = number
         self.truck_and_unloader = ()
         self.pallets = 0
+        self.unloading = False
 
     """
     Prints the door number along with the truck and employee number.

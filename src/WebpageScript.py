@@ -22,7 +22,7 @@ class WebpageScript:
 
         options = Options()
         options.add_argument("--headless")  # Remove this line if you want to see the browser
-        options.add_argument("--disable-gpu")
+        #options.add_argument("--disable-gpu")
         self.driver = webdriver.Chrome(options=options)
 
         path = Path("src") / "templates" / "TruckEntry.html"
