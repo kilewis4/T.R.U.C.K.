@@ -103,8 +103,7 @@ def unloading(gui):
 
     # Mark unloading completion time
     finish_time = str(math.ceil(gui.env.now))
-
-    webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
+    webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, chosen_door, start_time, finish_time), daemon=True)
     webpage_thread.start()
 
     # Submit the data to the webpage system (non-blocking background thread)
