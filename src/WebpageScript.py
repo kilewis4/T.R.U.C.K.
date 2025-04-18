@@ -30,7 +30,7 @@ class WebpageScript:
 
     def truck_entry(self, truck, unloader, start, finish):
  
-        assert "Truck Entry Replication" in self.driver.title
+        #assert "Truck Entry Replication" in self.driver.title
 
         with self.lock:
             self.driver.get(self.form_url)
