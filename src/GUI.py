@@ -5,6 +5,7 @@ from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
 from UnloaderGraphic import UnloaderGraphic
+from DataVisualizer import visualize
 
 import threading
 import time
@@ -398,6 +399,8 @@ class GUI():
             clock.tick(30)
         
         print("End time: " + str(self.env.now))
+        visualize()
+
 
     
     def update_unloaders(self, DOOR_XPOSITION, DOOR_YPOSITION):

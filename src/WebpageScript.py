@@ -38,7 +38,7 @@ class WebpageScript:
             form_data = {
             "recieved_time": truck.time,
             "po_num": truck.po,
-            "vendor": "vendor_name",
+            "vendor": truck.vendor,
             "door": door.number,
             "unloader_name": unloader.eid,
             "unload_start_time": start,
