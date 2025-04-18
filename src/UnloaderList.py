@@ -22,7 +22,7 @@ class UnloaderList:
             print(unloader.eid)
             self.addUnloader(unloader)"""
         Unloader103 = Unloader(env, 103, 20, "iphone")
-        Unloader1278 = Unloader(env, 1278, 20, "iphone")
+        Unloader1278 = Unloader(env, 1278, 20, "iphone2")
         Unloader13586 = Unloader(env, 13586, 20, "iphone")
         self.addUnloader(Unloader103)
         self.addUnloader(Unloader1278)

@@ -12,11 +12,11 @@ import threading
 import time
 import csv
 
-""" 
-Truck Entry Script
-Utilizes information passed in from Truck object to fill out billing info.
-"""
 class WebpageScript:
+    """ 
+    Truck Entry Script
+    Utilizes information passed in from Truck object to fill out billing info.
+    """
     def __init__(self):
         self.lock = threading.Lock()
 
