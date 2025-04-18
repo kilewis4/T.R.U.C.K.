@@ -452,7 +452,8 @@ class GUI():
             truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 100, 25)
             truck_text_surface = font.render(str(truck.po_num), True, BLACK)
             pg.draw.rect(surface, WHITE, truck_object)
-            surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
+            #surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
+            self.mouse_hover_truck(truck_object, surface, truck_text_surface)
 
     def add_text(self, new_text):
         """
@@ -656,7 +657,9 @@ class GUI():
             DISPLAYSURF.blit(unloader_text_surface, (pos[0] + 15, pos[1] + 15))
 
     def mouse_hover_truck(self, truck, DISPLAYSURF, truck_text_surface):
-        pass
+        pos = pg.mouse.get_pos()
+        if truck.collidepoint(pos):
+            DISPLAYSURF.blit(truck_text_surface, (pos[0] + 15, pos[1] + 15))
 
     # def warning_area(self, DISPLAYSURF, DOOR_XPOSITION, ):
     #     warning_area = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
