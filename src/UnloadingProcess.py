@@ -93,6 +93,7 @@ def unloading(gui):
     
     # Assign the truck and unloader to the door
     chosen_door.assign_job(truck, unloader)
+    chosen_door.unloading = True
     
     # Add a visual representation of the truck to the GUI
     truck_graphic = TruckGraphic(chosen_door.number, truck.po)
@@ -104,6 +105,7 @@ def unloading(gui):
     # Mark unloading completion time
     finish_time = str(math.ceil(gui.env.now))
     webpage_thread = threading.Thread(target= WebpageScript.truck_entry,args=(truck, unloader, chosen_door, start_time, finish_time), daemon=True)
+
     webpage_thread.start()
 
     # Submit the data to the webpage system (non-blocking background thread)
@@ -116,6 +118,8 @@ def unloading(gui):
 
     # Log unloading completion in the GUI
     gui.add_text('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
+    chosen_door.unloading = False
+
     
     # Mark the door as available again
     chosen_door.finish_job()
@@ -123,4 +127,4 @@ def unloading(gui):
     # Return the unloader to the list
     gui.unloaders.addUnloader(unloader)
     
-# submitter = WebpageScript()
+web = WebpageScript()
