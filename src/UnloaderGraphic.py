@@ -19,7 +19,6 @@ class UnloaderGraphic:
         go_in(door_x, door_y): Moves the unloader towards the door's position.
         go_out(): Moves the unloader back to its initial position.
     """
-    
     def __init__(self, eid, x, y):
         """
         Initializes the UnloaderGraphic with the specified ID and initial position.
