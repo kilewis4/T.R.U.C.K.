@@ -28,7 +28,7 @@ class WebpageScript:
         self.form_url = f"file://{path.resolve()}"
 
 
-    def truck_entry(self, truck, unloader, start, finish):
+    def truck_entry(self, truck, unloader, door, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
 
