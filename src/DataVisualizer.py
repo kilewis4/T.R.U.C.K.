@@ -8,6 +8,8 @@ def visualize():
 
     data['unload_duration'] = data['unload_end_time'] - data['unload_start_time']
 
+    plt.close('all')
+
     for index, row in data.iterrows():
         jitter = np.random.uniform(-0.05, 0.05)
         plt.hlines(row['door'] + jitter, 
@@ -18,10 +20,10 @@ def visualize():
         colors = ['red', 'blue', 'yellow' 'green']
         plt.plot(row['recieved_time'], row['door'] + jitter, 'X', color=colors[index % 3])
         plt.plot(row["unload_start_time"], row['door'] + jitter, 'o', color=colors[index % 3])
-        print(row['door'])
+
     
 
-
+    
     ax = plt.gca()
     ax.yaxis.set_major_locator(MultipleLocator(1))
 
@@ -42,3 +44,4 @@ def limit_y_zoom(event_ax):
         new_ymax = min(ymax, 4)
         event_ax.set_ylim(new_ymin, new_ymax)
         event_ax.figure.canvas.draw_idle()
+

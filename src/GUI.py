@@ -5,6 +5,7 @@ from TruckList import TruckList
 from UnloaderList import UnloaderList
 from DoorList import DoorList
 from UnloaderGraphic import UnloaderGraphic
+from DataVisualizer import visualize
 
 import threading
 import time
@@ -66,6 +67,7 @@ class GUI():
         ROOT = tk.Tk()  # Initialize Tkinter window for screen size calculations
         self.SCREEN_WIDTH = ROOT.winfo_screenwidth() - 100 # Set screen width based on monitor size
         self.SCREEN_HEIGHT = ROOT.winfo_screenheight() - 100 # Set screen height based on monitor size
+        ROOT.destroy()
 
         self.env.process(self.process_manager()) # Start the process manager in the simulation environment
 
@@ -394,6 +396,7 @@ class GUI():
         
         print("End time: " + str(self.env.now))
 
+
     
     def update_unloaders(self, DOOR_XPOSITION, DOOR_YPOSITION):
         """
@@ -699,3 +702,5 @@ class GUI():
     
 gui = GUI()
 gui.animation()
+pg.quit()
+visualize()

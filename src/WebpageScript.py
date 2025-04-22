@@ -27,14 +27,16 @@ class WebpageScript:
         path = Path("src") / "templates" / "TruckEntry.html"
         self.form_url = f"file://{path.resolve()}"
 
-    def truck_entry(self, truck, unloader, start, finish):
+
+    def truck_entry(self, truck, unloader, door, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
 
             form_data = {
             "recieved_time": truck.time,
             "po_num": truck.po,
-            "vendor": "vendor_name",
+            "vendor": truck.vendor,
+            "door": door.number,
             "unloader_name": unloader.eid,
             "unload_start_time": start,
             "unload_end_time": finish,
