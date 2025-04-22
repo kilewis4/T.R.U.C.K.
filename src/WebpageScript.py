@@ -3,7 +3,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from pathlib import Path
-#from TruckEntry import app
 from multiprocessing import Process
 from datetime import datetime
 from queue import Queue
@@ -28,10 +27,8 @@ class WebpageScript:
         path = Path("src") / "templates" / "TruckEntry.html"
         self.form_url = f"file://{path.resolve()}"
 
-    def truck_entry(self, truck, unloader, door, start, finish):
- 
-        #assert "Truck Entry Replication" in self.driver.title
 
+    def truck_entry(self, truck, unloader, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
 

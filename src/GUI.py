@@ -52,8 +52,6 @@ class GUI():
 
         self.truck_graphics = []
         self.unloader_graphics = []
-        #self.text_lines_scrollup = []
-        #self.text_lines_scrolldown = []
 
     def animation(self):
         """
@@ -113,10 +111,11 @@ class GUI():
         size_text_box_color = inactive_color
         vendor_text_box_color = inactive_color
 
-
+        # Color initialize for live box
         live_true_box_color = inactive_color
         live_false_box_color = inactive_color
 
+        # Color initializse for sumbit button, and hovering for live
         submit_hover_color = hover_inactive_color
         live_true_hover_color = hover_inactive_color
         live_false_hover_color = hover_inactive_color
@@ -157,7 +156,6 @@ class GUI():
         self.lines = []
         #self.lines = [f"Line {i}" for i in range(50)]
         self.max_lines = self.TERMINAL_HEIGHT // self.FONT_SIZE
-        #self.terminal_boxes = ['' for x in range(self.max_lines)]
 
 
         # Creates dimensions for text input.
@@ -187,11 +185,13 @@ class GUI():
         reset_button = pg.Rect(self.SCREEN_WIDTH - 200, 174, (52), 32)
         reset_button_outline = pg.Rect(reset_button.x-5, reset_button.y-5, reset_button.width + 10, reset_button.height + 10)
         reset_button_background = pg.Rect(reset_button.x + 2, reset_button.y+2, (reset_button.width)-2, reset_button.height-2)
+
         # Dimensions for Sumbit button
         button = pg.Rect(self.SCREEN_WIDTH - 98, 174, (52), 32)
         button_outline = pg.Rect(button.x-5, button.y-5, button.width + 10, button.height + 10)
         button_background = pg.Rect(button.x + 2, button.y+2, (button.width)-2, button.height-2)
 
+        # Main game loop
         running = True
         while running:
             # Check if any UI elements are being hovered over
@@ -205,8 +205,9 @@ class GUI():
             live_true_hover_color = hover_active_color if live_true_hover_active else hover_inactive_color
             live_false_hover_color = hover_active_color if live_false_hover_active else hover_inactive_color
             
+            # Loop for handling all events
             for event in pg.event.get():
-                # Handle scroll wheel events and dragging for the scrollbar
+                # Handles moving the terminal
                 self.handle_scroll_wheel(event)
                 self.handle_drag_events(event)
 
@@ -238,7 +239,7 @@ class GUI():
                         live_true_box_active = False
 
                         
-
+                    # Sets or unsets all the text boxes if needed
                     if po_input_box.collidepoint(event.pos):
                         po_text_box_active = True
                     else:
@@ -267,8 +268,6 @@ class GUI():
                     vendor_text_box_color = active_color if vendor_text_box_active else inactive_color
                     live_true_box_color = active_color if live_true_box_active else inactive_color
                     live_false_box_color = active_color if live_false_box_active else inactive_color
-                    
-                
                 
                 if event.type == pg.KEYDOWN:
                     # Handle text input for each active text box
@@ -367,6 +366,7 @@ class GUI():
             warehouse_outline_bottom = pg.Rect(DOOR_XPOSITION, self.SCREEN_HEIGHT - 25, 275, 5)
             pg.draw.rect(DISPLAYSURF, BLACK, warehouse_outline_bottom)
 
+            # Draw all of the doors
             idx = 1
             for idx, door in enumerate(door_graphics):
                 door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
@@ -376,24 +376,19 @@ class GUI():
                 self.mouse_hover_door(door_visual, DISPLAYSURF, door_text_surface)
                 idx += 1
             
-
+            # Draw all of the unloaders
             for unloader in self.unloader_graphics:
                 unloader_text_surface = font.render(str(unloader.eid), True, WHITE)
                 unloader_graphic = pg.draw.circle(DISPLAYSURF, BLACK, (unloader.x_position, unloader.y_position), 10)
                 #DISPLAYSURF.blit(unloader_text_surface, (unloader.x_position - 5, unloader.y_position - 5))
                 self.mouse_hover_door(unloader_graphic, DISPLAYSURF, unloader_text_surface)
 
-                
-
-            
+            # Call all outside methods
             self.draw_trucks(self.truck_graphics, DISPLAYSURF, font)
             self.update_trucks(self.truck_graphics, DOOR_XPOSITION, DOOR_YPOSITION)
             self.update_unloaders(DOOR_XPOSITION, DOOR_YPOSITION)
             self.draw_terminal(DISPLAYSURF, terminal_background, font) 
             self.draw_scrollbar(DISPLAYSURF)           
-
-
-
 
             pg.display.flip()
             clock.tick(30)
@@ -462,7 +457,6 @@ class GUI():
             truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 100, 25)
             truck_text_surface = font.render(str(truck.po_num), True, BLACK)
             pg.draw.rect(surface, WHITE, truck_object)
-            #surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
             self.mouse_hover_truck(truck_object, surface, truck_text_surface)
 
     def add_text(self, new_text):
@@ -498,7 +492,6 @@ class GUI():
         start_line = max(0, self.scroll_offset)
         end_line = min(start_line + self.max_lines, len(self.lines))
         
-
         for i in range(start_line, end_line):
              text_surface = font.render(self.lines[i], True, WHITE)  # Render text
              DISPLAYSURF.blit(text_surface, (0, y_offset))  # Draw text
@@ -535,7 +528,6 @@ class GUI():
         Returns:
             None
         """
-        #global scroll_offset
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 4:  # Scroll up
                 self.scroll_offset = max(0, self.scroll_offset - 1)
@@ -657,16 +649,49 @@ class GUI():
         unloader_graphic.current_door = door_num
     
     def mouse_hover_door(self, door, DISPLAYSURF, door_text_surface):
+        """
+        Checks if the mouse is hovering over a door
+
+        Parameters:
+            door (Door): The door to check if it is being hovered over.
+            DISPLAYSURF (Surface): The current GUI to draw to.
+            door_text_surface (Surface): the door surface to draw on
+
+        Returns:
+            None
+        """
         pos = pg.mouse.get_pos()
         if door.collidepoint(pos):
             DISPLAYSURF.blit(door_text_surface, (pos[0] + 15, pos[1] + 15))
 
     def mouse_hover_unloader(self, unloader, DISPLAYSURF, unloader_text_surface):
+        """
+        Checks if the mouse is hovering over a unloader
+
+        Parameters:
+            unloader (Unloader): The unloader to check if it is being hovered over.
+            DISPLAYSURF (Surface): The current GUI to draw to.
+            door_text_surface (Surface): the door surface to draw on
+
+        Returns:
+            None
+        """
         pos = pg.mouse.get_pos()
         if unloader.collidepoint(pos):
             DISPLAYSURF.blit(unloader_text_surface, (pos[0] + 15, pos[1] + 15))
 
     def mouse_hover_truck(self, truck, DISPLAYSURF, truck_text_surface):
+        """
+        Checks if the mouse is hovering over a truck
+
+        Parameters:
+            truck (Truck): The unloader to check if it is being hovered over.
+            DISPLAYSURF (Surface): The current GUI to draw to.
+            door_text_surface (Surface): the door surface to draw on
+
+        Returns:
+            None
+        """
         pos = pg.mouse.get_pos()
         if truck.collidepoint(pos):
             DISPLAYSURF.blit(truck_text_surface, (pos[0] + 15, pos[1] + 15))
