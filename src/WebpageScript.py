@@ -35,7 +35,8 @@ class WebpageScript:
     """
     Inserts data into the html file using selenium.
     """
-    def truck_entry(self, truck, unloader, start, finish):
+ 
+    def truck_entry(self, truck, unloader, door, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
             # print(self.driver.current_url)
@@ -45,7 +46,8 @@ class WebpageScript:
             form_data = {
             "received_time": truck.time,
             "po_num": truck.po,
-            "vendor": "vendor_name",
+            "vendor": truck.vendor,
+            "door": door.number,
             "unloader_name": unloader.eid,
             "unload_start_time": start,
             "unload_end_time": finish,
