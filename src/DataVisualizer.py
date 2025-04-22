@@ -43,4 +43,3 @@ def limit_y_zoom(event_ax):
         event_ax.set_ylim(new_ymin, new_ymax)
         event_ax.figure.canvas.draw_idle()
 
-visualize()
