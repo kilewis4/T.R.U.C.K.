@@ -18,6 +18,7 @@ def visualize():
         colors = ['red', 'blue', 'yellow' 'green']
         plt.plot(row['recieved_time'], row['door'] + jitter, 'X', color=colors[index % 3])
         plt.plot(row["unload_start_time"], row['door'] + jitter, 'o', color=colors[index % 3])
+
     
 
 
