@@ -10,6 +10,8 @@ import threading
 
 import time
 import csv
+import os
+import sys
 
 class WebpageScript:
     """ 
@@ -24,15 +26,24 @@ class WebpageScript:
         options.add_argument("--disable-gpu")
         self.driver = webdriver.Chrome(options=options)
 
-        path = Path("src") / "templates" / "TruckEntry.html"
-        self.form_url = f"file://{path.resolve()}"
+        # path = Path("src") / "templates" / "TruckEntry.html"
+        # self.form_url = f"file://{path.resolve()}"
 
+        path = self.resource_path("src/templates/TruckEntry.html")
+        self.form_url = f"file:///{path.as_posix()}"
+
+    """
+    Inserts data into the html file using selenium.
+    """
     def truck_entry(self, truck, unloader, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
+            # print(self.driver.current_url)
+            # print(self.driver.page_source)
+            # print(self.form_url)
 
             form_data = {
-            "recieved_time": truck.time,
+            "received_time": truck.time,
             "po_num": truck.po,
             "vendor": "vendor_name",
             "unloader_name": unloader.eid,
@@ -60,3 +71,10 @@ class WebpageScript:
 
     def close(self):
         self.driver.quit()
+
+    def resource_path(self, relative_path):
+        try:
+            base_path = Path(sys._MEIPASS)
+        except AttributeError:
+            base_path = Path(".").resolve()
+        return base_path / relative_path

@@ -1,6 +1,8 @@
 import math
 import threading
 import time
+import os
+import sys
 
 from WebpageScript import WebpageScript
 
@@ -43,8 +45,16 @@ def unloading(gui):
     truck = gui.trucks.removeTruck()
 
     # Construct the file path for the unloader's historical data
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+
     path = Path("Data") / f"Unloader_{unloader.eid}.json"
-    file_location = path.resolve()
+    file_location = Path(resource_path(path.as_posix()))
+    #file_location = path.resolve()
 
     potential_times = []
     # Attempt to find a realistic unload time from past data
