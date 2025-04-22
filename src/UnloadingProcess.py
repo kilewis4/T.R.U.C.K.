@@ -81,6 +81,7 @@ def unloading(gui):
     for door in gui.doors:
         if door.truck_and_unloader == ():   # Door is unassigned
             if door.pallets < local_min:
+                local_min = door.pallets
                 chosen_door = door
 
     # Send a push notification to the unloader's device
