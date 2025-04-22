@@ -29,19 +29,17 @@ class WebpageScript:
         # path = Path("src") / "templates" / "TruckEntry.html"
         # self.form_url = f"file://{path.resolve()}"
 
-        path = self.resource_path("src/templates/TruckEntry.html")
+        path = self.resource_path("templates/TruckEntry.html")
         self.form_url = f"file:///{path.as_posix()}"
+        print("Path: ", path)
+        print("form_url: ", self.form_url)
 
     """
     Inserts data into the html file using selenium.
     """
- 
     def truck_entry(self, truck, unloader, door, start, finish):
         with self.lock:
             self.driver.get(self.form_url)
-            # print(self.driver.current_url)
-            # print(self.driver.page_source)
-            # print(self.form_url)
 
             form_data = {
             "received_time": truck.time,
@@ -63,7 +61,10 @@ class WebpageScript:
             timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
             self.driver.find_element("id", "submit").click()
-            csv_file = "output.csv"
+
+            #this_dir = Path(__file__).parent.resolve()
+            csv_file = self.get_runtime_dir() / "output.csv"
+            #csv_file = "output.csv"
             with open(csv_file, mode='a', newline = "", encoding='utf-8') as file:
                 writer = csv.writer(file)
                 if file.tell() == 0:  
@@ -71,12 +72,27 @@ class WebpageScript:
 
                 writer.writerow([timestamp] + list(form_data.values()))
 
+    """
+    Closes the browser
+    """
     def close(self):
         self.driver.quit()
 
+    """
+    Initializes the path so the executable can use it
+    """
     def resource_path(self, relative_path):
         try:
             base_path = Path(sys._MEIPASS)
         except AttributeError:
-            base_path = Path(".").resolve()
+            base_path = Path(__file__).parent.resolve()
         return base_path / relative_path
+    
+    """
+    Checks to see if this is running in an executable or not
+    """
+    def get_runtime_dir(self):
+        if getattr(sys, 'frozen', False):  # we're in a PyInstaller bundle
+            return Path(sys.executable).parent
+        else:
+            return Path(__file__).parent.resolve()
