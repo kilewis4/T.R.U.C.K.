@@ -58,6 +58,3 @@ def getUnloaders(env):
     #unloaders[0].deviceName = "iphone"
 
     return unloaders
-
-
-
