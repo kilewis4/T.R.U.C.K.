@@ -39,14 +39,15 @@ Attributes:
     text_lines_scrolldown: List of lines for the terminal’s scrolling text display.
 """
 class GUI():
-    def __init__(self):
+    def __init__(self, experimental=False):
         """
         Initializes the GUI, including the simulation environment, truck list, unloader list, and door list.
         Sets up the graphical elements for trucks and unloaders.
         """
         self.env = simpy.RealtimeEnvironment()
         self.incomingTrucks = []
-        self.trucks = TruckList(self.env)
+        self.experimental = experimental
+        self.trucks = TruckList(self.env, experimental)
         self.unloaders = UnloaderList(self.env)
         self.doors = DoorList()
 
@@ -54,6 +55,9 @@ class GUI():
         self.unloader_graphics = []
         #self.text_lines_scrollup = []
         #self.text_lines_scrolldown = []
+        if experimental:
+            self.over_live_wait_time = 0
+
 
     def animation(self):
         """
@@ -372,13 +376,13 @@ class GUI():
                 door_graphic = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
                 color = GREEN if door.unloading else RED
                 door_visual = pg.draw.rect(DISPLAYSURF, color, door_graphic)
-                door_text_surface = font.render(str(idx + 1), True, WHITE)
+                door_text_surface = font.render('Door: ' + str(idx + 1), True, WHITE)
                 self.mouse_hover_door(door_visual, DISPLAYSURF, door_text_surface)
                 idx += 1
             
 
             for unloader in self.unloader_graphics:
-                unloader_text_surface = font.render(str(unloader.eid), True, WHITE)
+                unloader_text_surface = font.render('Unloader: ' + str(unloader.eid), True, WHITE)
                 unloader_graphic = pg.draw.circle(DISPLAYSURF, BLACK, (unloader.x_position, unloader.y_position), 10)
                 #DISPLAYSURF.blit(unloader_text_surface, (unloader.x_position - 5, unloader.y_position - 5))
                 self.mouse_hover_door(unloader_graphic, DISPLAYSURF, unloader_text_surface)
@@ -399,7 +403,8 @@ class GUI():
             clock.tick(30)
         
         print("End time: " + str(self.env.now))
-        visualize()
+        if self.experimental:
+            print("Number of times live loads waited longer than two hours: " + str (self.over_live_wait_time))
 
 
     
@@ -460,7 +465,7 @@ class GUI():
         """
         for truck in trucks:
             truck_object = pg.Rect(truck.truck_x_position, truck.truck_y_position, 100, 25)
-            truck_text_surface = font.render(str(truck.po_num), True, BLACK)
+            truck_text_surface = font.render('PO #: ' + str(truck.po_num), True, BLACK)
             pg.draw.rect(surface, WHITE, truck_object)
             #surface.blit(truck_text_surface, (truck_object.x + (truck_object.width / 2), truck_object.y + (truck_object.height / 4)))
             self.mouse_hover_truck(truck_object, surface, truck_text_surface)
@@ -675,5 +680,6 @@ class GUI():
     #     warning_area = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
 
     
-gui = GUI()
+gui = GUI(experimental=True)
 gui.animation()
+visualize()

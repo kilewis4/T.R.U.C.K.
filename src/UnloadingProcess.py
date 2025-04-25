@@ -106,6 +106,9 @@ def unloading(gui):
     finish_time = str(math.ceil(gui.env.now))
     webpage_thread = threading.Thread(target= web.truck_entry,args=(truck, unloader, chosen_door, start_time, finish_time), daemon=True)
 
+    if gui.experimental and int(finish_time) - int(start_time) > 120:
+        gui.over_live_wait_time += 1
+
     webpage_thread.start()
 
     # Submit the data to the webpage system (non-blocking background thread)
