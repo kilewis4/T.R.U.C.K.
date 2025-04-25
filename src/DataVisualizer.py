@@ -1,12 +1,20 @@
+import os
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+
+from pathlib import Path
 from matplotlib.ticker import MultipleLocator
 
 def visualize():
-    data = pd.read_csv('output.csv')
+    #data = pd.read_csv('output.csv')
+    data = pd.read_csv(resource_path('output.csv'))
 
     data['unload_duration'] = data['unload_end_time'] - data['unload_start_time']
+
+    plt.close('all')
 
     for index, row in data.iterrows():
         jitter = np.random.uniform(-0.05, 0.05)
@@ -16,12 +24,12 @@ def visualize():
                 colors='blue')
         
         colors = ['red', 'blue', 'yellow' 'green']
-        plt.plot(row['recieved_time'], row['door'] + jitter, 'X', color=colors[index % 3])
+        plt.plot(row['received_time'], row['door'] + jitter, 'X', color=colors[index % 3])
         plt.plot(row["unload_start_time"], row['door'] + jitter, 'o', color=colors[index % 3])
-        print(row['door'])
+
     
 
-
+    
     ax = plt.gca()
     ax.yaxis.set_major_locator(MultipleLocator(1))
 
@@ -43,3 +51,9 @@ def limit_y_zoom(event_ax):
         event_ax.set_ylim(new_ymin, new_ymax)
         event_ax.figure.canvas.draw_idle()
 
+def resource_path(relative_path):
+        try:
+            base_path = Path(sys._MEIPASS)
+        except AttributeError:
+            base_path = Path(__file__).parent.resolve()
+        return base_path / relative_path

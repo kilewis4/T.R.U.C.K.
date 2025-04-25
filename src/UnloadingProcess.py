@@ -1,6 +1,8 @@
 import math
 import threading
 import time
+import os
+import sys
 
 from WebpageScript import WebpageScript
 
@@ -12,7 +14,6 @@ from UnloaderGraphic import UnloaderGraphic
 from TruckGraphic import TruckGraphic
 from PushNoti import PushNoti
 from multiprocessing import Process
-# from TruckEntry import app
 
 def unloading(gui):
     """
@@ -44,17 +45,23 @@ def unloading(gui):
     truck = gui.trucks.removeTruck()
 
     # Construct the file path for the unloader's historical data
+    def resource_path(relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+
     path = Path("Data") / f"Unloader_{unloader.eid}.json"
-    file_location = path.resolve()
+    file_location = Path(resource_path(path.as_posix()))
+    #file_location = path.resolve()
 
     potential_times = []
-
-     # Attempt to find a realistic unload time from past data
+    # Attempt to find a realistic unload time from past data
     with open(file_location, "r") as file:
         loaded_data = json.load(file)
         for each_row in loaded_data:
-            if each_row.get("Main_Vendor_Name") == truck.vendor:
-                
+            if each_row.get("Main_Vendor_Name") == truck.vendor:   
                 if  int (each_row.get("Total_Pallet_Finished_Count")) >= truck.size - 5 and int (each_row.get("Total_Pallet_Finished_Count")) <= truck.size + 5:
                     potential_times.append(each_row.get("Total_Time_In_Minutes"))
     
@@ -74,6 +81,7 @@ def unloading(gui):
     for door in gui.doors:
         if door.truck_and_unloader == ():   # Door is unassigned
             if door.pallets < local_min:
+                local_min = door.pallets
                 chosen_door = door
 
     # Send a push notification to the unloader's device
@@ -85,7 +93,6 @@ def unloading(gui):
         if unloader_graphic.eid == unloader.eid:
             unloader_graphic.current_door = chosen_door.number
             chosen_unloader_graphic = unloader_graphic
-
 
     # Log the unloading start in the GUI
     start_time = str(gui.env.now)
@@ -111,9 +118,6 @@ def unloading(gui):
 
     webpage_thread.start()
 
-    # Submit the data to the webpage system (non-blocking background thread)
-    # threading.Thread(target = submitter.truck_entry,args=(truck, unloader, start_time, finish_time), daemon=True)
-
     # Update the graphics to reflect completion
     truck_graphic.done = True
     chosen_unloader_graphic.is_done = True
@@ -123,11 +127,11 @@ def unloading(gui):
     gui.add_text('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
     chosen_door.unloading = False
 
-    
     # Mark the door as available again
     chosen_door.finish_job()
 
     # Return the unloader to the list
     gui.unloaders.addUnloader(unloader)
     
+# Create a single chrome instance when this method is imported
 web = WebpageScript()
