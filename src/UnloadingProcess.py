@@ -52,9 +52,13 @@ def unloading(gui):
             base_path = os.path.abspath(".")
         return os.path.join(base_path, relative_path)
 
-    path = Path("Data") / f"Unloader_{unloader.eid}.json"
-    file_location = Path(resource_path(path.as_posix()))
+    #path = Path("Data") / f"Unloader_{unloader.eid}.json"
+    #file_location = Path(resource_path(path))  # No need for path.as_posix() here
+    file_location = resource_path(f"Data/Unloader_{unloader.eid}.json")
+    #file_location = Path(resource_path(path.as_posix()))
     #file_location = path.resolve()
+    print(f"Attempting to open file: {file_location}")
+
 
     potential_times = []
     # Attempt to find a realistic unload time from past data
