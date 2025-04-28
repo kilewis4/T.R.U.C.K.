@@ -16,7 +16,7 @@ class TruckList:
         getSize(): Returns the current size of the truck list.
     """
     
-    def __init__(self, env):
+    def __init__(self, env, experimental):
         """
         Initializes the TruckList with an empty list and the given environment.
 
@@ -25,6 +25,7 @@ class TruckList:
         """
         self.list = []
         self.env = env
+        self.experimental = experimental
 
     def __iter__(self):
         """
@@ -44,9 +45,12 @@ class TruckList:
             truck (Truck): The truck to add to the list.
             env (object): The environment object used to calculate the truck's priority.
         """
-        priorityNumber = -(int(truck.live) * ((env.now - truck.time) * 0.083))
-        self.list.append((priorityNumber, truck))
-        self.list.sort()
+        if not self.experimental:
+            priorityNumber = -(int(truck.live) * ((env.now - truck.time) * 0.083))
+            self.list.append((priorityNumber, truck))
+            self.list.sort()
+        else:
+            self.list.append((0, truck))
 
     def removeTruck(self):
         """
@@ -56,7 +60,9 @@ class TruckList:
             Truck: The truck that was removed from the list.
         """
         result = self.list.pop(0)[1]
-        self.list.sort()
+        if not self.experimental:
+            self.list.sort()
+
         return result
 
     def getSize(self):
