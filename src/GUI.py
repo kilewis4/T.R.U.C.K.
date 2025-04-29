@@ -708,7 +708,7 @@ class GUI():
     #     warning_area = pg.Rect(DOOR_XPOSITION, DOOR_YPOSITION * (idx + 1), 40, 40)
 
     
-gui = GUI(experimental=True)
+gui = GUI()
 gui.animation()
 pg.quit()
 visualize()

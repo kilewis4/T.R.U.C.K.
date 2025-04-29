@@ -85,7 +85,8 @@ def unloadingA(env, unloaders, trucks, doors, over_live_wait_time):
 
     # Log the unloading start in the GUI
     start_time = str(env.now)
-    print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
+    print("Amount of time truck " +  str(truck.po) + " waits: " + str((int(start_time) - truck.time)))
+    #print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
     
     # Assign the truck and unloader to the door
     chosen_door.assign_job(truck, unloader)
@@ -103,7 +104,7 @@ def unloadingA(env, unloaders, trucks, doors, over_live_wait_time):
         over_live_wait_time[0] += 1
 
     # Log unloading completion in the GUI
-    print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
+    #print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
     chosen_door.unloading = False
 
     # Mark the door as available again

@@ -139,7 +139,7 @@ def get_runtime_dir():
             return Path(__file__).parent.resolve()
     
 # Create a single chrome instance when this method is imported
-session_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+session_timestamp = datetime.now().strftime("%Y-%m-%d")
 csv_file = get_runtime_dir() / f"output_{session_timestamp}.csv"
 
 web = WebpageScript(csv_file)
