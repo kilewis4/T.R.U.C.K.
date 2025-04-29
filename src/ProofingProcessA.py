@@ -11,12 +11,10 @@ from datetime import datetime
 
 from pathlib import Path
 from TruckGraphic import TruckGraphic
-from UnloaderGraphic import UnloaderGraphic
-from TruckGraphic import TruckGraphic
 from PushNoti import PushNoti
 from multiprocessing import Process
 
-def unloading(gui):
+def unloadingA(env, unloaders, trucks, doors, over_live_wait_time):
     """
     Coroutine to simulate the unloading of a truck by an available unloader.
 
@@ -37,13 +35,12 @@ def unloading(gui):
     """
 
     # Wait until there is at least one available unloader
-    while gui.unloaders.isEmpty():
-        yield gui.env.timeout(1)
-    print("Unloader found")
+    while unloaders.isEmpty():
+        yield env.timeout(1)
 
     # Get an available unloader and the next truck in queue
-    unloader = gui.unloaders.removeUnloader()
-    truck = gui.trucks.removeTruck()
+    unloader = unloaders.removeUnloader()
+    truck = trucks.removeTruckA()
 
     # Construct the file path for the unloader's historical data
     def resource_path(relative_path):
@@ -67,70 +64,54 @@ def unloading(gui):
     # Use historical time if available; otherwise, calculate manually
     if (len(potential_times) != 0):
         time_taken = int (potential_times[random.randint(0, len(potential_times) - 1)])
-        print(time_taken)
     else:
         time_taken = (truck.size / unloader.pph) * 60 # Convert to minutes
-        print(str (time_taken) + " else")
 
     # Look for an available door with the least pallet load
     local_min = 1000
-    while not gui.doors.openDoors():
-        yield gui.env.timeout(1)
+    while not doors.openDoors():
+        yield env.timeout(1)
     
-    for door in gui.doors:
+    for door in doors:
         if door.truck_and_unloader == ():   # Door is unassigned
             if door.pallets < local_min:
                 local_min = door.pallets
                 chosen_door = door
 
     # Send a push notification to the unloader's device
-    pusher = PushNoti("https://api.pushover.net/1/messages.json", unloader.deviceName, chosen_door.number)
-    pusher.send_message()
-    
-    chosen_unloader_graphic = None
-    for unloader_graphic in gui.unloader_graphics:
-        if unloader_graphic.eid == unloader.eid:
-            unloader_graphic.current_door = chosen_door.number
-            chosen_unloader_graphic = unloader_graphic
+    # pusher = PushNoti("https://api.pushover.net/1/messages.json", unloader.deviceName, chosen_door.number)
+    # pusher.send_message()
+
 
     # Log the unloading start in the GUI
-    start_time = str(gui.env.now)
-    gui.add_text('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
+    start_time = str(env.now)
+    print("Amount of time truck " +  str(truck.po) + " waits: " + str((int(start_time) - truck.time)))
+    #print('The unloader ' + str(unloader.eid) + ' is unloading truck ' + str(truck.po) + ' at time ' + start_time + " at door: " + str(chosen_door.number))
     
     # Assign the truck and unloader to the door
     chosen_door.assign_job(truck, unloader)
     chosen_door.unloading = True
     
     # Add a visual representation of the truck to the GUI
-    truck_graphic = TruckGraphic(chosen_door.number, truck.po)
-    gui.add_truck_graphic(truck_graphic)
 
     # Simulate the unloading delay
-    yield gui.env.timeout(time_taken)
+    yield env.timeout(time_taken)
 
     # Mark unloading completion time
-    finish_time = str(math.ceil(gui.env.now))
-    webpage_thread = threading.Thread(target= web.truck_entry,args=(truck, unloader, chosen_door, start_time, finish_time), daemon=True)
+    finish_time = str(math.ceil(env.now))
 
-    if gui.experimental and int(finish_time) - int(start_time) > 120:
-        gui.over_live_wait_time += 1
-
-    webpage_thread.start()
-
-    # Update the graphics to reflect completion
-    truck_graphic.done = True
-    chosen_unloader_graphic.is_done = True
-    chosen_unloader_graphic.current_door = -1
+    if truck.live == 1 and int(start_time) - int(truck.time) > 120:
+        over_live_wait_time[0] += 1
 
     # Log unloading completion in the GUI
-    gui.add_text('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(gui.env.now)))
+    #print('Unloader ' + str(unloader.eid) + ' has finished w/truck ' + str(truck.po) + " at " + str(math.ceil(env.now)))
     chosen_door.unloading = False
 
     # Mark the door as available again
     chosen_door.finish_job()
 
     # Return the unloader to the list
-    gui.unloaders.addUnloader(unloader)
+    unloaders.addUnloader(unloader)
 
 def get_runtime_dir():
         if getattr(sys, 'frozen', False):  # we're in a PyInstaller bundle
@@ -139,7 +120,7 @@ def get_runtime_dir():
             return Path(__file__).parent.resolve()
     
 # Create a single chrome instance when this method is imported
-session_timestamp = datetime.now().strftime("%Y-%m-%d")
+session_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 csv_file = get_runtime_dir() / f"output_{session_timestamp}.csv"
 
 web = WebpageScript(csv_file)

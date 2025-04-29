@@ -35,7 +35,7 @@ class TruckListA:
         """
         return iter(self.list)
 
-    def addTruck(self, truck, env):
+    def addTruckA(self, truck, env):
         """
         Adds a truck to the list with a priority based on its arrival time and live status.
         The truck is added to the list, and the list is then sorted.
@@ -46,7 +46,7 @@ class TruckListA:
         """
         self.list.append((0, truck))
 
-    def removeTruck(self):
+    def removeTruckA(self):
         """
         Removes and returns the truck at the front of the list.
 
