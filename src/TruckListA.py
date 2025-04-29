@@ -1,4 +1,4 @@
-class TruckList:
+class TruckListA:
     """
     A class that manages a list of trucks for a specific day, including adding, 
     removing, and getting the size of the truck list. It also calculates the 
@@ -16,7 +16,7 @@ class TruckList:
         getSize(): Returns the current size of the truck list.
     """
     
-    def __init__(self, env, experimental):
+    def __init__(self, env):
         """
         Initializes the TruckList with an empty list and the given environment.
 
@@ -25,7 +25,6 @@ class TruckList:
         """
         self.list = []
         self.env = env
-        self.experimental = experimental
 
     def __iter__(self):
         """
@@ -45,13 +44,7 @@ class TruckList:
             truck (Truck): The truck to add to the list.
             env (object): The environment object used to calculate the truck's priority.
         """
-        if not self.experimental:
-            print("HERE")
-            priorityNumber = -(int(truck.live) * ((env.now - truck.time) * 0.083))
-            self.list.append((priorityNumber, truck))
-            self.list.sort()
-        else:
-            self.list.append((0, truck))
+        self.list.append((0, truck))
 
     def removeTruck(self):
         """
@@ -61,9 +54,6 @@ class TruckList:
             Truck: The truck that was removed from the list.
         """
         result = self.list.pop(0)[1]
-        if not self.experimental:
-            print("HERE")
-            self.list.sort()
 
         return result
 
