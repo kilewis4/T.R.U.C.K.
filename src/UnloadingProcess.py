@@ -3,11 +3,12 @@ import threading
 import time
 import os
 import sys
-
-from WebpageScript import WebpageScript
-
 import json
 import random
+
+from WebpageScript import WebpageScript
+from datetime import datetime
+
 from pathlib import Path
 from TruckGraphic import TruckGraphic
 from UnloaderGraphic import UnloaderGraphic
@@ -52,13 +53,7 @@ def unloading(gui):
             base_path = os.path.abspath(".")
         return os.path.join(base_path, relative_path)
 
-    #path = Path("Data") / f"Unloader_{unloader.eid}.json"
-    #file_location = Path(resource_path(path))  # No need for path.as_posix() here
     file_location = resource_path(f"Data/Unloader_{unloader.eid}.json")
-    #file_location = Path(resource_path(path.as_posix()))
-    #file_location = path.resolve()
-    print(f"Attempting to open file: {file_location}")
-
 
     potential_times = []
     # Attempt to find a realistic unload time from past data
@@ -136,6 +131,15 @@ def unloading(gui):
 
     # Return the unloader to the list
     gui.unloaders.addUnloader(unloader)
+
+def get_runtime_dir():
+        if getattr(sys, 'frozen', False):  # we're in a PyInstaller bundle
+            return Path(sys.executable).parent
+        else:
+            return Path(__file__).parent.resolve()
     
 # Create a single chrome instance when this method is imported
-web = WebpageScript()
+session_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+csv_file = get_runtime_dir() / f"output_{session_timestamp}.csv"
+
+web = WebpageScript(csv_file)
