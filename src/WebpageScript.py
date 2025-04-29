@@ -18,8 +18,10 @@ class WebpageScript:
     Truck Entry Script
     Utilizes information passed in from Truck object to fill out billing info.
     """
-    def __init__(self):
+    def __init__(self, csv_file):
         self.lock = threading.Lock()
+
+        self.csv_file = csv_file
 
         options = Options()
         options.add_argument("--headless")  # Remove this line if you want to see the browser
@@ -62,10 +64,10 @@ class WebpageScript:
 
             self.driver.find_element("id", "submit").click()
 
-            #this_dir = Path(__file__).parent.resolve()
-            csv_file = self.get_runtime_dir() / "output.csv"
-            #csv_file = "output.csv"
-            with open(csv_file, mode='a', newline = "", encoding='utf-8') as file:
+            # today = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  
+            # csv_file = self.get_runtime_dir() / f"output_{today}.csv"
+
+            with open(self.csv_file, mode='a', newline = "", encoding='utf-8') as file:
                 writer = csv.writer(file)
                 if file.tell() == 0:  
                     writer.writerow(["Timestamp"] + list(form_data.keys()))
