@@ -46,7 +46,6 @@ class TruckList:
             env (object): The environment object used to calculate the truck's priority.
         """
         if not self.experimental:
-            print("HERE")
             priorityNumber = -(int(truck.live) * ((env.now - truck.time) * 0.083))
             self.list.append((priorityNumber, truck))
             self.list.sort()
@@ -62,7 +61,6 @@ class TruckList:
         """
         result = self.list.pop(0)[1]
         if not self.experimental:
-            print("HERE")
             self.list.sort()
 
         return result
