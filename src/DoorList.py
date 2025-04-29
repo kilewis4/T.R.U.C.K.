@@ -8,8 +8,7 @@ class DoorList:
     """
     Initiazlises the list, and adds the doors to the list.
 
-    Args:
-        env (Enviorment): enviorment which used for getUnloaders.
+
     """
     def __init__(self):
         self.list = []
